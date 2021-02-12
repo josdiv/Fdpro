@@ -1,0 +1,133 @@
+<template>
+<div class="page" data-name="bkdetail3">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+          <a href="/srvrequest/" class="link">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Service Details</div>
+    </div>
+  </div>
+  <div class="page-content">
+	<div class="block text-align-center">
+        <div class="gauge demo-gauge"></div>
+      </div>
+	 <div class="list no-hairlines-md">
+              <ul>
+                <li class="customli2">
+                  <div class="item-content">
+                     <div class="item-media"><i class="ion ion-ios-construct iconlarge"></i></div>
+					<div class="item-inner">
+                      <div class="item-title"></div>
+					  <div class="item-after">ID04814N</div>
+                    </div>
+                  </div>
+                </li>
+				<li class="customli2">
+                  <div class="item-content">
+                     <div class="item-media"><i class="ion ion-ios-list iconlarge"></i></div>
+					<div class="item-inner">
+                      <div class="item-title"></div>
+					  <div class="item-after">Electrical</div>
+                    </div>
+                  </div>
+                </li>
+				<li class="customli2">
+                  <div class="item-content">
+                     <div class="item-media"><i class="ion ion-ios-calendar iconlarge"></i></div>
+					<div class="item-inner">
+                      <div class="item-title"></div>
+					  <div class="item-after">December 15, 2018 | 5pm</div>
+                    </div>
+                  </div>
+                </li>
+				<li class="customli2">
+                  <div class="item-content">
+                     <div class="item-media"><i class="ion ion-ios-compass iconlarge"></i></div>
+					<div class="item-inner">
+                      <div class="item-title"></div>
+					  <div class="item-after">Ajah</div>
+                    </div>
+                  </div>
+                </li>
+				<li class="customli2">
+                  <div class="item-content">
+                     <div class="item-media"><i class="ion ion-ios-card iconlarge"></i></div>
+					<div class="item-inner">
+                      <div class="item-title"></div>
+					  <div class="item-after">Not Paid</div>
+                    </div>
+                  </div>
+                </li>
+			</ul>
+		</div>
+	<div class="card card-outline">
+      <div class="card-content card-content-padding">
+		<p class="font12"><strong>Description:</strong><br>My Central Fuse box just sparked and there is no light in my house.</p>
+	  </div>
+     </div>
+	 <div class="card card-outline">
+      <div class="card-content card-content-padding">
+		<p class="font12"><strong>Address:</strong><br>12, Billing Avenue Estate<br>Onike, Ishaga<br>Ajah</p>
+	  </div>
+     </div>
+	 
+	 
+	
+	
+  </div>
+ 
+ 
+
+</div>
+</template>
+<style>
+.alnright
+{float: right;}
+.customli2
+{border-bottom: 1px solid #e0e0e0; font-size:14px !important;}
+</style>
+<script>
+  return {
+    methods: {
+      setGaugeValue: function(value) {
+        var self = this;
+        self.demoGauge.update({
+          value: value / 100,
+          valueText: value + '%',
+        });
+      },
+    },
+    on: {
+      pageInit: function (e, page) {
+        var self = this;
+        var app = self.$app;
+        self.demoGauge = app.gauge.create({
+          el: '.demo-gauge',
+          type: 'circle',
+          value: 0.0,
+          size: 250,
+          borderColor: '#034679',
+          borderWidth: 10,
+          valueText: '0%',
+          valueFontSize: 41,
+          valueTextColor: '#034679',
+          labelText: 'Status: Cancelled',
+        });
+      },
+      pageBeforeRemove: function (e, page) {
+        if (this.demoGauge) this.demoGauge.destroy();
+      },
+    }
+  }
+  /*
+  Accepted		10%
+  Assigned		20%
+  In Progress	40%
+  Completed		100%
+  Cancelled		0%
+  */
+</script>

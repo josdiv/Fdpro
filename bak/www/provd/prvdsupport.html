@@ -1,0 +1,204 @@
+<template>
+<div class="page" data-name="prvdsupport">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+          <a href="#" class="link back">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Support</div>
+    </div>
+  </div>
+  <div class="page-content">
+  <div class="block block-strong font12">
+      <p>Reach us on any of the channels below for complaints, issue resolutions, feedbacks or just tell us how our platform has helped you today.</p>
+    </div>
+    <div class="block">
+	<div class="list no-hairlines-md">
+		  <ul>
+			<li class="item-content">
+			  <div class="item-media">
+				<i class="ion ion-ios-phone-portrait iconlarge-x" ></i>
+			  </div>
+			  <div class="item-inner textsmall">
+				0700 3000 1500
+			  </div>
+			</li>
+			<li class="item-content">
+			  <div class="item-media">
+				<i class="ion ion-ios-paper-plane iconlarge-x" ></i>
+			  </div>
+			  <div class="item-inner textsmall">
+				support@xperthands.ng
+			  </div>
+			</li>
+			<li class="item-content">
+			  <div class="item-media">
+				<i class="ion ion-ios-globe iconlarge-x" ></i>
+			  </div>
+			  <div class="item-inner textsmall">
+				www.xperthands.ng
+			  </div>
+			</li>
+			<li class="item-content">
+			  <div class="item-media">
+				<i class="ion ion-logo-facebook iconlarge-x" ></i>
+			  </div>
+			  <div class="item-inner textsmall">
+				@xperthandsng
+			  </div>
+			</li>
+			<li class="item-content">
+			  <div class="item-media">
+				<i class="ion ion-logo-twitter iconlarge-x" ></i>
+			  </div>
+			  <div class="item-inner textsmall">
+				@xperthandsng
+			  </div>
+			</li>
+			
+		  </ul>
+	</div>
+	</div>
+    
+
+	<div class="block">
+		<a href="#" class="button button-fill button-round button-big popup-open" data-popup=".sendmsg-popup" style="background:#034679">Send a Quick Message</a>
+    </div>
+	
+  </div>
+ 
+ <!-- Send Message Pop Start -->
+  	<div class="popup sendmsg-popup">
+      <div class="page">
+        <div class="navbar" style="background:#e3000f;">
+          <div class="navbar-inner">
+            <div class="title titlehd font12">Send Message</div>
+            <div class="right titlehd"><a href="#" class="link popup-close">Close</a></div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="block-title">Complete Fields:</div>
+    <div class="list no-hairlines-md">
+      <ul>
+        <li class="item-content item-input">
+          <div class="item-media">
+            <i class="ion ion-ios-list iconlarge-x" ></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-title item-label">Category</div>
+            <div class="item-input-wrap input-dropdown-wrap">
+              <select class="frmtxt" id="supportCat" placeholder="Please choose...">
+                <option value="General">General</option>
+                <option value="Complaint">Complaint</option>
+                <option value="Feedback">Feedback</option>
+                <option value="Suggestion">Suggestion</option>
+                <option value="Testimonial">Testimonial</option>
+              </select>
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input">
+          <div class="item-media">
+            <i class="ion ion-ios-create iconlarge-x" ></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-title item-label">Message</div>
+            <div class="item-input-wrap">
+              <textarea class="frmtxt" id="supportMsg" placeholder="Write Message"></textarea>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+	 <div class="block">
+			<a class="button button-fill button-round button" @click="sendSupport" style="background:#034679">Submit</a>
+	</div>
+        </div>
+      </div>
+    </div>
+<!-- Send Message Pop Ends -->
+
+
+</div>
+</template>
+<style>
+.iconlarge-x
+{
+color: #e62b1e;
+font-size: large;
+}
+.textsmall
+{
+font-size:16px;
+text-align: justify;
+}
+</style>
+<script>
+  return {
+	methods:{
+		sendSupport: function () {
+		
+		// App instance
+		var app = this.$app;
+		
+		//Get Inputs
+		var supportCat = $$('#supportCat').val();
+		var supportMsg = $$('#supportMsg').val();
+		
+		if (!supportMsg){
+		  app.dialog.alert('Enter a Support Message!');
+		  return;
+		 }
+		 
+		
+		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		var supportType = "Provider";
+		
+		 app.popup.close();
+		
+		// Show Preloader
+		app.dialog.progress();
+		
+		//Update Server Record ajax
+		app.request({
+				url: url+'type=supportmessage',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				supportCat: supportCat,
+				userPhone: userPhone,
+				supportMsg: supportMsg,
+				supportType: supportType
+				},
+				crossDomain:true,
+				success:function(data){
+				 
+				 
+				  if (data.message == "success") {			
+						app.dialog.alert('Success! Your message has been sent.');
+					  }
+				},
+				error:function(error){
+				console.log(error);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again!');
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.dialog.close();}, 1000);
+				}
+				}); 
+				
+		//Close Dialog
+		//setTimeout(function () {app.dialog.close();}, 1000);
+
+		
+		}	
+	}
+  };
+</script>

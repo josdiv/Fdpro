@@ -1,0 +1,167 @@
+<template>
+  <div class="page" data-name="signup">
+    <div class="navbar" style="background:#ffffff;color:#000000">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="/" class="link">
+            <i class="ion ion-ios-arrow-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title sliding titlehd">Sign Up</div>
+      </div>
+    </div>
+     <div class="page-content custombackground">
+  
+	<div class="block" style="height:70%">
+	<div class="progressbar color-green" data-progress="10"><span style="transform: translate3d(-20%, 0px, 0px);"></span></div>
+	<br><span style="font-size:larger">Lets get to know you:</span>
+	<br>
+		<div class="list no-hairlines-md" >
+		  <ul>
+			<li class="item-content item-input">
+			  <div class="item-media">
+				<i class="ion ion-ios-person iconlarge" ></i>
+			  </div>
+			  <div class="item-inner">
+				<div class="item-title item-floating-label">First Name</div>
+				<div class="item-input-wrap">
+				  <input type="text" required id="firstName" placeholder="First name">
+				  <span class="input-clear-button"></span>
+				</div>
+			  </div>
+			</li>
+			<li class="item-content item-input">
+			  <div class="item-media">
+				<i class="ion ion-ios-person-add iconlarge" ></i>
+			  </div>
+			  <div class="item-inner">
+				<div class="item-title item-floating-label">Last Name</div>
+				<div class="item-input-wrap">
+				  <input type="text" required id="lastName" placeholder="Last name">
+				  <span class="input-clear-button"></span>
+				</div>
+			  </div>
+			</li>
+			
+		  </ul>
+		</div>
+			</div>
+		<div class="block">
+			<a class='button button-raised button-big button-outline buttonback'  @click="newUser"><i class='ion ion-ios-pulse'></i> Proceed</a>
+			<a href='/plogin/'><span class="itemright">Already Registered? LOGIN</span></a>
+    </div>
+		</div>
+		
+		
+  </div>
+</template>
+<style>
+.divspinner
+{background:transparent url('./img/imgspinner.gif') center no-repeat;}
+.md .navbar:after
+{height:0px;}
+</style>
+<script>
+return {
+	methods:{
+	newUser: function () {
+	
+		// App instance
+		var app = this.$app;
+			
+		//get variables from login form
+		var firstName = $$('#firstName').val();
+		var lastName = $$('#lastName').val();
+		var fullName = firstName + " " + lastName;
+		
+		if (!firstName || !lastName){
+		  app.dialog.alert('Complete Required Fields');
+		  return;
+		 }
+		 
+		
+		 
+		var url = app.data.appconst.url;
+		app.data.appdata.firstName = firstName;
+		app.data.appdata.lastName = lastName;
+		app.data.appdata.fullName = fullName;
+		app.router.navigate('/pgender/');
+		
+		
+		 /*
+		 //validate E-mail
+		 if((userEmail) && (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userEmail))))
+		 {
+			app.dialog.alert('Invalid Email Address');
+			return;
+		 }
+		 
+		
+		  // Show Preloader
+			app.dialog.progress();
+			
+			app.request({
+				url: url+'type=reg',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				fullName:$$('#fullName').val(),
+				userEmail:$$('#userEmail').val(),
+				userPhone:$$('#userPhone').val(),
+				inviteCode:$$('#inviteCode').val()
+				},
+				crossDomain:true,
+				success:function(data){
+				 
+				 
+				  if (data.message == "success") {
+						app.data.appdata = {otpCode: data.otpcode, userPhone: userPhone, fullName: fullName};
+						app.router.navigate('/verify/');
+					  } else {
+					  app.dialog.alert(data.message);
+					  }
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+				  // Create toast
+					//if (!app.toastBottom) {
+					  app.toastBottom =  app.toast.create({
+						text: 'Connection Error!',
+						closeTimeout: 3000,
+					  });
+				//	}
+					
+					
+					// Open it
+					app.toastBottom.open();
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.dialog.close();}, 1000);
+				}
+				
+				}); 
+
+			//Close Dialog
+		//setTimeout(function () {app.dialog.close();}, 1000);
+	
+	
+		*/
+	
+	
+		},
+			},
+	on: {
+      pageInit: function (e, page) {
+		// App instance
+		localStorage.setItem("lclalertNum", "0");	
+		
+      }
+    }
+
+
+}
+
+</script>

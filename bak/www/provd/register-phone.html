@@ -1,0 +1,109 @@
+<template>
+  <div class="page" data-name="regphone">
+    <div class="navbar" style="background:#ffffff;color:#000000">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="ion ion-ios-arrow-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title sliding titlehd">Sign Up</div>
+      </div>
+    </div>
+     <div class="page-content custombackground">
+  
+	<div class="block" style="height:70%">
+	<div class="progressbar color-green" data-progress="80"><span style="transform: translate3d(-20%, 0px, 0px);"></span></div>
+	<br><span style="font-size:larger">Create a Password?</span>
+	<br>
+		<div class="list no-hairlines-md" >
+		  <ul>
+			<li class="item-content item-input">
+			  <div class="item-media">
+				<i class="ion ion-ios-lock iconlarge" ></i>
+			  </div>
+			  <div class="item-inner">
+				<div class="item-title item-floating-label">Choose Password</div>
+				<div class="item-input-wrap">
+				  <input type="password" required id="createPass" placeholder="Choose Password">
+				  <span class="input-clear-button"></span>
+				</div>
+			  </div>
+			</li>
+			<li class="item-content item-input">
+			  <div class="item-media">
+				<i class="ion ion-ios-lock iconlarge" ></i>
+			  </div>
+			  <div class="item-inner">
+				<div class="item-title item-floating-label">Confirm Password</div>
+				<div class="item-input-wrap">
+				  <input type="password" required id="confirmPass" placeholder="Confirm Password">
+				  <span class="input-clear-button"></span>
+				</div>
+			  </div>
+			</li>
+			
+		  </ul>
+		</div>
+			</div>
+		<div class="block">
+			<a class='button button-raised button-big button-outline buttonback'  @click="newUser"><i class='ion ion-ios-pulse'></i> Proceed</a>
+			
+    </div>
+		</div>
+		
+		
+  </div>
+</template>
+<style>
+.divspinner
+{background:transparent url('./img/imgspinner.gif') center no-repeat;}
+.md .navbar:after
+{height:0px;}
+</style>
+<script>
+return {
+	methods:{
+	newUser: function () {
+	
+		// App instance
+		var app = this.$app;
+			
+		//get variables from login form
+		var createPass = $$('#createPass').val();
+		var confirmPass = $$('#confirmPass').val();
+		
+		if (!createPass || !confirmPass){
+		  app.dialog.alert('Complete Required Fields');
+		  return;
+		 }
+		 
+		if(createPass != confirmPass){
+		  app.dialog.alert('Password must match confirmation!');
+		  return;
+		 } 
+		 
+		var url = app.data.appconst.url;
+		
+		app.data.appdata.userPass = createPass;
+		app.router.navigate('/pregpassword/');
+	
+	
+	
+	
+	
+		},
+			},
+	on: {
+      pageInit: function (e, page) {
+		// App instance
+			
+		
+      }
+    }
+
+
+}
+
+</script>

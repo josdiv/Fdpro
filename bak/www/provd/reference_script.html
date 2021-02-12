@@ -1,0 +1,403 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="title">{{title}}</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <a @click="openAlert">Open Alert</a>
+      <div class="list simple-list">
+        <ul>
+          {{#each names}}
+            <li>{{this}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+<style>
+  .red-link {
+    color: red;
+  }
+</style>
+<script>
+  return {
+    data: function () {
+      return {
+        title: 'Component Page',
+        names: ['John', 'Vladimir', 'Timo'],
+      }
+    },
+    methods: {
+      openAlert: function () {
+        var self = this.$app.dialog.alert('Hello world!');
+      },
+    },
+    on: {
+      pageInit: function () {
+        // do something on page init
+      },
+      pageAfterOut: function () {
+        // page has left the view
+      },
+    }
+  }
+</script>
+<script>
+{
+  // ...
+  methods: {
+    onClick: function() {
+      // ...
+    }
+  },
+  on: {
+    pageInit: function (page) {
+      // this won't work
+      page.$el.append('<a @click="onClick">Link</a>');
+    }
+  }
+}
+
+</script>
+
+routes = [
+  // ...
+  {
+    path: '/some-page/',
+    // Component Object
+    component: {
+      template: `
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="title">{{title}}</div>
+            </div>
+          </div>
+          <div class="page-content">
+            <a @click="openAlert" class="red-link">Open Alert</a>
+            <div class="list simple-list">
+              <ul>
+                {{#each names}}
+                  <li>{{this}}</li>
+                {{/each}}
+              </ul>
+            </div>
+          </div>
+        </div>
+      `,
+      style: `
+        .red-link {
+          color: red;
+        }
+      `,
+      data: function () {
+        return {
+          title: 'Component Page',
+          names: ['John', 'Vladimir', 'Timo'],
+        }
+      },
+      methods: {
+        openAlert: function () {
+          var self = this;
+          self.$app.dialog.alert('Hello world!');
+        },
+      },
+      on: {
+        pageInit: function (e, page) {
+          // do something on page init
+        },
+        pageAfterOut: function (e, page) {
+          // page has left the view
+        },
+      }
+    },
+  },
+  // ...
+]
+
+
+this.$router.back();
+
+
+https://framework7.io/docs/router-component.html
+
+this.$el.find('p').addClass('red')
+
+this.$app.dialog.alert('Hello world!')
+
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="title">Profile</div>
+      </div>
+    </div>
+    <div class="page-content">
+      {{#if user}}
+      <!-- Show user list when it is loaded -->
+      <div class="list simple-list">
+        <ul>
+          <li>First Name: {{user.firstName}}</li>
+          <li>Last Name: {{user.lastName}}</li>
+          <li>Age: {{user.age}}</li>
+        </ul>
+      </div>
+      {{else}}
+      <!-- Otherwise show preloader -->
+      <div class="block block-strong text-align-center">
+        <div class="preloader"></div>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    data: function () {
+      return {
+        // empty initial user data
+        user: null,
+      }
+    },
+    on: {
+      pageInit: function () {
+        var self = this;
+        var app = self.$app;
+        // request user data on page init
+        app.request.get('http://api.website.com/get-user-profile', (user) => {
+          // update component state with new state
+          self.$setState({
+            user: user,
+          });
+        });
+      },
+    },
+  };
+</script>
+
+
+Where do you use “this.$route.params” ?
+Inside component lifecycle hooks, the components methods or “on” events (such as pageInit) this.$route.params should exist.
+
+
+
+
+Use page.query.your_url_parameter to get the parameter value.
+
+Example:
+
+To get <a href="a.html?type=new&ok=fine" >Go to a with values of ok & type</a> parameter :
+
+$$(document).on('page:init', function (e) {
+var page = e.detail.page;
+
+if (page.name === 'a') {
+
+    var type = page.query.type; // returning "new"
+    var ok = page.query.ok; // returning "fine"
+
+    alert(type); 
+    alert(ok);
+
+}
+// Code for Services page
+if (page.name === 'inch') {
+    myApp.alert('Here comes our inch!');
+}
+});
+
+Note***
+Thanks, that worked well but only after updating F7 to the latest version.. :) However now the document.addEventListener("deviceready", onDeviceReady, false); is not working in the phonegap. :( – Utpal - Ur Best Pal Jan 19 '17 at 9:15 
+As of Framework7 version 3.2.1, you now use e.detail.route instead of e.detail.page, and the doc link is now framework7.io/docs/page.html#page-data. – Michael Plautz Sep 5 at 1:15
+
+
+
+<template>
+  <div class="page" data-name="catalog">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="title">Catalog</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="list links-list">
+        <ul>
+          {{#each products}}
+            <li><a href="/product/{{id}}/">{{title}}</a></li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    data: function () {
+      return {
+        products: this.$root.products,
+      };
+    }
+  };
+</script>
+
+Divider in List view - check - list.html
+
+
+Where do you use “this.$route.params” ?
+Inside component lifecycle hooks, the components methods or “on” events (such as pageInit) this.$route.params should exist.
+
+
+
+
+
+// kitchen-sink
+{
+  path: '/action-sheet/',
+  options: {
+    context:{/*keep it empty*/}
+  },
+  /*componentUrl:'./pages/action-sheet.html',*/
+  async:function(routeTo,routeFrom,resolve,reject){
+    resolve({componentUrl:'./pages/action-sheet.html'},{context:{foo:'bar'}});
+  },
+  on:{ 
+    pageInit:function(page){        
+      console.log(page.detail.route.context.foo); // => 'bar'     
+    }
+  } 
+}
+// your case
+{
+  path:'/stats/',
+  options: {
+    context:{/*keep it empty*/} 
+  },
+  /*componentUrl:'/path/to/stats.html'*/
+  async(routeTo,routeFrom,resolve,reject){
+    resolve({componentUrl:'/path/to/stats.html'},{context:{stats:'ok'}});
+  },
+  on:{ 
+    pageInit:function(page){
+      console.log(page.detail.route.context.stats); // => 'ok'       
+    }
+  }  
+}
+1 Reply1
+
+
+ {
+    path: '/pdetails/',
+	async(routeTo,routeFrom,resolve,reject){
+    resolve({componentUrl:'./pages/pdetails.html'},);
+  },
+  on:{ 
+    pageInit:function(page){
+      //console.log(page.detail.route.context.stats); // => 'ok'  
+		app.data.appdata.puserImg = page.detail.route.query.userImg;
+		app.data.appdata.pfullName = page.detail.route.query.fullName;
+		app.data.appdata.prating = page.detail.route.query.rating;	 
+		 
+    }
+  }  
+   /* componentUrl: './pages/pdetails.html',*/
+  },
+
+
+Francois-Xavier_G
+Mar '18
+console.log(page.detail.route.context.stats);
+
+It was
+
+console.log(e.detail.route.context.stats);
+
+
+If you just want to navigate to back pages,Use pushState : true in app initialization,You will be able to go back using hardware back button in framework7. If you want to open a specific page,mainView.router.load is a function in framework7. You can put a validation on router to check if page is your mainView page.By doing that you can control exiting app.when back page loads it calls the router and router gives you details about page ie: page.name,page.query. Hope this helps
+
+
+To navigate back, go to Step 1. my-app.js step2. Paste the following:
+
+// Initialize your app
+var myApp = new Framework7({pushState: true,});
+
+this is work. :)
+
+open kitchen-sink.js put code 
+var myApp = new Framework7({ pushState: true, });
+
+
+
+pushState
+
+I have some redirect condition on index page, after enabling pushState the page not redirecting to dashboard at the same time its not returning any errors as well. Its simply on homepage itself.
+
+	{
+		path: '/',
+		url: './index.html',
+		name: 'home',
+		on: {
+			pageInit: function (event, page) {
+				var app = page.app;
+					var userinfo = app.form.getFormData('userinfo')
+					if (userinfo == undefined) {
+						app.router.navigate('/login/');
+						return
+					}
+					if (userinfo.uid) {
+						app.router.navigate('/dashboard/');						
+					}
+			},
+		}
+	}
+In app.js i have below code.
+
+var app = new Framework7({
+	id: 'io.framework7.testingapp',
+	root: '#app',
+	theme: 'md',
+	dialog: {
+		title: 'Framework7',
+	},
+	view: {
+		pushState :true,
+		stackPages: true,            
+	},
+	routes: routes,
+});
+
+
+
+nolimits4web
+Feb '18
+There is no sense to use such route redirection on page init. Use async route instead
+
+
+
+
+arulraj
+Feb '18
+Thanks for your reply @nolimits4web. I have achieved this functionality using navigator pluing on cordova.
+
+
+Image Upload 
+http://forum.framework7.io/t/solved-upload-image-with-formdata-not-working-v2-0-6/1846
+
+back event - working
+https://stackoverflow.com/questions/18211984/how-to-control-back-button-event-in-jquery-mobile
+
+You need to listen to navigation event and state.direction.
+
+$(window).on("navigate", function (event, data) {
+  var direction = data.state.direction;
+  if (direction == 'back') {
+    // do something
+  }
+  if (direction == 'forward') {
+    // do something else
+  }
+});
+
+https://jqmtricks.wordpress.com/2014/12/01/detect-back-navigation/

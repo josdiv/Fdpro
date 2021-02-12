@@ -1,0 +1,87 @@
+<template>
+<div class="page" data-name="serviceimage">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+        <a href="/bkdetail1/" class="link">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Service Images</div>
+    </div>
+  </div>
+  <div class="page-content">
+  <div class="block"></div>
+	  {{#each usrvImages}}
+		 <div style="background:transparent url('./img/imgspinner.gif') center no-repeat !important;height:250px;margin-bottom: 20px;"><center><a href="/imgdetails/?imgfile={{imgFile}}"><img src="https://xperthands.ng/admin/{{imgFile}}" style="max-height:250px; padding:5px; border: 1px solid #f5f5f5" class=""></a></center></div>
+		<p></p>
+		{{else}}
+	 
+	 <div class="block">
+	<center><i class="ion ion-ios-construct iconlarge-xx"></i></center>
+	
+	</div>
+	<div class="block">
+	<p><strong><center>None Available at the Moment!</center></strong></p>
+	
+	</div>
+	
+{{/each}}
+
+
+     
+  </div>
+</div>
+</template>
+<style>
+.alnright
+{float: right;}
+.divspinner
+{background:transparent url('./img/imgspinner.gif') center no-repeat;}
+.customli2
+{border-bottom: 1px solid #e0e0e0; font-size:14px !important;}
+.srvimg
+{display: block; margin: auto; height:250px; padding:5px; margin-bottom: 30px; border: 1px solid #f5f5f5}
+</style>
+<script>
+return {
+	methods:{
+
+	},
+	 data: function () {
+      return {		
+		//read data from root object
+        usrvImages: this.$app.data.usrvImages,
+      };
+    },
+	// Page Events
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+		
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);
+	
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    }
+
+}
+
+</script>

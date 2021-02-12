@@ -1,0 +1,146 @@
+<template>
+<div class="page" data-name="bkdetailsx">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+          <a href="/srvrequestx/" class="link">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Details</div>
+    </div>
+  </div>
+  <div class="page-content">
+  <div class="block block-strong">
+      <p>Provide Details:</p>
+    </div>
+    
+	  <p></p>
+	 <div class="list no-hairlines-md">
+      <ul>
+	   <li class="item-content item-input item-input-with-info">
+          <div class="item-inner">
+            <div class="item-input-wrap">
+             <textarea class="frmtxt" placeholder="What you need fixed!"></textarea>
+              <div class="item-input-info lblcolor">Service Details:</div>
+            </div>
+          </div>
+        </li>
+		
+        <li class="item-content item-input item-input-with-info">
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <textarea class="frmtxt" placeholder="Where you want the Service"></textarea>
+              <div class="item-input-info lblcolor">Your Address:</div>
+            </div>
+          </div>
+        </li>
+	
+        <li class="item-content item-input item-input-with-info">
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <input class="frmtxt" type="text" placeholder="Lets find you faster">
+              <span class="input-clear-button"></span>
+              <div class="item-input-info lblcolor">Address Landmark:</div>
+            </div>
+          </div>
+        </li>
+	
+       
+	</ul>
+	</div>
+	
+	
+	<div class="block">
+		<a href="#" class="button button-fill button-round button-big" @click="bookService" style="background:#034679">Request Service</a>
+    </div>
+	
+
+	
+  </div>
+ 
+ 
+
+
+</div>
+</template>
+<style>
+.iconlarge-x
+{
+color: #e62b1e;
+font-size: large;
+}
+.textsmall
+{
+font-size:small;
+text-align: justify;
+}
+</style>
+<script>
+return {
+	methods:{
+		bookService: function () {
+		// App instance
+			var app = this.$app;
+			
+		// Show Preloader
+		//app.dialog.progress();
+		
+		//Close Dialog
+		//setTimeout(function () {app.dialog.close();}, 3000);
+		
+		
+        // Create toast
+        if (!app.toastIcon) {
+          app.toastIcon = app.toast.create({
+            icon: '<i class="material-icons">star</i>',
+            text: 'Completed',
+            position: 'center',
+            closeTimeout: 2000,
+          });
+        }
+        // Open it
+        app.toastIcon.open();
+		
+		/*
+		 // Create toast
+					if (!app.toastBottom) {
+					  app.toastBottom =  app.toast.create({
+						text: 'Booking Completed',
+						closeTimeout: 3000,
+					  });
+					}
+					
+					
+					// Open it
+					app.toastBottom.open();
+		*/
+		// Create notification
+        if (!app.notificationFull) {
+          app.notificationFull = app.notification.create({
+            icon: '<i class="ion ion-ios-construct" style="color:#e62b1e;"></i>',
+            title: 'XpertHands',
+            titleRightText: 'now',
+            subtitle: 'Booking Completed',
+            text: 'A Service Provider will contact your shortly. Thanks',
+            closeTimeout: 10000,
+          });
+        }
+        // Open it
+        app.notificationFull.open()
+		
+		//Go to Dashboard
+		app.router.navigate('/dashboard/');
+		
+	
+		
+	
+		}
+
+	},
+	 
+
+}
+
+</script>

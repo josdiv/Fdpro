@@ -1,0 +1,299 @@
+<template>
+<div class="page" data-name="dashboard">
+  <!-- Top Navbar -->
+	  <div class="navbar" style="background:#e3000f">
+	  <div class="navbar-inner sliding">
+		<div class="left">
+		  <div class="title sliding titlehd">Dashboard</div>
+		</div>
+		<div class="right"> {{#with appdata}}
+	  <a href="/mymessage/" class="link icon-only">
+		<i class="icon f7-icons ios-only">bell{{#js_if "this.userAlert > 0"}}<span class="badge custombadge">{{userAlert}} {{else}} {{/js_if}}</span></i>
+		<i class="icon material-icons md-only">notifications_none{{#js_if "this.userAlert > 0"}}<span class="badge custombadge">{{userAlert}} {{else}} {{/js_if}}</span></i>
+	  </a>
+	</div>{{/with}}
+	  </div>
+	</div>
+  <!-- Top Navbar -->
+  <div class="toolbar tabbar-labels toolbar-bottom-md customtoolbar">
+    <div class="toolbar-inner">
+      <a href="#tab-1" class="tab-link tab-link-active activeborder">
+			<i class="ion ion-ios-home" style="font-size:x-large;"></i>
+            <span class="tabbar-label badgefont">Dashboard</span>
+	  </a>
+      <a href="/service/" class="tab-link">
+			<i class="ion ion-ios-list icontab"></i>
+            <span class="tabbar-label badgefont">Services</span>
+	  </a>
+	  <a href="/wallet/" class="tab-link">
+			<i class="ion ion-ios-wallet icontab"></i>
+            <span class="tabbar-label badgefont">Wallet</span>
+	  </a>
+      <a href="/account/" class="tab-link">
+			<i class="ion ion-ios-settings icontab"></i>
+            <span class="tabbar-label badgefont">Account</span>
+	  </a>
+    </div>
+  </div>
+  <div class="tabs">
+    <div id="tab-1" class="page-content tab tab-active">
+    <!-- Scrollable page content-->
+		  <div class="swiper-container demo-swiper" style="height:200px">
+			<div class="swiper-pagination"></div>
+			  <div class="swiper-wrapper">
+				<div class="swiper-slide"><img src="img/sl2.jpg"  style='display: block; margin: auto; width:100%;'></div>
+				<div class="swiper-slide"><img src="img/sl1.jpg"  style='display: block; margin: auto; width:100%;'></div>
+				<div class="swiper-slide"><img src="img/sl3.jpg"  style='display: block; margin: auto; width:100%;'></div>
+				<div class="swiper-slide"><img src="img/sl4.jpg"  style='display: block; margin: auto; width:100%;'></div>
+				<div class="swiper-slide"><img src="img/sl5.jpg"  style='display: block; margin: auto; width:100%;'></div>
+				<div class="swiper-slide"><img src="img/sl6.jpg"  style='display: block; margin: auto; width:100%;'></div>
+			</div>
+			</div>
+
+            <div class="block-title">Navigation</div>
+            <div class="list no-hairlines-md">
+              <ul>
+			  {{#with appdata}}
+                <li class="customli">
+                  <a href="/srvrequest/" class="item-content item-link">
+                     <div class="item-media"><i class="ion ion-ios-construct iconlarge"></i></div>
+					<div class="item-inner">
+                      <div class="item-title">Service Requests</div>
+					  <div class="item-after">{{#js_if "this.userSrvReqs > 0"}}<span class="badge color-blue badgefont">{{userSrvReqs}}</span>{{else}} {{/js_if}}</div>
+                    </div>
+                  </a>
+                </li>
+				<li class="customli">
+                  <a href="/subscription/" class="item-content item-link">
+				  <div class="item-media"><i class="ion ion-ios-hourglass iconlarge"></i></div>
+                    <div class="item-inner">
+                      <div class="item-title">Subscription</div>
+					  <div class="item-after"><span class="badge color-green badgefont">0</span></div>
+                    </div>
+                  </a>
+                </li>
+				<li class="customli">
+                  <a @click="getInvoice" class="item-content item-link">
+				  <div class="item-media"><i class="ion ion-ios-card iconlarge"></i></div>
+                    <div class="item-inner">
+                      <div class="item-title">Invoice</div>
+					  <div class="item-after">{{#js_if "this.usrInvNum > 0"}}<span class="badge color-orange badgefont">{{usrInvNum}}</span>{{else}} {{/js_if}}</div>
+                    </div>
+                  </a>
+                </li>
+				<li class="customli">
+                  <a href="/mymessage/" class="item-content item-link">
+				  <div class="item-media"><i class="ion ion-ios-mail iconlarge"></i></div>
+                    <div class="item-inner">
+                      <div class="item-title">Messages</div>
+					  <div class="item-after">{{#js_if "this.userAlert > 0"}}<span class="badge badgefont">{{userAlert}}</span>{{else}} {{/js_if}}</div>
+                    </div>
+                  </a>
+                </li>
+				{{/with}}
+              </ul>
+            </div>
+
+           
+          
+    </div>
+    <div id="tab-2" class="page-content tab">
+      <div class="block">
+        <p>Tab 2 content</p>
+        
+      </div>
+    </div>
+    <div id="tab-3" class="page-content tab">
+      <div class="block">
+        <p>Tab 3 content</p>
+        
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+<script>
+return {
+	methods:{
+		callAccounts: function () {
+		//var fullName = app.data.appdata.fullName;
+		//var userPhone = app.data.appdata.userPhone;
+		
+		//app.router.navigate('/account/');
+		//document.getElementById("usrdet").innerHTML = fullName + ' <br> ' + userPhone; 
+
+
+		},
+		getInvoice: function () {
+		
+		var app = this.$app;
+		 
+		//read data from root object
+		var url = app.data.appconst.url;
+		var userPhone = app.data.appdata.userPhone;
+		
+		 // Show Preloader
+		app.preloader.show();
+		//app.dialog.progress();
+		
+		//Update Server Record ajax
+		app.request({
+				url: url+'type=getinvoice',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				userPhone: userPhone
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				 
+				  if (adata.message == "success") {
+					app.data.appdata.usrInvNum = adata.usrInvNum;
+					app.data.usrInvList = adata.usrInvList;
+					app.router.navigate('/invoicelist/');
+					  }
+					
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again!');
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.preloader.hide();}, 1000);
+				}
+			});
+		 
+	
+
+
+		},
+
+	},
+	 data: function () {
+      return {		
+		//read data from root object
+        appdata: this.$app.data.appdata,
+      };
+    },
+    // Page Events
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+		//var app = this.$app;
+		//app.router.clearPreviousHistory();
+		this.$app.methods.getUserAlerts();
+		
+		var swiper = this.$app.swiper.create('.swiper-container', {
+		pagination: {
+		el: '.swiper-pagination',
+		type: 'bullets',
+		},
+		spaceBetween: 10,
+		autoplay: {
+		delay: 5000,
+		},
+		loop: true
+		});
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);
+		
+      },
+      pageAfterIn: function(e, page) {
+		console.log('pageAfterIn', page);
+		
+		//GET INVITE CODE
+		var app = this.$app;
+		 
+		//read data from root object
+		var url = app.data.appconst.url;
+		var userPhone = app.data.appdata.userPhone;
+		var inviteCode = app.data.appdata.inviteCode;
+		
+		 // Show Preloader
+		//app.preloader.show();
+		//app.dialog.progress();
+		
+		if(!inviteCode)
+		{
+				
+		 // Show Preloader
+		//app.preloader.show();
+		//app.dialog.progress();
+		
+		//Update Server Record ajax
+		app.request({
+				url: url+'type=invitecode',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				userPhone: userPhone
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				 
+				  if (adata.message == "success") {
+					app.data.appdata.inviteCode = adata.inviteCode;
+				  }
+					
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					//app.dialog.alert('Connection Error, Try Again!');
+				},
+				complete:function(){
+				//Close Dialog
+				//setTimeout(function () {app.preloader.hide();}, 1000);
+				}
+			});
+		}
+		
+		//register for push notification
+		//send push notification ID and Userphone to Database - user record
+		
+		/*
+		app.dialog.alert("Started");
+		 var push = PushNotification.init({
+                android:{}
+            });
+
+            push.on('registration', function (data) {
+                // data.registrationId
+                console.log(data.registrationId);
+				app.dialog.alert("Push Registration ID - " + data.registrationId);
+            });
+
+            push.on('notification', function (data) {
+                alert("Title:"+data.title+" Message:"+ data.message);
+            });
+
+            push.on('error', function (e) {
+                console.log(e.message)
+				app.dialog.alert("Error - " + e.message);
+            });
+			
+		app.dialog.alert("Finished");
+		*/
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    }
+
+}
+
+</script>

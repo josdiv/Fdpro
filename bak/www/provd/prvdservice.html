@@ -1,0 +1,162 @@
+<template>
+<div class="page" data-name="prvdservice">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+        <a href="#" class="link back">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Services</div>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="block-title">Select Services you can Provide:</div>
+<div class="list">
+      <ul>
+	{{#each prvdsrvlist}}
+        <li>
+          <label class="item-checkbox item-content">
+            <input type="checkbox" {{hasPrvd}} name="psrv" id="psrv" value="{{catsno}}" />
+            <i class="icon icon-checkbox"></i>
+            <div class="item-inner" style="border-bottom: 1px solid #e0e0e0;">
+              <div class="item-title font14">{{catname}}</div>
+            </div>
+          </label>
+        </li>
+		 
+		{{/each}}
+      </ul>
+    </div>
+	<div class="block">
+			<a class="button button-raised button-big button-fill button-round" @click="comProfile"  style="background:#034679">Complete</a>
+		</div>
+  </div>
+</div>
+</template>
+
+<script>
+return {
+	methods:{
+		comProfile: function () {
+		// App instance
+		var app = this.$app;
+		
+		//Get selected service
+		var srvlist = [];
+		var srvstr = "0,";
+		var checkboxes = document.querySelectorAll('input[id=psrv]:checked');
+
+		for (var i = 0; i < checkboxes.length; i++) {
+		  srvlist.push(checkboxes[i].value);
+		  srvstr += checkboxes[i].value+',';
+		}
+		
+		
+		
+		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		
+			// Show Preloader
+		app.dialog.progress();
+		
+		//Update Server Record ajax
+		app.request({
+		url: url+'type=updatesrvprvd',
+		dataType:'json',
+		method: 'GET',
+		data:{
+		userPhone: userPhone,
+		srvlist: srvlist,
+		srvstr: srvstr
+		},
+		crossDomain:true,
+		success:function(adata){
+		 
+		 
+		  if (adata.message == "success") {
+				app.data.prvdsrvlist = adata.prvdsrvlist;
+				app.data.appdata.prvdprofile = adata.prvdprofile;
+				app.data.appdata.prvdprofcitylist = adata.prvdprofcitylist;
+				app.data.appdata.prvdprofsrvlist = adata.prvdprofsrvlist;
+				app.router.navigate('/prvdashboard/');
+				//app.dialog.alert(app.data.appdata.prvdprofile);
+		
+				//if (!app.toastBottom) {
+				  app.toastBottom =  app.toast.create({
+					text: 'Profile Updated!',
+					closeTimeout: 3000,
+				  });
+				//}
+		
+		
+			// Open it
+			app.toastBottom.open();
+			}
+		},
+		error:function(error){
+		console.log(error.code);
+		if (error.exception !== ""){console.log(error.exception);}
+			app.dialog.alert('Connection Error, Try Again!');
+		},
+		complete:function(){
+		//Close Dialog
+		setTimeout(function () {app.dialog.close();}, 1000);
+		}
+		}); 
+		
+		//app.dialog.alert(srvlist);
+		//app.dialog.alert(srvstr);
+		
+	
+		}
+
+	},
+	 data: function () {
+      return {		
+		//read data from root object
+        prvdsrvlist: this.$app.data.prvdsrvlist,
+      };
+    },
+	// Page Events
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+		
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);
+	/*
+	// User ID from request
+      var catName = routeTo.params.catname;
+		
+		//Set Global object Service Type
+		app.data.appdata.catName = catName;
+		//Set Global object Service Type
+		*/
+		app.data.appdata.catName = page.route.query.cat;
+		
+		//this.$app.dialog.alert(page.route.query.cat);
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    }
+
+}
+
+</script>

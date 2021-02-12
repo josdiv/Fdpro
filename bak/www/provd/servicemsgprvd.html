@@ -1,0 +1,220 @@
+<template>
+<div class="page" data-name="servicemsgprvd">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+          <a href="#" class="link back">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Service Messages</div>
+    </div>
+  </div>
+  <div class="fab fab-right-bottom">
+    <a href="#" class="popup-open" data-popup=".sendmsg-popup">
+	<i class="ion ion-ios-add" style="font-size: x-large"></i>
+    </a>
+  </div>
+  
+  <div class="page-content">
+	
+	
+	{{#each serviceMsgPrvd}}
+	{{#js_if "this.utype === 'Provider'"}}
+	
+	<div class="card card-outline">
+      <div class="card-content card-content-padding" style="text-align:right;border:1px solid #e3000f">
+		<p><strong><i class="ion ion-ios-construct" style="color:#e3000f"></i> &nbsp;<small>Me | {{datefmt}} - {{timefmt}}</small></strong><br>
+		<span class="font12">{{msgdet}}</span>
+		</p>
+	  </div>
+     </div>
+	 
+	 
+	
+	 {{else}}
+	 
+	 
+	
+	 <div class="card card-outline">
+      <div class="card-content card-content-padding" style="text-align:left;border:1px solid #034679">
+		<p><strong><small>User | {{datefmt}} - {{timefmt}}</small> &nbsp;<i class="ion ion-ios-contact" style="color:#034679"></i></strong><br>
+		<span class="font12">{{msgdet}}</span>
+		</p>
+	  </div>
+     </div>
+		
+	 
+	 {{/js_if}}
+	 
+	 
+	 {{else}}
+	 
+	 <div class="block">
+	<center><i class="ion ion-ios-construct iconlarge-xx"></i></center>
+	
+	</div>
+	<div class="block">
+	<p><strong><center>None Available at the Moment!</center></strong></p>
+	
+	</div>
+	
+{{/each}}
+	
+	
+  </div>
+  
+  
+ 
+ 
+ <!-- Send Message Pop Start -->
+ 	<div class="popup sendmsg-popup">
+      <div class="page">
+        <div class="navbar" style="background:#e3000f;">
+          <div class="navbar-inner">
+            <div class="title titlehd">Message</div>
+            <div class="right titlehd"><a href="#" class="link popup-close">Close</a></div>
+          </div>
+        </div>
+        <div class="page-content">
+         <div class="block block-strong font12"> 
+      <p><i class="ion ion-ios-create iconlargeorange"></i>&nbsp; Send Message:</p>
+    </div>
+    
+	  <p></p>
+	 <div class="list no-hairlines-md">
+      <ul>
+	   <li class="item-content item-input item-input-with-info">
+          <div class="item-inner">
+            <div class="item-input-wrap">
+             <textarea class="" id="sndMsgFrm" placeholder="Send a Message to Provider"></textarea>
+              <div class="item-input-info lblcolor"></div>
+            </div>
+          </div>
+        </li>
+		
+	
+       
+	</ul>
+	</div>
+	
+	
+	<div class="block">
+		<a @click="sendMessage" class="button button-fill button-round button-big" style="background:#034679">Send</a>
+    </div>
+	
+        </div>
+      </div>
+    </div>
+
+</div>
+</template>
+<script>
+return {
+	data: function () {
+      return {		
+		//read data from root object
+        //userAlertdate: this.$app.data.userAlertdate,
+        serviceMsgPrvd: this.$app.data.serviceMsgPrvd,
+      };
+    },
+	methods: {
+	sendMessage: function() {
+        // App instance
+		var app = this.$app;
+		
+		
+		
+		var msgDet = $$('#sndMsgFrm').val();
+		
+		if (!msgDet){
+		  app.dialog.alert('Please type a Message.');
+		 // app.dialog.alert('Message Details is: ' + msgDet);
+		  //app.dialog.alert(srvdate+' '+srvtime+' '+srvdetails+' '+srvadd+' '+srvdate2);
+		  return;
+		 }
+		 
+		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		var usrvsno = app.data.appdata.usrvsno;
+		var service_id = app.data.appdata.service_id;
+		 
+		 //Close Popup
+		app.popup.close();
+		
+		// Show Preloader
+		app.preloader.show();
+		
+		
+		app.request({
+				url: url+'type=servicemsg',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				usrvsno: usrvsno,
+				msgDet: msgDet,
+				utype: 'Provider',
+				service_id: service_id
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				  app.toastBottom =  app.toast.create({
+					text: 'Success! Message Sent to User.',
+					closeTimeout: 2000,
+				  })
+				 
+				 app.router.navigate('/bkdetailx1/');
+				 
+				// Open it
+				app.toastBottom.open();
+					
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again!');
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.preloader.hide();}, 1000);
+				}
+			});
+		
+		
+      },
+	
+	},
+	// Page Events
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+		
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);
+	
+		
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    }
+
+}
+
+</script>

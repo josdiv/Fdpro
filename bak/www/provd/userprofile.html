@@ -1,0 +1,257 @@
+<template>
+<div class="page" data-name="userprofile">
+  <div class="navbar gradback navborder" >
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="ion ion-ios-arrow-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title sliding titlehd whitecolor">Profile</div>
+		
+      </div>
+    </div>
+  <div class="page-content" style="margin-top:10%">
+         <li class="item-divider">Update Your Profile</li>
+<div class="list no-hairlines-md">
+		  <ul>
+		  {{#with appdata}}
+			<li class="item-content item-input">
+			  <div class="item-media">
+				<i class="ion ion-ios-phone-portrait iconlarge"></i>
+			  </div>
+			  <div class="item-inner">
+				<div class="item-title item-floating-label">Phone Number</div>
+				<div class="item-input-wrap">
+				  <input type="number" value="{{userPhone}}" id="userPhone" disabled  readonly placeholder="">
+				</div>
+			  </div>
+			</li>
+			<li class="item-content item-input">
+			  <div class="item-media">
+				<i class="ion ion-ios-person iconlarge" ></i>
+			  </div>
+			  <div class="item-inner">
+				<div class="item-title item-floating-label">Full Name</div>
+				<div class="item-input-wrap">
+				  <input type="text" required value="{{fullName}}" id="ufullName" placeholder="">
+				  <span class="input-clear-button"></span>
+				</div>
+			  </div>
+			</li>
+			<li class="item-content item-input">
+			  <div class="item-media">
+				<i class="ion ion-ios-mail iconlarge"></i>
+			  </div>
+			  <div class="item-inner">
+				<div class="item-title item-floating-label">E-mail (Optional)</div>
+				<div class="item-input-wrap">
+				  <input type="email" id="userEmail" value="{{userEmail}}" placeholder="Your e-mail (Optional)">
+				  <span class="input-clear-button"></span>
+				</div>
+			  </div>
+			</li>
+			<li class="item-content item-input">
+			  <div class="item-media">
+				<i class="ion ion-ios-navigate iconlarge"></i>
+			  </div>
+			  <div class="item-inner">
+				<div class="item-title item-floating-label">Your Address</div>
+				<div class="item-input-wrap">
+				  <textarea id="usr_add" placeholder="Add an Address">{{userAddress}}</textarea>
+				  <span class="input-clear-button"></span>
+				</div>
+			  </div>
+			</li>
+			{{/with}}
+		  </ul>
+		</div>
+	<div class="block">
+			<a class="button button-raised button-big button-fill button-round" @click="updateProfile" style="background:#2196f3">Submit</a>
+		</div>
+	
+  </div>
+</div>
+</template>
+<style>
+.divspinner
+{background:transparent url('./img/imgspinner.gif') center no-repeat;}
+.md .navbar:after
+{height:0px;}
+.md .color-theme-red .toolbar:not(.messagebar), .md .color-theme-red.toolbar:not(.messagebar)
+{background: #ffffff;}
+.md .tabbar a.tab-link.active-state, .md .tabbar a.tab-link.tab-link-active, .md .tabbar-labels a.tab-link.active-state, .md .tabbar-labels a.tab-link.tab-link-active
+{color: #346d9a;}
+.md .item-input-wrap:after
+{background-color:#e3e1e1;}
+.md .toolbar a
+{color: #f44336;}
+.md .color-theme-red .input-after:after, .md .color-theme-red .item-input-focused .item-input-wrap:after
+{background: #e3e1e1;}
+.md .list
+{margin: 10px 0;}
+.iptborder
+{background:#e3e1e1;border-radius:10px;}
+.boxcol
+{border-radius: 10px;background: #ffffff none repeat scroll 0 0;box-shadow: 0 5px 20px 0 rgba(0,0,0,0.15);margin:15px 0;}
+.alnright
+{float: right;}
+</style>
+<script>
+  return {
+    data: function () {
+      return {		
+		//read data from root object
+        appdata: this.$app.data.appdata,
+      };
+    },
+	methods:{
+		updateProfile: function () {
+		
+		// App instance
+		var app = this.$app;
+		
+		//Get Inputs
+		var fullName = $$('#ufullName').val();
+		var userEmail = $$('#userEmail').val();
+		var userAddress = $$('#usr_add').val();
+		
+		if (!fullName){
+		  app.dialog.alert('Full Name Cannot be empty!');
+		  return;
+		 }
+		 
+		//Set Global object
+		app.data.appdata.fullName = fullName;
+		app.data.appdata.userEmail = userEmail;
+		app.data.appdata.userAddress = userAddress;
+		
+		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		
+		// Show Preloader
+		app.dialog.progress();
+		
+		//Update Server Record ajax
+		app.request({
+				url: url+'type=profileupdate',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				fullName: fullName,
+				userEmail: userEmail,
+				userPhone: userPhone,
+				userAddress: userAddress
+				},
+				crossDomain:true,
+				success:function(data){
+				 
+				 
+				  if (data.message == "success") {
+						app.router.navigate('/account/');
+						
+						//if (!app.toastBottom) {
+						  app.toastBottom =  app.toast.create({
+							text: 'Profile Updated!',
+							closeTimeout: 3000,
+						  });
+						//}
+						
+						
+						// Open it
+						app.toastBottom.open();
+					  }
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again!');
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.dialog.close();}, 1000);
+				}
+				}); 
+				
+		//Close Dialog
+		//setTimeout(function () {app.dialog.close();}, 1000);
+
+		
+		}	
+	},
+	 // Page Events
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+		
+		//GET INVITE CODE
+		var app = this.$app;
+		 
+		//read data from root object
+		var url = app.data.appconst.url;
+		var userPhone = app.data.appdata.userPhone;
+		var inviteCode = app.data.appdata.inviteCode;
+		
+		 // Show Preloader
+		//app.preloader.show();
+		//app.dialog.progress();
+		
+		if(!inviteCode)
+		{
+		
+		//Update Server Record ajax
+		app.request({
+				url: url+'type=invitecode',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				userPhone: userPhone
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				 
+				  if (adata.message == "success") {
+					document.getElementById("invcode").innerHTML = adata.inviteCode;
+				  }
+					
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					//app.dialog.alert('Connection Error, Try Again!');
+				},
+				complete:function(){
+				//Close Dialog
+				//setTimeout(function () {app.preloader.hide();}, 1000);
+				}
+			});
+			
+			}
+			else
+			{document.getElementById("invcode").innerHTML = inviteCode;}
+			
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);		
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);		
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    }
+  };
+</script>

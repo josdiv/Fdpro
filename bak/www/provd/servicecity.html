@@ -1,0 +1,179 @@
+<template>
+<div class="page" data-name="servicecity">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+        <a href="/service/" class="link">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Service City</div>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="block-title">City where service is required:</div>
+<div class="list">
+      <ul>
+	  {{#each appcity}}
+        <li>
+          <label class="item-radio item-content">
+            <input type="radio" name="city" id="setcity" value="{{this}}" />
+            <i class="icon icon-radio"></i>
+            <div class="item-inner">
+              <div class="item-title font14">{{this}}</div>
+            </div>
+          </label>
+        </li>
+		{{/each}}
+      </ul>
+    </div>
+	<div class="block">
+			<a class="button button-raised button-big button-fill button-round" @click="setCity" style="background:#034679">Submit</a>
+		</div>
+  </div>
+</div>
+</template>
+<script>
+return {
+	methods:{
+		setCity: function () {
+		//var fullName = app.data.appdata.fullName;
+		//var userPhone = app.data.appdata.userPhone;
+		
+		//app.router.navigate('/account/');
+		//document.getElementById("usrdet").innerHTML = fullName + ' <br> ' + userPhone; 
+		// App instance
+		var app = this.$app;
+		
+		//Get selected City
+		var userCity = document.querySelector('input[id="setcity"]:checked').value;
+		
+		if (userCity == null){
+			  app.dialog.alert('Please select a City');
+			  return;
+			 }
+		
+		//Set Global object userCity
+		app.data.appdata.userCity = userCity;
+		
+		
+		//Retrieve Global Object
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		var catName = app.data.appdata.catName;
+		var catSno = app.data.appdata.catSno;
+		
+		if((userCity == "Outside Lagos") || (userCity == "Others") )
+		{app.router.navigate('/providersoon/');return;}
+		
+		//app.dialog.alert(catName);
+		
+		if(catName === "Others")
+		{
+			
+			app.dialog.alert('Our System will Recommended the best Provider as per your Service Request.');
+			app.data.appdata.recomprvd = "Yes";
+			app.data.appdata.prvdsno = "";
+			app.router.navigate('/schedule/');
+			return;
+		}
+		
+		// Show Preloader
+		app.dialog.progress();
+		
+		//Update Server Record ajax
+		app.request({
+				url: url+'type=getproviders',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				userCity: userCity,
+				userPhone: userPhone,
+				catName: catName,
+				catSno: catSno
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				 
+				  if (adata.message == "success") {
+					//if provider found
+					//app.dialog.alert(userCity+' '+userPhone+' '+catName+' '+catSno);
+					app.data.srvPrvdList = adata.srvPrvdList;
+					app.router.navigate('/providerlist/');
+					  }
+					
+				 if (adata.message == "none") {
+				 
+						//if no provider found
+						//app.dialog.alert(userCity+' '+userPhone+' '+catName+' '+catSno);
+						app.dialog.alert('Our System will Recommended the best Provider as per your Service Request.');
+						app.data.appdata.recomprvd = "Yes";
+						app.data.appdata.prvdsno = "";
+						app.router.navigate('/schedule/');
+					  }
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again!');
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.dialog.close();}, 1000);
+				}
+			}); 
+			
+		
+	
+		}
+
+	},
+	 data: function () {
+      return {		
+		//read data from root object
+        appcity: this.$app.data.appcity,
+      };
+    },
+	// Page Events
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+		
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);
+	/*
+	// User ID from request
+      var catName = routeTo.params.catname;
+		
+		//Set Global object Service Type
+		app.data.appdata.catName = catName;
+		//Set Global object Service Type
+		*/
+		app.data.appdata.catName = page.route.query.catName;
+		app.data.appdata.catSno = page.route.query.catSno;
+		
+		//this.$app.dialog.alert(page.route.query.cat);
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    }
+
+}
+
+</script>

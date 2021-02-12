@@ -1,0 +1,485 @@
+<template>
+<div class="page" data-name="schedule">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+          <a href="#" class="link back">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Booking Details</div>
+    </div>
+  </div>
+  <div class="page-content">
+  <img src='./img/zcal.png' style='display: block; margin: auto; width:50%;'>
+	 <div class="list inline-labels no-hairlines-md">
+      <ul>
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-label lblcolor"><i class="ion ion-ios-calendar iconlarge-x"></i>&nbsp; Set Date:</div>
+            <div class="item-input-wrap">
+              <input type="text" class="" placeholder="Select date" name="srvdate" id="demo-calendar-modal"/>
+              <span class="input-clear-button"></span>
+            </div>
+          </div>
+        </li>
+		<li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-label lblcolor"><i class="ion ion-ios-hourglass iconlarge-x"></i>&nbsp; Set Time:</div>
+            <div class="item-input-wrap">
+              <select class="" name="srvtime" id="srvtime">
+                <option value="8am">8 am</option>
+                <option value="9am">9 am</option>
+                <option value="10am">10 am</option>
+                <option value="11am">11 am</option>
+                <option value="12pm">12 pm</option>
+                <option value="1pm">1 pm</option>
+                <option value="2pm">2 pm</option>
+                <option value="3pm">3 pm</option>
+                <option value="4pm">4 pm</option>
+                <option value="5pm">5 pm</option>
+              </select>
+            </div>
+          </div>
+        </li>
+	</ul>
+	</div>
+	 <div class="list no-hairlines-md">
+      <ul>
+	  {{#with appdata}}
+	  <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-label frmtxt lblcolor"><i class="ion ion-ios-compass iconlarge-x"></i>&nbsp; Your Address:</div>
+            <div class="item-input-wrap">
+              <textarea id="srvadd" class="" placeholder="Where you want the Service">{{#js_if "this.userAddress !== ''"}}{{userAddress}}{{/js_if}}</textarea>
+              <span class="input-clear-button"></span>
+            </div>
+          </div>
+        </li>
+		{{/with}}
+		<li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-label frmtxt lblcolor"><i class="ion ion-ios-construct iconlarge-x"></i>&nbsp; Service Details:</div>
+            <div class="item-input-wrap">
+              <textarea id="srvdetails" class="" placeholder="What you need fixed!"></textarea>
+              <span class="input-clear-button"></span>
+            </div>
+          </div>
+        </li>
+
+		
+	</ul>
+	</div>
+	<div class="block-title frmtxt"><span class="lblcolor"><i class="ion ion-ios-images iconlarge-x"></i>&nbsp; Add Media: [Optional]</span> <br>(Up to 4 Images)</div>
+
+	  
+	 <div class="row">
+        <div class="col">
+			<a @click='addNewImage(1)'><div id="imagesrc1"><center><i class="ion ion-ios-add-circle-outline iconupload"></i></center></div></a><input type="hidden" name="imagefrm1" id="imagefrm1"/>
+			<a @click='deleteImage(1)'><center><span id="delfrm1"></span></center></a>
+			<br>
+		</div>
+        <div class="col">
+			<div id="imagesrc2"><a @click='addNewImage(2)'><center><i class="ion ion-ios-add-circle-outline iconupload"></i></center></a></div><input type="hidden" name="imagefrm2" id="imagefrm2"/>
+			<a @click='deleteImage(2)'><center><span id="delfrm2"></span></center></a>
+			<br>
+		</div>
+      </div>
+
+	<div class="row">
+        <div class="col">
+			<div id="imagesrc3"><a @click='addNewImage(3)'><center><i class="ion ion-ios-add-circle-outline iconupload"></i></center></a></div><input type="hidden" name="imagefrm3" id="imagefrm3"/>
+			<a @click='deleteImage(3)'><center><span id="delfrm3"></span></center></a>
+			<br>
+		</div>
+        <div class="col">
+			<div id="imagesrc4"><a @click='addNewImage(4)'><center><i class="ion ion-ios-add-circle-outline iconupload"></i></center></a></div><input type="hidden" name="imagefrm4" id="imagefrm4"/>
+			<a @click='deleteImage(4)'><center><span id="delfrm4"></span></center></a>
+			<br>
+		</div>
+      </div>
+	
+	
+	
+	
+	
+	<div class="block">
+		<a @click="bookService" class="button button-fill button-big" style="background:#034679">Submit</a>
+    </div>
+	
+
+	
+  </div>
+ 
+ 
+
+
+</div>
+</template>
+<style>
+.iconlarge-x
+{
+color: #034679;
+font-size: large;
+}
+.iconupload
+{
+color: #f5f5f5;
+font-size: 100px;
+}
+.textsmall
+{
+font-size:small;
+text-align: justify;
+}
+.srvimg
+{display: block; margin: auto; width:50%; padding:5px; border: 1px solid #f5f5f5}
+</style>
+<script>
+  return {
+	data: function () {
+      return {		
+		//read data from root object
+        appdata: this.$app.data.appdata,
+      };
+    },
+    on: {
+      pageInit: function(e, page) {
+        var self = this;
+        var today = new Date();
+        var app = self.$app;
+        var $ = self.$;
+       
+	   //document.getElementById("imagesrc").innerHTML = "<img src='./img/camimg1.jpg' class='srvimg'>";
+	   //app.data.appdata.srvImg = 1;
+	   //	document.getElementById("imgsrc").appendChild(xmlhttp.responseText);
+	   
+	   //var app = this.$app;
+		var randNum = Math.floor(Math.random() * 9999999) + 111;
+
+		app.data.appdata.randNum = randNum;
+		app.data.appdata.srvImg = 0;
+	   
+        // Custom modal
+        self.calendarModal = app.calendar.create({
+          inputEl: '#demo-calendar-modal',
+          openIn: 'customModal',
+          header: true,
+          footer: true,
+          dateFormat: 'yyyy-mm-dd',
+        });
+        // Inline with custom toolbar
+        var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        self.calendarInline = app.calendar.create({
+          containerEl: '#demo-calendar-inline-container',
+          value: [new Date()],
+          renderToolbar: function() {
+            return '<div class="toolbar calendar-custom-toolbar no-shadow">' +
+              '<div class="toolbar-inner">' +
+              '<div class="left">' +
+              '<a href="#" class="link icon-only"><i class="icon icon-back ' + (self.$theme.md ? 'color-black' : '') + '"></i></a>' +
+              '</div>' +
+              '<div class="center"></div>' +
+              '<div class="right">' +
+              '<a href="#" class="link icon-only"><i class="icon icon-forward ' + (self.$theme.md ? 'color-black' : '') + '"></i></a>' +
+              '</div>' +
+              '</div>' +
+              '</div>';
+          },
+          on: {
+            init: function(c) {
+              $('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
+              $('.calendar-custom-toolbar .left .link').on('click', function() {
+                self.calendarInline.prevMonth();
+              });
+              $('.calendar-custom-toolbar .right .link').on('click', function() {
+                self.calendarInline.nextMonth();
+              });
+            },
+            monthYearChangeStart: function(c) {
+              $('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
+            }
+          }
+        });
+      },
+      pageBeforeRemove() {
+        var self = this;
+        self.calendarModal.destroy();
+        self.calendarInline.destroy();
+      },
+    },
+	methods:{
+		addNewImage: function (imgNum) {
+		
+		var app = this.$app;
+		var idname,frmname,delfrm;
+		
+		var imgRand = Math.floor(Math.random() * 99999999) + 1111;
+		
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		var irandNum = app.data.appdata.randNum;
+		
+		idname = "imagesrc"+imgNum;
+		frmname = "imagefrm"+imgNum;
+		delfrm = "delfrm"+imgNum;
+		
+		
+		navigator.camera.getPicture(onSuccess, onFail, {  
+			 quality: 60,
+			destinationType: Camera.DestinationType.FILE_URI,
+			encodingType: Camera.EncodingType.JPEG,
+			correctOrientation: true,
+			targetWidth: 720,
+			targetHeight: 1280,
+			sourceType : Camera.PictureSourceType.CAMERA 
+		   });  
+		   
+		
+		 function onSuccess(imageData) { 
+		var filepath = imageData;
+		
+		//var old_html = document.getElementById("imagesrc").innerHTML;
+		document.getElementById(idname).innerHTML = "<img src='"+filepath+"' class='srvimg'>";
+		document.getElementById(delfrm).innerHTML = "Delete Image";
+		
+		document.getElementById(frmname).setAttribute("value", imgRand);
+		// $$(frmname).val() = imgNum;
+		
+		 // Show Preloader
+		app.preloader.show();
+		
+		//Do File Transfer of Image
+		var options = new FileUploadOptions();
+		 options.fileKey = "file";
+		 options.fileName = imageData.substr(imageData.lastIndexOf('/') + 1);
+		 options.mimeType = "image/jpeg";
+		 console.log(options.fileName);
+		 var params = new Object();
+		 params.value1 = "test";
+		 params.value2 = "param";
+		 options.params = params;
+		 options.chunkedMode = false;
+		
+		var ft = new FileTransfer();
+		var url = 'https://xperthands.ng/mapp/api/api?type=imgfileupload&imgRand='+imgRand+'&srvRand='+irandNum+'&userPhone='+userPhone;
+		 ft.upload(imageData, url, function(result){
+		 console.log(JSON.stringify(result));
+		
+		 app.toastBottom =  app.toast.create({
+						text: 'Image Added!',
+						closeTimeout: 2000,
+					  });
+		 app.toastBottom.open();
+		 app.preloader.hide();
+		 
+		 }, function(error){
+			 console.log(JSON.stringify(error));
+			 setTimeout(function () {app.dialog.close();}, 1000); //Close Dialog
+			 app.dialog.alert('An Error Occurred. Take Another Photo!');
+			 app.preloader.hide();
+			 }, options);
+		 } 
+		   function onFail(message) {
+			  setTimeout(function () {app.dialog.close();}, 1000); //Close Dialog		   
+			  alert('Failed because: ' + message); 
+		   }
+		 
+		},
+		deleteImage: function (idnum) {
+		// App instance
+		var app = this.$app;
+		var cdivid = "imagesrc"+idnum;
+		var cfrmid = "imagefrm"+idnum;
+		var delfrm = "delfrm"+idnum;
+		var imgRand = document.getElementById(cfrmid).value;
+		//var cfmtxt = 'Confirm Image Delete for '+idnum+' for formID:'+cfrmid+' and DivID:'+cdivid+' form value is '+frmval;
+		var cfmtxt = 'Confirm Image Delete';
+		
+		//Get global variables
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		var srvRand = app.data.appdata.randNum;
+		
+		 
+		
+		app.dialog.confirm(cfmtxt, function () {
+		
+		
+		// Show Preloader
+		app.preloader.show();
+		
+		//Do Ajax Image Database Record Delete to Server with userPhone and imgRand & srvRand
+		app.request({
+				url: url+'type=deleteSrvImg',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				userPhone: userPhone,
+				imgRand: imgRand,
+				srvRand: srvRand,
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				 
+				  if (adata.message == "success") {
+				   
+				    app.toastBottom =  app.toast.create({
+						text: 'Image Deleted!',
+						closeTimeout: 2000,
+					  });
+						app.toastBottom.open();
+				 }
+					
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again!');
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.preloader.hide();}, 1000);
+				}
+			}); 
+		
+			document.getElementById(cdivid).innerHTML = "<center><i class='ion ion-ios-add-circle-outline iconupload'></i></center>";
+			document.getElementById(delfrm).innerHTML = "";
+          
+        });
+		 
+		
+		},
+		bookService: function () {
+		// App instance
+			var app = this.$app;
+
+		//get variables from form
+		//var srvdate = document.getElementsByName("srvdate");
+		var srvdate = document.querySelector('input[name="srvdate"]').value;
+		//var srvdate2 = $$('#srvdate2').val();;
+		//var srvtime = document.getElementsByName("srvtime").value;
+		var srvdetails = document.getElementById("srvdetails").value;
+		var srvtime = $$('#srvtime').val();
+		//var srvdetails = $$('#srvdetails').val();
+		var srvadd = $$('#srvadd').val();
+		
+		/*future usemap html date
+		<li class="item-content item-input item-input-with-info">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input type="date" class="frmtxt" placeholder="Select date" name="srvdate2" id="srvdate2" />
+				  <div class="item-input-info lblcolor">Select Date:</div>
+                </div>
+              </div>
+          </li>
+		
+		*/
+
+		if (!srvdate || !srvtime|| !srvdetails || !srvadd){
+		  app.dialog.alert('Please fill in all fields');
+		  //app.dialog.alert(srvdate+' '+srvtime+' '+srvdetails+' '+srvadd+' '+srvdate2);
+		  return;
+		 }
+		
+		//app.dialog.alert(srvdate+' '+srvtime+' '+srvdetails+' '+srvadd+' '+srvdate2);
+		//Retrieve Global Object
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		var catName = app.data.appdata.catName;
+		var catSno = app.data.appdata.catSno;
+		var recomprvd = app.data.appdata.recomprvd;
+		var prvdsno = app.data.appdata.prvdsno;
+		var userCity = app.data.appdata.userCity;
+		var srvRand = app.data.appdata.randNum;
+		
+		// Show Preloader
+		//app.preloader.show();
+		app.dialog.progress();
+		
+		
+		//Update Server Record ajax
+		app.request({
+				url: url+'type=bookservice',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				prvdsno: prvdsno,
+				recomprvd: recomprvd,
+				catSno: catSno,
+				catName: catName,
+				srvdate: srvdate,
+				srvtime: srvtime,
+				srvdetails: srvdetails,
+				srvadd: srvadd,
+				userCity: userCity,
+				srvRand: srvRand,
+				userPhone: userPhone
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				 
+				  if (adata.message == "success") {
+					// Create toast
+					//if (!app.toastIcon) {
+							  app.toastIcon = app.toast.create({
+								icon: '<i class="material-icons">star</i>',
+								text: 'Completed',
+								position: 'center',
+								closeTimeout: 2000,
+							  });
+					//}
+							// Open it
+							//app.toastIcon.open();
+
+							// Create notification
+						   // if (!app.notificationFull) {
+							  app.notificationFull = app.notification.create({
+								icon: '<i class="ion ion-ios-construct" style="color:#e62b1e;"></i>',
+								title: 'XpertHands',
+								titleRightText: 'now',
+								subtitle: 'Booking Complete',
+								text: 'A Service Provider will contact you!',
+								closeTimeout: 10000,
+							  });
+						   // }
+							// Open it
+							app.notificationFull.open()
+							app.data.appdata.userSrvReqs = adata.userSrvReqs;
+							app.data.userSrvReqList = adata.userSrvReqList;
+							
+							//Go to Dashboard
+							app.router.navigate('/dashboard/');
+					  }
+					  
+					  if (adata.message == "error") {
+					  app.dialog.alert(adata.errormsg);
+					  }
+					
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again! '+error.exception+error.code);
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.dialog.close();}, 1000);
+				}
+			});
+			
+			
+		
+        
+		
+	
+		
+	
+		}
+
+	},
+  }
+</script>

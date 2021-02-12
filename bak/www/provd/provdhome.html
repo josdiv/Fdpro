@@ -1,0 +1,596 @@
+<template>
+  <div class="page" data-name="provdhome">
+    <div class="navbar gradback navborder" >
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link">
+            <i class="ion ion-ios-home whitecolor"></i>
+          </a>
+        </div>
+        <div class="title sliding titlehd whitecolor">Provider Area</div>
+		<div class="right">
+          <a href="/notice/" class="link icon-only">
+            <i class="icon material-icons md-only">notifications_none<span class="badge color-red">5</span></i>
+            <i class="icon f7-icons ios-only">bell<span class="badge color-red">5</span></i>
+          </a>
+        </div>
+      </div>
+    </div>
+	
+	
+	<div class="toolbar tabbar-labels toolbar-bottom-md customtoolbar">
+    <div class="toolbar-inner">
+      <a href="#tab-1" class="tab-link tab-link-active activeborder">
+			<i class="ion ion-ios-pulse" style="font-size:x-large;"></i>
+            <span class="tabbar-label badgefont">Explore</span>
+	  </a>
+      <a href="/service/" class="tab-link">
+			<i class="ion ion-ios-medkit icontab"></i>
+            <span class="tabbar-label badgefont">Booking</span>
+	  </a>
+	  <a href="/upayment/" class="tab-link">
+			<i class="ion ion-ios-card icontab"></i>
+            <span class="tabbar-label badgefont">Wallet</span>
+	  </a>
+      <a href="/account/" class="tab-link">
+			<i class="ion ion-ios-switch icontab"></i>
+            <span class="tabbar-label badgefont">Account</span>
+	  </a>
+    </div>
+  </div>
+  
+  <div class="tabs">
+    <div id="tab-1" class="page-content tab tab-active  bodybg" style="margin-top:8%">
+    
+	
+        
+			<div class="block" style="margin-top:0px;padding:0 10px">
+			
+			<div class="card" style="margin:5px 0px;">
+			<div class="row">
+				<div class="col-35" style="padding:5px"><img src="img/doctor1.jpg" style="max-height:100px"></div>
+				<div class="col-65" style="color:black;"><br><span style="font-size:larger;font-weight:bold">Adewale Shuiabu <i class="material-icons" style="color: red;font-size:x-small">brightness_1</i></span><br>Doctor, Eye care<br><i class="ion ion-ios-pin" style="color: red;font-size:small"></i> Ikeja <br><span class="badge color-green" style="font-size:small">Registered</span></div>
+			 </div>
+			 <br>
+			 <!--
+			 <div class="card-footer" style="display:block"><p style="text-align:right"><i class="ion ion-ios-create" style="color: #007cff;"></i> Edit Profile</p></div>
+			 -->
+			</div>	
+			<!-- <span><center><i class="ion ion-ios-create" style="color: #007cff;font-size:larger"></center></i></span> -->
+			<div class="block" style="margin:10px 0;padding:0 10px">
+			
+			<p style="font-size:medium;"><b>Quick Stats:</b></p>
+			
+			</div>
+			
+			<div class="row">
+			<div class="col">
+				<div class="col bluecolor2 boxcol block" style="margin:10px 0px;">
+				<center><br>
+				<i class="material-icons" style="color: green;font-size:x-small">brightness_1</i> Completed
+				<br>
+				<span style="font-size:60px">0</span>
+				<br>
+				<span class="badge color-green" style="font-size:small">View</span><br><br>
+				</center>
+				</div>
+			</div>
+			<div class="col">
+				<div class="col bluecolor2 boxcol block" style="margin:10px 0px;">
+				<center><br>
+				<i class="material-icons" style="color: orange;font-size:x-small">brightness_1</i> Pending
+				<br>
+				<span style="font-size:60px">1</span>
+				<br>
+				<span class="badge color-green" style="font-size:small">View</span><br><br>
+				</center>
+				</div>
+			</div>			
+			</div>
+			<a href="/rating/">
+			<div class="col bluecolor2 boxcol block" style="margin:10px 0px;">
+				<div class="row" style="padding-top: 10px;padding-bottom: 10px;">
+				<div class="col-80" style="font-size:medium;color:black;">My Rating
+				</div>
+				<div class="col-20" style="font-size:larger;text-align:right"> <b>2.0 </b><i class="ion ion-ios-arrow-forward" style="color: #c7c7cc;font-size:large"></i></div>
+				</div>
+				
+			</div>
+			</a>
+			
+			
+			<div class="col bluecolor2 boxcol block" style="margin:10px 0px;">
+				<div class="row" style="padding-top: 10px;padding-bottom: 10px;">
+				<div class="col-50" style="font-size:medium;color:black;"> My Status (Online)
+				</div>
+				<div class="col-50" style="font-size:larger;text-align:right">
+					  <label class="toggle color-green toggle-init" id="prvdtoggle1">
+						<input id="prvdtoggle"  type="checkbox" checked>
+						<span class="toggle-icon"></span>
+					  </label>
+				</div>
+				</div>
+				
+			</div>
+			
+			
+			<a href="/upayment//">
+			<div class="col bluecolor2 boxcol block" style="margin:10px 0px;">
+				<div class="row" style="padding-top: 10px;padding-bottom: 10px;">
+				<div class="col-50" style="font-size:medium;color:black;">
+				<i class="ion ion-md-arrow-round-up" style="color: #007cff;"></i> Wallet
+				</div>
+				<div class="col-50" style="font-size:larger;text-align:right"> 4,000.00 <i class="ion ion-ios-arrow-forward" style="color: #c7c7cc;font-size:large"></i></div>
+				</div>
+				
+			</div>
+			</a>
+			
+			
+			<br>
+			<br>
+			<!--
+			<div class="card demo-card-header-pic">
+			  <div style="background-image:url(img/avatar.jpg)" valign="bottom" class="card-header">Journey To Mountains</div>
+			  <div class="card-content card-content-padding">
+				<p class="date">Posted on January 21, 2015</p>
+				
+			  </div>
+			  <div class="card-footer"><a href="#" class="link">Like</a><a href="#" class="link">Read more</a></div>
+			</div>
+			
+			<div class="card">
+				  <div class="card-header">Card header</div>
+				  <div class="card-content card-content-padding">Card with header and footer. Card headers are used to display card titles and footers for additional information or just for custom actions.</div>
+				  <div class="card-footer">Card Footer</div>
+				</div>			
+			
+			<div class="col bluecolor2 boxcol">
+			<br>
+			<div class="row blockmod">
+				<div class="col-35"><img src="img/specialist.png" class="lazy-loaded" style="max-height:100px"></div>
+				<div class="col-65" style="color:black;">
+				<span style="color:#346d9a">Micheal Ade Williams</span>
+				<br>Doctor, Eye Care
+				<br>0805625141
+				<br>
+				<div class="chip color-green">
+				  <div class="chip-label">Registered</div>
+				</div>
+				</div>
+			 </div>
+				
+			</div>
+			
+			
+			<div class="col bluecolor2 boxcol">
+			<br>
+			<div class="row blockmod">
+				<div class="col-35"><img src="img/specialist.png" class="lazy-loaded" style="max-height:100px"></div>
+				<div class="col-65" style="font-size:medium;color:black;">
+				<span style="font-size:larger;color:#346d9a">Micheal Ade Williams</span>
+				<br>Doctor, Eye Care
+				<br>0805625141
+				<br>
+				<span class="badge color-green">Registered</span>
+				</div>
+			 </div>
+				
+			</div>
+			
+			-->
+			
+			
+		 
+		
+	</div>
+	
+	
+          
+    </div>
+    <div id="tab-2" class="page-content tab">
+      <div class="block">
+        <p>Tab 2 content</p>
+        
+      </div>
+    </div>
+    <div id="tab-3" class="page-content tab">
+      <div class="block">
+        <p>Tab 3 content</p>
+        
+      </div>
+    </div>
+  </div>
+	
+		
+		
+  </div>
+</template>
+<style>
+.divspinner
+{background:transparent url('./img/imgspinner.gif') center no-repeat;}
+.md .navbar:after
+{height:0px;}
+.md .color-theme-red .toolbar:not(.messagebar), .md .color-theme-red.toolbar:not(.messagebar)
+{background: #ffffff;}
+.md .tabbar a.tab-link.active-state, .md .tabbar a.tab-link.tab-link-active, .md .tabbar-labels a.tab-link.active-state, .md .tabbar-labels a.tab-link.tab-link-active
+{color: #346d9a;}
+.md .item-input-wrap:after
+{background-color:#e3e1e1;}
+.md .toolbar a
+{color: #f44336;}
+.md .color-theme-red .input-after:after, .md .color-theme-red .item-input-focused .item-input-wrap:after
+{background: #e3e1e1;}
+.md .list
+{margin: 10px 0;}
+.iptborder
+{background:#e3e1e1;border-radius:10px;}
+.boxcol
+{border-radius: 10px;background: #ffffff none repeat scroll 0 0;box-shadow: 0 5px 20px 0 rgba(0,0,0,0.15);margin:15px 0;}
+.alnright
+{float: right;}
+</style>
+<script>
+return {
+	methods:{
+	iptSearch: function () {
+	
+	var fullName = $$('#fullName').val();
+	app.dialog.alert('Inputed '+ fullName);
+	
+	},
+	newUser: function () {
+	
+		// App instance
+		var app = this.$app;
+			
+		//get variables from login form
+		var fullName = $$('#fullName').val();
+		var userEmail = $$('#userEmail').val();
+		var userPhone = $$('#userPhone').val();
+		var inviteCode = $$('#inviteCode').val();
+		
+		if (!fullName || !userPhone){
+		  app.dialog.alert('Complete Required Fields');
+		  return;
+		 }
+		 
+		 if (document.getElementById("myCheck").checked != true){
+		  app.dialog.alert('Accept Terms & Condition');
+		  return;
+		 }
+		 
+		 if(userPhone.length != 11){
+		  app.dialog.alert('Enter a Valid Phone Number');
+		  return;
+		 }
+		 
+		var url = app.data.appconst.url;
+		
+		 //validate E-mail
+		 if((userEmail) && (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userEmail))))
+		 {
+			app.dialog.alert('Invalid Email Address');
+			return;
+		 }
+		 
+		  // Show Preloader
+			app.dialog.progress();
+			
+			app.request({
+				url: url+'type=reg',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				fullName:$$('#fullName').val(),
+				userEmail:$$('#userEmail').val(),
+				userPhone:$$('#userPhone').val(),
+				inviteCode:$$('#inviteCode').val()
+				},
+				crossDomain:true,
+				success:function(data){
+				 
+				 
+				  if (data.message == "success") {
+						app.data.appdata = {otpCode: data.otpcode, userPhone: userPhone, fullName: fullName};
+						app.router.navigate('/verify/');
+					  } else {
+					  app.dialog.alert(data.message);
+					  }
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+				  // Create toast
+					//if (!app.toastBottom) {
+					  app.toastBottom =  app.toast.create({
+						text: 'Connection Error!',
+						closeTimeout: 3000,
+					  });
+				//	}
+					
+					
+					// Open it
+					app.toastBottom.open();
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.dialog.close();}, 1000);
+				}
+				
+				}); 
+
+			//Close Dialog
+		//setTimeout(function () {app.dialog.close();}, 1000);
+	
+	
+	
+	
+	
+		},
+			},
+	on: {
+      pageInit: function (e, page) {
+        var self = this;
+        var today = new Date();
+        var app = self.$app;
+        // iOS Device picker
+		
+		var lclcityList = localStorage.getItem("lclcityList");
+		var lclserviceList = localStorage.getItem("lclserviceList");
+		
+        self.pickerDevice = app.picker.create({
+          inputEl: '#demo-picker-device',
+          cols: [
+            {
+              textAlign: 'center',
+              values: ['All City','Agboyi/Ketu','Agege','Ajah','Alimosho','Amuwo-Odofin','Apapa','Badagry','Egbe Idimu','Epe','Gbagada','Ibeju','Ifako-Ijaiye','Ikeja','Ikorodu','Ikotun/Igando','Ikoyi','Ilupeju','Ipaja','Isolo','Kosofe','Lagos Island','Lagos Mainland','Lekki Phase I','Lekki Phase II','Magodo','Maryland','Mushin','Ojo','Ojodu','Ojota','Orile','Oshodi-Isolo','Shomolu','Surulere','Victoria Island','Yaba']
+            }
+          ],
+		  on: {
+            closed: function(picker, value, displayValue) {
+             var iptCity = $$('#demo-picker-device').val();
+			 var iptService = $$('#demo-picker-device2').val();
+			 //app.dialog.alert('Selected City '+ iptCity);
+			
+			//check both city and service 
+			if (iptCity && iptService){
+			  //app.dialog.alert('Ready to call API');
+			  
+			  app.data.appdata.filtCity = iptCity;
+			  app.data.appdata.filtSrv = iptService;
+			  app.router.navigate('/filtresult/');
+			  
+			}
+			
+            },
+          }
+        });
+		
+		 self.pickerDevice = app.picker.create({
+          inputEl: '#demo-picker-device2',
+          cols: [
+            {
+              textAlign: 'center',
+              values: ['Ayurveda','Cardiology','Dental Care','Dermatology','Eye Care','Gastrology','Gynecology','Homeopathy','Neurology','Orthopedic','Pulmonology','Urology']
+            }
+          ],
+		  on: {
+            closed: function(picker, value, displayValue) {
+             var iptCity = $$('#demo-picker-device').val();
+			 var iptService = $$('#demo-picker-device2').val();
+			//app.dialog.alert('Selected Service '+ iptService);
+			
+			//check both city and service 
+			if (iptCity && iptService){
+			  //app.dialog.alert('Ready to call API');
+			  
+			  app.data.appdata.filtCity = iptCity;
+			  app.data.appdata.filtSrv = iptService;
+			  app.router.navigate('/filtresult/');
+			  
+			  
+			}
+			
+            },
+          }
+        });
+
+
+        // Describe yourself picker
+        self.pickerDescribe = app.picker.create({
+          inputEl: '#demo-picker-describe',
+          rotateEffect: true,
+          cols: [
+            {
+              textAlign: 'left',
+              values: ('Super Amazing Bat Iron Rocket Lex Beautiful Wonderful Raining Happy Funny Cool Hot').split(' ')
+            },
+            {
+              values: ('Man Luthor Woman Boy Girl Person Cutie Babe Raccoon').split(' ')
+            },
+          ]
+        });
+
+        // Dependent values
+        var carVendors = {
+          Japanese : ['Honda', 'Lexus', 'Mazda', 'Nissan', 'Toyota'],
+          German : ['Audi', 'BMW', 'Mercedes', 'Volkswagen', 'Volvo'],
+          American : ['Cadillac', 'Chrysler', 'Dodge', 'Ford']
+        };
+        self.pickerDependent = app.picker.create({
+          inputEl: '#demo-picker-dependent',
+          rotateEffect: true,
+          formatValue: function (values) {
+            return values[1];
+          },
+          cols: [
+            {
+              textAlign: 'left',
+              values: ['Japanese', 'German', 'American'],
+              onChange: function (picker, country) {
+                if(picker.cols[1].replaceValues){
+                  picker.cols[1].replaceValues(carVendors[country]);
+                }
+              }
+            },
+            {
+              values: carVendors.Japanese,
+              width: 160,
+            },
+          ]
+        });
+
+        // Custom Toolbar
+        self.pickerCustomToolbar = app.picker.create({
+          inputEl: '#demo-picker-custom-toolbar',
+          rotateEffect: true,
+          renderToolbar: function () {
+            return '<div class="toolbar">' +
+              '<div class="toolbar-inner">' +
+                '<div class="left">' +
+                  '<a href="#" class="link toolbar-randomize-link">Randomize</a>' +
+                '</div>' +
+                '<div class="right">' +
+                  '<a href="#" class="link sheet-close popover-close">That\'s me</a>' +
+                '</div>' +
+              '</div>' +
+            '</div>';
+          },
+          cols: [
+            {
+              values: ['Mr', 'Ms'],
+            },
+            {
+              textAlign: 'left',
+              values: ('Super Amazing Bat Iron Rocket Lex Beautiful Wonderful Raining Happy Funny Cool Hot').split(' ')
+            },
+            {
+              values: ('Man Luthor Woman Boy Girl Person Cutie Babe Raccoon').split(' ')
+            },
+          ],
+          on: {
+            open: function (picker) {
+              picker.$el.find('.toolbar-randomize-link').on('click', function () {
+                var col0Values = picker.cols[0].values;
+                var col0Random = col0Values[Math.floor(Math.random() * col0Values.length)];
+
+                var col1Values = picker.cols[1].values;
+                var col1Random = col1Values[Math.floor(Math.random() * col1Values.length)];
+
+                var col2Values = picker.cols[2].values;
+                var col2Random = col2Values[Math.floor(Math.random() * col2Values.length)];
+
+                picker.setValue([col0Random, col1Random, col2Random]);
+              });
+            },
+          }
+        });
+        // Inline date-time
+        self.pickerInline = app.picker.create({
+          containerEl: '#demo-picker-date-container',
+          inputEl: '#demo-picker-date',
+          toolbar: false,
+          rotateEffect: true,
+          value: [
+            today.getMonth(),
+            today.getDate(),
+            today.getFullYear(),
+            today.getHours(),
+            today.getMinutes() < 10 ? '0' + today.getMinutes() : today.getMinutes()
+          ],
+          formatValue: function (values, displayValues) {
+            return displayValues[0] + ' ' + values[1] + ', ' + values[2] + ' ' + values[3] + ':' + values[4];
+          },
+          cols: [
+            // Months
+            {
+              values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+              displayValues: ('January February March April May June July August September October November December').split(' '),
+              textAlign: 'left'
+            },
+            // Days
+            {
+              values: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            },
+            // Years
+            {
+              values: (function () {
+                var arr = [];
+                for (var i = 1950; i <= 2030; i++) { arr.push(i); }
+                  return arr;
+              })(),
+            },
+            // Space divider
+            {
+              divider: true,
+              content: '&nbsp;&nbsp;'
+            },
+            // Hours
+            {
+              values: (function () {
+                var arr = [];
+                for (var i = 0; i <= 23; i++) { arr.push(i); }
+                  return arr;
+              })(),
+            },
+            // Divider
+            {
+              divider: true,
+              content: ':'
+            },
+            // Minutes
+            {
+              values: (function () {
+                var arr = [];
+                for (var i = 0; i <= 59; i++) { arr.push(i < 10 ? '0' + i : i); }
+                  return arr;
+              })(),
+            }
+          ],
+          on: {
+            change: function (picker, values, displayValues) {
+              var daysInMonth = new Date(picker.value[2], picker.value[0]*1 + 1, 0).getDate();
+              if (values[1] > daysInMonth) {
+                picker.cols[1].setValue(daysInMonth);
+              }
+            },
+          }
+        });
+		
+		
+		
+		
+		/*
+		else
+		{
+			//get from api
+		}
+		
+		*/
+		
+		//on page after in - check for new lclallServices if new update localstorage
+      },
+	  pageAfterIn: function(e, page) {
+		
+		//get allservice data
+		var lclallServices = localStorage.getItem("lclallServices");
+		var lclallServicesData = localStorage.getItem("lclallServicesData");
+		
+		
+		if(lclallServices){setTimeout(function () {}, 2000);document.getElementById("lclallServicesData").innerHTML = lclallServicesData;}
+	  
+	  },
+      pageBeforeRemove() {
+        var self = this;
+        self.pickerDevice.destroy();
+        self.pickerDescribe.destroy();
+        self.pickerDependent.destroy();
+        self.pickerCustomToolbar.destroy();
+      },
+    }
+
+
+}
+
+</script>

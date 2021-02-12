@@ -1,0 +1,347 @@
+<template>
+  <div class="page" data-name="verifyphone">
+    <div class="navbar pgradback navborder" >
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="/pmainhome/" class="link">
+            <i class="ion ion-ios-arrow-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title sliding titlehd whitecolor">Provider Area</div>
+		<div class="right">
+          <a href="/pnotice/" class="link icon-only">
+            <i class="icon material-icons md-only">notifications_none<span class="badge color-red">5</span></i>
+            <i class="icon f7-icons ios-only">bell<span class="badge color-red">5</span></i>
+          </a>
+        </div>
+      </div>
+    </div>
+	
+	
+	<div class="toolbar tabbar-labels toolbar-bottom-md customtoolbar">
+    <div class="toolbar-inner">
+      <a href="#tab-1" class="tab-link tab-link-active activeborder">
+			<i class="ion ion-ios-pulse" style="font-size:x-large;"></i>
+            <span class="tabbar-label badgefont">Explore</span>
+	  </a>
+      <a href="/pservice/" class="tab-link">
+			<i class="ion ion-ios-medkit icontab"></i>
+            <span class="tabbar-label badgefont">Booking</span>
+	  </a>
+	  <a href="/pupayment/" class="tab-link">
+			<i class="ion ion-ios-card icontab"></i>
+            <span class="tabbar-label badgefont">Wallet</span>
+	  </a>
+      <a href="/paccount/" class="tab-link">
+			<i class="ion ion-ios-switch icontab"></i>
+            <span class="tabbar-label badgefont">Account</span>
+	  </a>
+    </div>
+  </div>
+  
+  <div class="tabs">
+    <div id="tab-1" class="page-content tab tab-active  bodybg" style="margin-top:8%">
+    
+	
+        
+			<div class="block" style="margin-top:0px;padding:0 10px">
+			
+			<span id="lclprovdInfoData2">
+		
+				 
+					
+			</span>	
+			
+			
+			<div class="block" style="margin:10px 0;padding:0 10px">
+			
+			<p style="font-size:medium;"><b>Complete the following:</b></p>
+			
+			</div>
+			<div class="col bluecolor2 boxcol block" style="margin:10px 0px;">
+				<div class="row" style="padding-top: 10px;padding-bottom: 10px;">
+				<div class="col" style="font-size:medium;color:black;">
+				<i class="ion ion-md-call" style="color: #007cff;"></i> Verify Phone Number [<span id="lcluserPhone"></span>]				</div>
+				</div>
+				
+			</div>
+			
+			<div class="col boxcol2 block" style="margin:10px 0px;">
+				<br>
+				Get code with the Resend Code button and Submit for Verification
+				<div class="list no-hairlines-md">
+				<ul>
+					<li class="item-content item-input">
+					 
+					  <div class="item-inner">
+						<div class="item-title item-floating-label">Enter Verification Code</div>
+						<div class="item-input-wrap">
+						  <input type="number" value="" id="vCode" placeholder="">
+						</div>
+					  </div>
+				  </li>
+				 </ul>
+				</div>
+			  
+			  <p class="row">
+				<button class="col button button-raised" @click="submitCode" style="color:#000000">Submit</button>
+				<button class="col button button-raised button-fill" @click="getCode" style="background:#6abf1f">Resend Code</button>
+			  </p>
+			  <br>
+			</div>
+			
+			<br>
+			<br>
+			
+			
+			
+		 
+		
+	</div>
+	
+	
+          
+    </div>
+    <div id="tab-2" class="page-content tab">
+      <div class="block">
+        <p>Tab 2 content</p>
+        
+      </div>
+    </div>
+    <div id="tab-3" class="page-content tab">
+      <div class="block">
+        <p>Tab 3 content</p>
+        
+      </div>
+    </div>
+  </div>
+	
+		
+		
+  </div>
+</template>
+<style>
+.divspinner
+{background:transparent url('./img/imgspinner.gif') center no-repeat;}
+.md .navbar:after
+{height:0px;}
+.md .color-theme-red .toolbar:not(.messagebar), .md .color-theme-red.toolbar:not(.messagebar)
+{background: #ffffff;}
+.md .tabbar a.tab-link.active-state, .md .tabbar a.tab-link.tab-link-active, .md .tabbar-labels a.tab-link.active-state, .md .tabbar-labels a.tab-link.tab-link-active
+{color: #346d9a;}
+.md .item-input-wrap:after
+{background-color:#e3e1e1;}
+.md .toolbar a
+{color: #f44336;}
+.md .color-theme-red .input-after:after, .md .color-theme-red .item-input-focused .item-input-wrap:after
+{background: #e3e1e1;}
+.md .list
+{margin: 10px 0;}
+.iptborder
+{background:#e3e1e1;border-radius:10px;}
+.boxcol
+{border-radius: 10px;background: #ffffff none repeat scroll 0 0;box-shadow: 0 5px 20px 0 rgba(0,0,0,0.15);margin:15px 0;}
+.boxcol2
+{border-radius: 0px;background: #ffffff none repeat scroll 0 0;box-shadow: 0 5px 20px 0 rgba(0,0,0,0.15);margin:15px 0;}
+.alnright
+{float: right;}
+</style>
+<script>
+return {
+	methods:{
+	iptSearch: function () {
+	
+	var fullName = $$('#fullName').val();
+	app.dialog.alert('Inputed '+ fullName);
+	
+	},
+	getCode: function () {
+	
+		var userPhone = localStorage.getItem("lcluserPhone");
+		var url = app.data.appconst.url;
+		var constr = app.data.appconst.constr;
+		
+		app.toastBottom =  app.toast.create({
+			text: 'Please wait...',
+			closeTimeout: 2000,
+		  })
+		// Open it
+		app.toastBottom.open();
+		
+		//Call server and send code
+		app.request({
+				url: url+'Phoneverify/getcode/',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				authid: constr,
+				userPhone:userPhone
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				 
+				 if(adata.status == "Success")
+					{
+						localStorage.setItem("lclotpCode", adata.otpCode);
+						app.toastBottom =  app.toast.create({
+							text: adata.message,
+							closeTimeout: 3000,
+						  })
+						// Open it
+						app.toastBottom.open();
+					
+					}
+					else
+					{
+						//app.dialog.alert(adata.message);
+						app.toastBottom =  app.toast.create({
+							text: adata.message,
+							closeTimeout: 3000,
+						  })
+						// Open it
+						app.toastBottom.open();
+					}
+					  
+				},
+				error:function(error){
+				//console.log(error.code);
+				console.log(error);
+					//if(!navigator.onLine) { }
+						app.toastBottom =  app.toast.create({
+							text: 'An Error Occurred, Please check connection!',
+							closeTimeout: 3000,
+						  })
+						// Open it
+						app.toastBottom.open();
+						
+						//else
+						//{app.dialog.alert('An Error Occurred!'+error.response);}
+				
+				},
+				complete:function(){
+				//Close Dialog
+				//setTimeout(function () {app.dialog.close();}, 1000);
+				//app.dialog.alert('An Error Occurred!'+error.response); 
+				
+				
+				}
+			});
+		
+		
+		
+	
+		},
+	submitCode: function () {
+	
+		var vCode = $$('#vCode').val();
+		var url = app.data.appconst.url;
+		var constr = app.data.appconst.constr;
+		var userPhone = localStorage.getItem("lcluserPhone");
+	
+		if (!vCode){
+		  app.dialog.alert('Enter Verification Code!');
+		  return;
+		 }
+		 
+		 //var lclotpCode = localStorage.getItem("lclotpCode");
+		 
+		  // Show Preloader
+			app.dialog.progress();
+		 
+		 //Call server and send code
+		app.request({
+				url: url+'Phoneverify/',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				authid: constr,
+				vCode:vCode,
+				userPhone:userPhone
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				 
+				 if(adata.status == "Success")
+					{
+						localStorage.setItem("lclprovdInfo", adata.provdInfo);
+						localStorage.setItem("lclverifyInfo", adata.verifyInfo);
+						app.router.navigate('/pmainhome/');
+						
+						app.toastBottom =  app.toast.create({
+							text: adata.message,
+							closeTimeout: 3000,
+						  })
+						// Open it
+						app.toastBottom.open();
+					
+					}
+					else
+					{
+						//app.dialog.alert(adata.message);
+						app.toastBottom =  app.toast.create({
+							text: adata.message,
+							closeTimeout: 3000,
+						  })
+						// Open it
+						app.toastBottom.open();
+					}
+					  
+				},
+				error:function(error){
+				//console.log(error.code);
+				console.log(error);
+					//if(!navigator.onLine) { }
+						app.toastBottom =  app.toast.create({
+							text: 'An Error Occurred, Please check connection!',
+							closeTimeout: 3000,
+						  })
+						// Open it
+						app.toastBottom.open();
+						
+						//else
+						//{app.dialog.alert('An Error Occurred!'+error.response);}
+				
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.dialog.close();}, 1000);
+				//app.dialog.alert('An Error Occurred!'+error.response); 
+				
+				
+				}
+			});
+		
+	
+		},
+			},
+	on: {
+      pageInit: function (e, page) {
+		
+		var lclprovdInfo = localStorage.getItem("lclprovdInfo");
+		
+		document.getElementById("lclprovdInfoData2").innerHTML = lclprovdInfo;
+		
+		var lcluserPhone = localStorage.getItem("lcluserPhone");
+		document.getElementById("lcluserPhone").innerHTML = lcluserPhone;
+		
+		
+        },
+	  pageAfterIn: function(e, page) {
+	  
+		
+		
+		
+		
+	  
+	  },
+      pageBeforeRemove() {
+      },
+    }
+
+
+}
+
+</script>

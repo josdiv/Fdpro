@@ -1,0 +1,165 @@
+<template>
+<div class="page" data-name="myrating">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+        <a href="#" class="link back">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">My Rating</div>
+    </div>
+  </div>
+  <div class="page-content">
+<div class="block" style="height:1px"></div>
+    {{#with providerappdata}}
+	{{#js_if "this.prvdRating > 0"}}
+	<div class="block">
+      <p><center style="font-size:40px">{{prvdRating}} <i class="ion ion-ios-star iconlarge" style="font-size:40px"></i></center></p>
+	   
+    </div>
+	<div class="block">	
+	<div class="list simple-list">
+        <ul>
+          <li>
+			<center>&nbsp;5&nbsp;<i class="ion ion-ios-star iconlarge" style="font-size:medium"></i>&nbsp;</center>
+			<div class="progressbar color-orange" data-progress="100"></div><br>
+			<center>&nbsp;&nbsp;&nbsp;<span id="star5"><img src="./img/rateload.gif" width="20px" height="20px"></span></center>
+          </li>
+          <li>
+            <center>&nbsp;4&nbsp;<i class="ion ion-ios-star iconlarge" style="font-size:medium"></i>&nbsp;</center>
+			<div class="progressbar color-green" data-progress="80"></div><br>
+			<center>&nbsp;&nbsp;&nbsp;<span id="star4"><img src="./img/rateload.gif" width="20px" height="20px"></span></center>
+          </li>
+          <li>
+		    <center>&nbsp;3&nbsp;<i class="ion ion-ios-star iconlarge" style="font-size:medium"></i>&nbsp;</center>
+            <div class="progressbar color-blue" data-progress="60"></div><br>
+			<center>&nbsp;&nbsp;&nbsp;<span id="star3"><img src="./img/rateload.gif" width="20px" height="20px"></span></center>
+          </li>
+          <li>
+		    <center>&nbsp;2&nbsp;<i class="ion ion-ios-star iconlarge" style="font-size:medium"></i>&nbsp;</center>
+            <div class="progressbar color-pink" data-progress="40"></div><br>
+			<center>&nbsp;&nbsp;&nbsp;<span id="star2"><img src="./img/rateload.gif" width="20px" height="20px"></span></center>
+          </li>
+          <li>
+		    <center>&nbsp;1&nbsp;<i class="ion ion-ios-star iconlarge" style="font-size:medium"></i>&nbsp;</center>
+            <div class="progressbar color-red" data-progress="20"></div><br>
+			<center>&nbsp;&nbsp;&nbsp;<span id="star1"><img src="./img/rateload.gif" width="20px" height="20px"></span></center>
+          </li>
+        </ul>
+      </div>
+	<p><center><strong>Total Reviews: {{prvdRatingNo}}</strong></center></p>
+	</div>
+	<p class="row block">
+          <a href="/myreviewx/" class="col button button-raised" >View Reviews</a>
+        </p>
+	{{else}}
+	<div class="block">
+	<center><i class="ion ion-ios-construct iconlarge-xx"></i></center>
+	
+	</div>
+	<div class="block">
+	<p><strong><center>None Available at the Moment!</center></strong></p>
+	
+	</div>
+	{{/js_if}}
+	{{/with}}
+  </div>
+</div>
+</template>
+<script>
+
+return {
+	
+	 
+	// Page Events
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+		
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+		/*
+		app.data.appdata.puserImg = page.route.query.userImg;
+		app.data.appdata.pfullName = page.route.query.fullName;
+		app.data.appdata.prating = page.route.query.rating;
+		*/
+		
+		var app = this.$app;
+		  
+  		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		
+		//get rating values from database
+		app.request({
+				url: url+'type=getrating',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				userPhone: userPhone
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				document.getElementById("star1").innerHTML = adata.star1;
+				document.getElementById("star2").innerHTML = adata.star2;
+				document.getElementById("star3").innerHTML = adata.star3;
+				document.getElementById("star4").innerHTML = adata.star4;
+				document.getElementById("star5").innerHTML = adata.star5;
+				
+				app.data.usrvPrvdRating = adata.srvPrvdRating;
+					  
+				},
+				error:function(error){
+				//console.log(error.code);
+				console.log(error);
+				app.dialog.alert('An Error Occurred!'+error.response);
+				
+				},
+				complete:function(){
+				//Close Dialog
+				//setTimeout(function () {app.dialog.close();}, 1000);
+				}
+			}); 
+		
+		
+		
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);	
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    },
+	data: function () {
+      return {		
+        providerappdata: this.$app.data.appdata,
+      };
+    },
+	methods: {
+	bookProvider: function () {
+		// App instance
+		/*
+		var app = this.$app;
+		app.data.appdata.recomprvd = "No";
+		app.router.navigate('/schedule/');
+		*/
+	},
+	},
+
+}
+
+</script>

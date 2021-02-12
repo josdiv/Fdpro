@@ -1,0 +1,95 @@
+<template>
+<div class="page" data-name="imgdetails">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+          <a href="#" class="link back">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Image Details</div>
+    </div>
+  </div>
+  
+  
+  <div class="page-content" style="background:transparent url('./img/imgspinner.gif') center no-repeat">
+  
+	
+	<p><img src="" id="myImage" class="imgdet"></p>
+	 
+	
+	
+  </div>
+ 
+ 
+
+</div>
+</template>
+<style>
+.imgdet
+{
+max-height:100%;
+max-width:100%;
+width auto;
+height:auto;
+position:absolute;
+top:0;
+bottom:0;
+left:0;
+right:0;
+margin:auto;
+}
+.loading {
+  background: transparent url('./img/imgspinner.gif') center no-repeat;
+}
+</style>
+<script>
+return {
+	data: function () {
+      return {		
+		//read data from root object
+       // userSrvReqList: this.$app.data.userSrvReqList,
+      };
+    },
+	// Page Events
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+		this.$app.methods.getUserAlerts();
+		
+		//app.preloader.show();
+		
+		var myImage = document.getElementById('myImage'); 
+		var imgpreload = document.getElementById('imgpreload'); 
+		var imagesrcd = 'https://xperthands.ng/admin/'+page.route.query.imgfile;
+		
+		myImage.src = imagesrcd;
+		
+		//setTimeout(function () {app.preloader.hide();}, 5000);
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);
+
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    }
+
+
+}
+
+</script>

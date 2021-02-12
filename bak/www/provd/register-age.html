@@ -1,0 +1,182 @@
+<template>
+  <div class="page" data-name="age">
+    <div class="navbar" style="background:#ffffff;color:#000000">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="ion ion-ios-arrow-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title sliding titlehd">Sign Up</div>
+      </div>
+    </div>
+     <div class="page-content custombackground">
+  
+	<div class="block" style="height:70%">
+	<div class="progressbar color-green" data-progress="35"><span style="transform: translate3d(-20%, 0px, 0px);"></span></div>
+	<br><span style="font-size:larger">How old are you?</span>
+	<br>
+		<div class="list inline-labels no-hairlines-md">
+		  <ul>
+			<li class="item-content item-input">
+			  <div class="item-inner">
+				<div class="item-input-wrap">
+				  <input type="text" class="" placeholder="Select Date of Birth" name="srvdate" id="demo-calendar-modal"/>
+				  <span class="input-clear-button"></span>
+				</div>
+			  </div>
+			</li>
+		</ul>
+		</div>
+	</div>
+		<div class="block">
+			<a class='button button-raised button-big button-outline buttonback' @click="newUser"><i class='ion ion-ios-pulse'></i> Proceed</a>
+			
+    </div>
+		</div>
+		
+		
+  </div>
+</template>
+<style>
+.divspinner
+{background:transparent url('./img/imgspinner.gif') center no-repeat;}
+.md .navbar:after
+{height:0px;}
+.md .calendar-header
+{
+	background: #4caf50 !important;
+	background: linear-gradient(90deg, #2dc111 0%, #7cb5d6 100%) !important;
+	background: -webkit-gradient(linear, left top, right top, from(#2dc111), to(#7cb5d6)) !important;
+}
+</style>
+<script>
+return {
+	methods:{
+	newUser: function () {
+	
+		// App instance
+		var app = this.$app;
+			
+		//get variables from login form
+		var dob = $$('#demo-calendar-modal').val();
+		
+		if (!dob){
+		  app.dialog.alert('Provide Date of Birth');
+		  return;
+		 }
+		 
+		app.data.appdata.uAge = dob;
+		app.router.navigate('/presidence/');
+	
+	
+	
+		},
+			},
+	on: {
+      pageInit: function(e, page) {
+        var self = this;
+        var today = new Date();
+        var app = self.$app;
+        var $ = self.$;
+       
+	   //document.getElementById("imagesrc").innerHTML = "<img src='./img/camimg1.jpg' class='srvimg'>";
+	   //app.data.appdata.srvImg = 1;
+	   //	document.getElementById("imgsrc").appendChild(xmlhttp.responseText);
+	   
+	   //var app = this.$app;
+		var randNum = Math.floor(Math.random() * 9999999) + 111;
+
+		app.data.appdata.randNum = randNum;
+		app.data.appdata.srvImg = 0;
+	   
+        // Custom modal
+        self.calendarModal = app.calendar.create({
+          inputEl: '#demo-calendar-modal',
+          openIn: 'customModal',
+          header: true,
+          footer: true,
+          dateFormat: 'yyyy-mm-dd',
+        });
+        // Inline with custom toolbar
+        var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        self.calendarInline = app.calendar.create({
+          containerEl: '#demo-calendar-inline-container',
+          value: [new Date()],
+          renderToolbar: function() {
+            return '<div class="toolbar calendar-custom-toolbar no-shadow">' +
+              '<div class="toolbar-inner">' +
+              '<div class="left">' +
+              '<a href="#" class="link icon-only"><i class="icon icon-back ' + (self.$theme.md ? 'color-black' : '') + '"></i></a>' +
+              '</div>' +
+              '<div class="center"></div>' +
+              '<div class="right">' +
+              '<a href="#" class="link icon-only"><i class="icon icon-forward ' + (self.$theme.md ? 'color-black' : '') + '"></i></a>' +
+              '</div>' +
+              '</div>' +
+              '</div>';
+          },
+          on: {
+            init: function(c) {
+              $('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
+              $('.calendar-custom-toolbar .left .link').on('click', function() {
+                self.calendarInline.prevMonth();
+              });
+              $('.calendar-custom-toolbar .right .link').on('click', function() {
+                self.calendarInline.nextMonth();
+              });
+            },
+            monthYearChangeStart: function(c) {
+              $('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
+            }
+          }
+        });
+		
+		
+		//Retrieve Global Object userPhone
+		var fullName = app.data.appdata.fullName;
+		var url = app.data.appconst.url;
+		var constr = app.data.appconst.constr;
+		
+		//get list of city from backend
+			app.request({
+			url: url+'Getcity/',
+			dataType:'json',
+			method: 'GET',
+			data:{
+			fullName: fullName,
+			authid: constr
+			},
+			crossDomain:true,
+			success:function(adata){
+			 
+			 
+			  if(adata.status == "Success") {
+			  
+					app.data.appcity = adata.cityList;
+					localStorage.setItem("lclcityList", adata.cityList);
+				  }
+			},
+			error:function(error){
+			console.log(error.code);
+			if (error.exception !== ""){console.log(error.exception);}
+				//app.dialog.alert('Connection Error, Try Again!');
+			},
+			complete:function(){
+			//Close Dialog
+			setTimeout(function () {app.dialog.close();}, 1000);
+			}
+			}); 
+      },
+      pageBeforeRemove() {
+        var self = this;
+        self.calendarModal.destroy();
+        self.calendarInline.destroy();
+      },
+    }
+
+
+}
+
+</script>

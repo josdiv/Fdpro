@@ -1,0 +1,136 @@
+<template>
+  <div class="page" data-name="phone">
+    <div class="navbar" style="background:#e3000f">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="/home/" class="link">
+            <i class="ion ion-ios-arrow-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title sliding titlehd">Enter Phone</div>
+      </div>
+    </div>
+     <div class="page-content custombackground">
+    <div class="block">
+        <img src='img/xpertlogo.png' style='display: block; margin: auto; width:45%; margin-top:15%'>
+      </div>
+	<div class="block">
+		<div class="list no-hairlines-md">
+		  <ul>
+			
+			<li class="item-content item-input">
+			  <div class="item-media">
+				<i class="ion ion-ios-phone-portrait iconlarge"></i>
+			  </div>
+			  <div class="item-inner">
+				<div class="item-title item-floating-label">Enter Phone</div>
+				<div class="item-input-wrap">
+				  <input type="number" required id="uPhone" placeholder="Your Phone Number" validate pattern="[0-9]*" data-error-message="Only numbers please!">
+				  <span class="input-clear-button"></span>
+				</div>
+			  </div>
+			</li>
+			
+		  </ul>
+		</div>
+			</div>
+		<div class="block">
+			<a class='button button-raised button-big button-outline' style='border-color:#034679;color:#034679' @click="verifyPhone"><i class='ion ion-ios-done-all' style='font-size:large'></i> Submit</a>
+			
+		</div>
+    </div>
+  </div>
+</template>
+<script>
+return {
+	methods:{
+	verifyPhone: function () {
+	
+		// App instance
+		var app = this.$app;
+			
+		//get variables from login form
+		var userPhone = $$('#uPhone').val();
+		
+	
+		if (!userPhone){
+		  app.dialog.alert('Enter Phone Number');
+		  return;
+		 }
+		
+		//read data from root object
+		//var otpCode = app.data.appdata.otpCode;
+		//var fullName = app.data.appdata.fullName;
+		//var userPhone = app.data.appdata.userPhone;
+		
+		//app.dialog.alert('Your OTP Code - ' +veriCode);
+		//app.dialog.alert('Sent OTP Code - ' +otpCode);
+		
+		var url = app.data.appconst.url;
+		
+		 // Show Preloader
+		app.dialog.progress();
+			
+		
+		app.request({
+				url: url+'type=phone',
+				dataType:'json',
+				method: 'GET',
+				crossDomain:true,
+				data:{
+				userPhone: userPhone
+				},
+				success:function(data){
+				 
+				 
+				  if (data.message == "success") {
+						app.data.appdata = {otpCode: data.otpcode, userPhone: userPhone, fullName: data.fullname};
+						app.router.navigate('/verify/');
+					  } else {
+					//if (!app.toastBottom) {
+					  app.toastBottom =  app.toast.create({
+						text: data.message,
+						closeTimeout: 3000,
+					  });
+				//	}
+					
+					
+					// Open it
+					app.toastBottom.open();
+					  }
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again!');
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.dialog.close();}, 1000);
+				}
+				}); 
+			
+		
+		
+		//Close Dialog
+		//setTimeout(function () {app.dialog.close();}, 1000);
+		
+		
+		
+	
+		},
+
+	},
+	/*
+	on: {
+      pageInit: function () {
+        // do something on page init
+		var page = e.detail.page;
+		
+		var otpCode = page.query.otp; // returning "otp"
+      },
+	  */
+}
+
+</script>

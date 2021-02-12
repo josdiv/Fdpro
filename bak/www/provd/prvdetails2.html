@@ -1,0 +1,64 @@
+<template>
+<div class="page" data-name="prvdetails2">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+          <a href="/accountprvd/" class="link">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Provider Details</div>
+    </div>
+  </div>
+  <div class="page-content">
+  {{#with appdata}}
+  <p></p>
+ <div style="width:100%">
+		
+		<img class="centerimgprvd lazy" src="img/demo.png?tr=w-40,h-40" data-src="https://xperthands.ng/admin/{{profile_img}}"/>
+		
+		<p class="texthd" id="usrdet"><span style="font-size:x-large">{{fullName}}</span>
+		<br>
+		<small>{{prvd_rating}} <i class="ion ion-ios-star iconbluesmall" ></i></small>
+		</p>
+		</div>
+  <div class="block font12">
+      About:
+	  <hr class="hline">
+	  <p>{{prvdabout}}</p>
+    </div>
+	<div class="block font12">
+      Services:
+	  <hr class="hline">
+	  <p>{{prvdprofsrvlist}}</p>
+    </div>
+    <div class="block font12">
+      Service Locations:
+	  <hr class="hline">
+	  <p>{{prvdprofcitylist}}</p>
+    </div>
+	<div class="block font12">
+      Address:
+	  <hr class="hline">
+	  <p>{{prvdadd}}</p>
+    </div>
+	 
+	{{/with}}
+  </div>
+ 
+ 
+
+
+</div>
+</template>
+<script>
+  return {
+    data: function () {
+      return {		
+		//read data from root object
+        appdata: this.$app.data.appdata,
+      };
+    },
+	};
+</script>

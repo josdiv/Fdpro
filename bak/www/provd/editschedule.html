@@ -1,0 +1,282 @@
+<template>
+<div class="page" data-name="editschedule">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+          <a href="/srvrequest/" class="link">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Booking Details</div>
+    </div>
+  </div>
+  <div class="page-content">
+	 {{#each usrvDets}}
+	 <div class="list no-hairlines-md">
+      <ul>
+	   <li class="item-content item-input item-input-with-info">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input type="text" class="frmtxt" placeholder="Select date" value="{{service_date}}" name="srvdate" id="demo-calendar-modal"/>
+				  <div class="item-input-info lblcolor">Select Date:</div>
+                </div>
+              </div>
+          </li>
+		
+        <li class="item-content item-input item-input-with-info">
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <select class="frmtxt" name="srvtime" id="srvtime">
+				 <option value="{{service_time}}" selected>{{service_time}}</option>
+                <option value="8am">8 am</option>
+                <option value="9am">9 am</option>
+                <option value="10am">10 am</option>
+                <option value="11am">11 am</option>
+                <option value="12pm">12 pm</option>
+                <option value="1pm">1 pm</option>
+                <option value="2pm">2 pm</option>
+                <option value="3pm">3 pm</option>
+                <option value="4pm">4 pm</option>
+                <option value="5pm">5 pm</option>
+              </select>
+              <div class="item-input-info lblcolor">Select Time:</div>
+            </div>
+          </div>
+        </li>
+		
+		<li class="item-content item-input item-input-with-info">
+          <div class="item-inner">
+            <div class="item-input-wrap">
+             <textarea id="srvdetails" class="frmtxt" value="{{service_request}}" placeholder="What you need fixed!"></textarea>
+              <div class="item-input-info lblcolor">Service Details:</div>
+            </div>
+          </div>
+        </li>
+		
+        <li class="item-content item-input item-input-with-info">
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <textarea id="srvadd" class="frmtxt" value="{{service_add}}" placeholder="Where you want the Service"></textarea>
+              <div class="item-input-info lblcolor">Your Address:</div>
+            </div>
+          </div>
+        </li>
+	</ul>
+	</div>
+	{{/each}} 
+	
+	<div class="block">
+		<a @click="edtService" class="button button-fill button-big" style="background:#034679">Re-Schedule</a>
+    </div>
+	
+
+	
+  </div>
+ 
+ 
+
+
+</div>
+</template>
+<style>
+.iconlarge-x
+{
+color: #e62b1e;
+font-size: large;
+}
+.textsmall
+{
+font-size:small;
+text-align: justify;
+}
+</style>
+<script>
+  return {
+  data: function () {
+      return {		
+		//read data from root object
+        //userAlertdate: this.$app.data.userAlertdate,
+        usrvDets: this.$app.data.usrvDets,
+      };
+    },
+    on: {
+      pageInit: function(e, page) {
+        var self = this;
+        var today = new Date();
+        var app = self.$app;
+        var $ = self.$;
+       
+        // Custom modal
+        self.calendarModal = app.calendar.create({
+          inputEl: '#demo-calendar-modal',
+          openIn: 'customModal',
+          header: true,
+          footer: true,
+          dateFormat: 'yyyy-mm-dd',
+        });
+        // Inline with custom toolbar
+        var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        self.calendarInline = app.calendar.create({
+          containerEl: '#demo-calendar-inline-container',
+          value: [new Date()],
+          renderToolbar: function() {
+            return '<div class="toolbar calendar-custom-toolbar no-shadow">' +
+              '<div class="toolbar-inner">' +
+              '<div class="left">' +
+              '<a href="#" class="link icon-only"><i class="icon icon-back ' + (self.$theme.md ? 'color-black' : '') + '"></i></a>' +
+              '</div>' +
+              '<div class="center"></div>' +
+              '<div class="right">' +
+              '<a href="#" class="link icon-only"><i class="icon icon-forward ' + (self.$theme.md ? 'color-black' : '') + '"></i></a>' +
+              '</div>' +
+              '</div>' +
+              '</div>';
+          },
+          on: {
+            init: function(c) {
+              $('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
+              $('.calendar-custom-toolbar .left .link').on('click', function() {
+                self.calendarInline.prevMonth();
+              });
+              $('.calendar-custom-toolbar .right .link').on('click', function() {
+                self.calendarInline.nextMonth();
+              });
+            },
+            monthYearChangeStart: function(c) {
+              $('.calendar-custom-toolbar .center').text(monthNames[c.currentMonth] + ', ' + c.currentYear);
+            }
+          }
+        });
+      },
+      pageBeforeRemove() {
+        var self = this;
+        self.calendarModal.destroy();
+        self.calendarInline.destroy();
+      },
+    },
+	methods:{
+		edtService: function () {
+		// App instance
+			var app = this.$app;
+
+		//get variables from form
+		//var srvdate = document.getElementsByName("srvdate");
+		var srvdate = document.querySelector('input[name="srvdate"]').value;
+		//var srvdate2 = $$('#srvdate2').val();;
+		//var srvtime = document.getElementsByName("srvtime").value;
+		var srvdetails = document.getElementById("srvdetails").value;
+		var srvtime = $$('#srvtime').val();
+		//var srvdetails = $$('#srvdetails').val();
+		var srvadd = $$('#srvadd').val();
+		
+		/*future usemap html date
+		<li class="item-content item-input item-input-with-info">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input type="date" class="frmtxt" placeholder="Select date" name="srvdate2" id="srvdate2" />
+				  <div class="item-input-info lblcolor">Select Date:</div>
+                </div>
+              </div>
+          </li>
+		
+		*/
+
+		if (!srvdate || !srvtime|| !srvdetails || !srvadd){
+		  app.dialog.alert('Please fill in all fields');
+		  //app.dialog.alert(srvdate+' '+srvtime+' '+srvdetails+' '+srvadd+' '+srvdate2);
+		  return;
+		 }
+		
+		//app.dialog.alert(srvdate+' '+srvtime+' '+srvdetails+' '+srvadd+' '+srvdate2);
+		//Retrieve Global Object
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		var usrvsno = app.data.appdata.usrvsno;
+		var catName = app.data.appdata.catName;
+		
+		// Show Preloader
+		//app.preloader.show();
+		app.dialog.progress();
+		
+		
+		//Update Server Record ajax
+		app.request({
+				url: url+'type=editservice',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				usrvsno: usrvsno,
+				srvdate: srvdate,
+				srvtime: srvtime,
+				srvdetails: srvdetails,
+				srvadd: srvadd,
+				userPhone: userPhone
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				 
+				  if (adata.message == "success") {
+						app.data.appdata.userSrvReqs = adata.userSrvReqs;
+						app.data.userSrvReqList = adata.userSrvReqList;
+					// Create toast
+					//if (!app.toastIcon) {
+							  app.toastIcon = app.toast.create({
+								icon: '<i class="material-icons">star</i>',
+								text: 'Completed',
+								position: 'center',
+								closeTimeout: 2000,
+							  });
+					//}
+							// Open it
+							//app.toastIcon.open();
+
+							// Create notification
+						   // if (!app.notificationFull) {
+							  app.notificationFull = app.notification.create({
+								icon: '<i class="ion ion-ios-construct" style="color:#e62b1e;"></i>',
+								title: 'XpertHands',
+								titleRightText: 'now',
+								subtitle: 'Booking Re-Scheduled',
+								text: 'A Service Provider will contact you!',
+								closeTimeout: 10000,
+							  });
+						   // }
+							// Open it
+							app.notificationFull.open()
+							app.data.appdata.userSrvReqs = adata.userSrvReqs;
+							app.data.userSrvReqList = adata.userSrvReqList;
+							
+							//Go to Dashboard
+							app.router.navigate('/dashboard/');
+					  }
+					  
+					  if (adata.message == "error") {
+					  app.dialog.alert(adata.errormsg);
+					  }
+					
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again! '+error.exception+error.code);
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.dialog.close();}, 1000);
+				}
+			});
+			
+			
+		
+        
+		
+	
+		
+	
+		}
+
+	},
+  }
+</script>

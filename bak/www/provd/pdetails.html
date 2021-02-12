@@ -1,0 +1,141 @@
+<template>
+<div class="page" data-name="pdetails">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+          <a href="/providerlist/" class="link">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Provider Details</div>
+    </div>
+  </div>
+  <div class="page-content">
+  <p></p>
+ <div style="width:100%">
+		{{#with providerappdata}}
+		<img class="centerimgprvd lazy" src="img/demo.png?tr=w-40,h-40" data-src="https://xperthands.ng/admin/{{puserImg}}"/>
+		
+		<p class="texthd" id="usrdet"><span style="font-size:x-large">{{pfullName}}</span>
+		<br>
+		<small>{{prating}} <i class="ion ion-ios-star iconbluesmall" ></i></small>
+		</p>
+		{{/with}}
+		</div>
+		{{#each srvPrvdDetails}}
+  <div class="block font12">
+      About:
+	  <hr class="hline">
+	  <p>{{srv_des}}</p>
+    </div>
+	<div class="block font12">
+      Services:
+	  <hr class="hline">
+	  <p>{{srv_type}}</p>
+    </div>
+    <div class="block font12">
+      Service Locations:
+	  <hr class="hline">
+	  <p>{{srv_city}}</p>
+    </div>
+	{{/each}}
+	  <div class="block font12">
+     Reviews:
+	  <hr class="hline">
+	  <p>
+	  {{#each srvPrvdRating}}
+	  <div class="card card-outline">
+      <div class="card-content card-content-padding">
+		<div class="list">
+			  <ul>
+				<li>
+				  <div class="item-content">
+					<div class="item-media"><i class="ion ion-ios-ribbon iconlarge" ></i></div>
+					<div class="item-inner">
+					  <div class="item-title font12">{{user_fullname}}
+					  <div class="item-footer">{{datefmt}}</div>
+					  </div>
+					  
+					  <div class="item-after"><small>{{review_star}}&nbsp;<i class="ion ion-ios-star iconbluesmall" ></i></small></div>
+					</div>
+				  </div>
+				</li>
+				</ul>
+		</div>
+		<p class="font12">{{user_review}}</p>
+	  </div>
+     </div>
+	 {{else}}
+	 <p class="font12">No Reviews Yet!</p>
+	  {{/each}}
+	  </p>
+    </div>
+    
+
+
+	<div class="block">
+		<a @click="bookProvider" class="button button-fill button-round button-big" style="background:#034679">Book Provider</a>
+    </div>
+	
+  </div>
+ 
+ 
+
+
+</div>
+</template>
+<script>
+
+return {
+	
+	 
+	// Page Events
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+		
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+		/*
+		app.data.appdata.puserImg = page.route.query.userImg;
+		app.data.appdata.pfullName = page.route.query.fullName;
+		app.data.appdata.prating = page.route.query.rating;
+		*/
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);	
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    },
+	data: function () {
+      return {			
+        providerappdata: app.data.appdata,
+        srvPrvdDetails: app.data.srvPrvdDetails,
+        srvPrvdRating: app.data.srvPrvdRating
+      };
+    },
+	methods: {
+	bookProvider: function () {
+		// App instance
+		var app = this.$app;
+		app.data.appdata.recomprvd = "No";
+		app.router.navigate('/schedule/');
+	},
+	},
+
+}
+
+</script>

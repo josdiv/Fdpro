@@ -1,0 +1,110 @@
+<template>
+<div class="page" data-name="city">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+        <a href="/dashboard/" class="link">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Select City</div>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="block-title">Select Your Current City</div>
+<div class="list">
+      <ul>
+	  {{#each appcity}}
+        <li>
+          <label class="item-radio item-content">
+            <input type="radio" name="city" id="city" value="{{this}}" />
+            <i class="icon icon-radio"></i>
+            <div class="item-inner">
+              <div class="item-title font14">{{this}}</div>
+            </div>
+          </label>
+        </li>
+		{{/each}}
+      </ul>
+    </div>
+	<div class="block">
+			<a class="button button-raised button-big button-fill button-round" @click="setCity" style="background:#034679">Submit</a>
+		</div>
+  </div>
+</div>
+</template>
+<script>
+return {
+	methods:{
+		setCity: function () {
+		//var fullName = app.data.appdata.fullName;
+		//var userPhone = app.data.appdata.userPhone;
+		
+		//app.router.navigate('/account/');
+		//document.getElementById("usrdet").innerHTML = fullName + ' <br> ' + userPhone; 
+		// App instance
+		var app = this.$app;
+		
+		//Get selected City
+		var userCity = document.querySelector('input[name="city"]:checked').value;
+		
+		if (!userCity){
+			  app.dialog.alert('Please select a City');
+			  return;
+			 }
+		
+		//Set Global object userCity
+		app.data.appdata.userCity = userCity;
+		
+		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		
+		// Show Preloader
+		app.dialog.progress();
+		
+		//Update Server Record ajax
+		app.request({
+				url: url+'type=setcity',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				userCity: userCity,
+				userPhone: userPhone
+				},
+				crossDomain:true,
+				success:function(data){
+				 
+				 
+				  if (data.message == "success") {
+						app.router.navigate('/dashboard/');
+					  }
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again!');
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.dialog.close();}, 1000);
+				}
+				}); 
+				
+		//Close Dialog
+		//setTimeout(function () {app.dialog.close();}, 1000);
+	
+		}
+
+	},
+	 data: function () {
+      return {		
+		//read data from root object
+        appcity: this.$app.data.appcity,
+      };
+    },
+
+}
+
+</script>

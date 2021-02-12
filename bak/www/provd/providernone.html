@@ -1,0 +1,63 @@
+<template>
+<div class="page" data-name="providerlistnone">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+          <a href="#" class="link back">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Provider List</div>
+    </div>
+  </div>
+  <div class="page-content">
+  
+	
+  <div class="block block-strong">
+      <p>Providers Near you:</p>
+    </div>
+	<div class="block">
+	<center><i class="ion ion-ios-construct iconlarge-xx"></i></center>
+	
+	</div>
+	<div class="block">
+	<p><strong><center>None Available at the Moment!</center></strong></p>
+	
+	</div>
+	
+	<div class="block">
+		<a @click="recomProvider" class="button button-fill button-big" style="background:#034679">Use A Recommended Provider</a>
+    </div>
+	
+  </div>
+ 
+ 
+
+</div>
+</template>
+<script>
+return {
+	
+	 data: function () {
+      return {		
+		//read data from root object
+        curappcity: app.data.appdata.userCity,
+      };
+    },
+	methods: {
+	recomProvider: function () {
+		// App instance
+		var app = this.$app;
+		
+		app.dialog.alert('Our System will Recommended the best Provider as per your Service Request.');
+		
+		app.router.navigate('/schedule/');
+	}	
+	},
+	
+	
+
+}
+
+</script>

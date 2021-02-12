@@ -1,0 +1,503 @@
+<template>
+<div class="page" data-name="mydocs">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+          <a href="/prvdashboard/" class="link">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">My Documents</div>
+    </div>
+  </div>
+  
+  
+  <div class="page-content">		
+	
+	
+	{{#each getprvdDocs}}
+	<div class="card card-outline">
+      <div class="card-content card-content-padding">
+		<div class="list">
+			  <ul>
+				<li>
+				  <div class="item-content">
+				  <div class="item-media itmsize"><img src="img/addimage.png" style="height:40px"></div>
+					<div class="item-inner">
+					  <div class="item-title font14">Current Photo  
+					  <div class="item-footer">Required</div>
+					  </div>
+					  
+					  <div class="item-after"><small><i class="ion ion-ios-cloud-upload iconblueright alnright" ></i><br><span id="photoDate2">{{datefmt}}</span></small></div>
+					</div>
+				  </div>
+				</li>
+				</ul>
+		</div>
+		<p class="font12"><small>Take a photo with your Phone Camera. This image will be your Profile Photo</small><br>
+		
+		</p>
+	  </div>
+	  <div class="card-footer"><a class=""><strong>Status:</strong> <span id="photoStatus"style="color:#000000">{{doc_stat}}</span></a>{{#js_if "this.doc_stat !== 'Accepted'"}}<a class="">|</a><a @click="uploadPhoto('Photo','Yes')" class="link">Upload</a>{{/js_if}}</div>
+     </div>
+	{{/each}}
+	
+	
+	{{#each getprvdId}}
+	<div class="card card-outline">
+      <div class="card-content card-content-padding">
+		<div class="list">
+			  <ul>
+				<li>
+				  <div class="item-content">
+				  <div class="item-media itmsize"><img src="img/id.png" style="height:40px"></div>
+					<div class="item-inner">
+					  <div class="item-title font14">Valid ID 
+					  <div class="item-footer">Required</div>
+					  </div>
+					  
+					  <div class="item-after"><small><i class="ion ion-ios-cloud-upload iconblueright alnright" ></i><br><span id="idDate">{{datefmt}}</span></small></div>
+					</div>
+				  </div>
+				</li>
+				</ul>
+		</div>
+		<p class="font12"><small>Upload Photo of Valid Driver's License, Voters Card or International Passport</small></p>
+	  </div>
+	   <div class="card-footer"><a class=""><strong>Status:</strong> <span id="idStatus" style="color:#000000">{{doc_stat}}</span></a>{{#js_if "this.doc_stat !== 'Accepted'"}}<a class="">|</a><a @click="getPhoto('Id','Yes')" class="link">Upload</a>{{/js_if}}</div>
+     </div>
+	{{/each}}
+	
+	{{#each getprvdAdd}}
+	<div class="card card-outline">
+      <div class="card-content card-content-padding">
+		<div class="list">
+			  <ul>
+				<li>
+				  <div class="item-content">
+				  <div class="item-media itmsize"><img src="img/map.png" style="height:40px"></div>
+					<div class="item-inner">
+					  <div class="item-title font14">Verify Address
+					  <div class="item-footer">Required</div>
+					  </div>
+					  
+					  <div class="item-after"><small><i class="ion ion-ios-cloud-upload iconblueright alnright" ></i><br><span id="addDate">{{datefmt}}</span></small></div>
+					</div>
+				  </div>
+				</li>
+				</ul>
+		</div>
+		<p class="font12"><small>Upload Photo of Valid Bank Statement, Utility Bill with your Address</small></p>
+	  </div>
+	  <div class="card-footer"><a class=""><strong>Status:</strong> <span id="addStatus" style="color:#000000">{{doc_stat}}</span></a>{{#js_if "this.doc_stat !== 'Accepted'"}}<a class="">|</a><a @click="getPhoto('Address','Yes')" class="link">Upload</a>{{/js_if}}</div>
+     </div>
+	{{/each}}
+	
+{{#each getprvdPolice}}
+	<div class="card card-outline">
+      <div class="card-content card-content-padding">
+		<div class="list">
+			  <ul>
+				<li>
+				  <div class="item-content">
+				  <div class="item-media itmsize"><img src="img/approved.png" style="height:40px"></div>
+					<div class="item-inner">
+					  <div class="item-title font14">Police Clearance 
+					  <div class="item-footer">Required</div>
+					  </div>
+					  
+					  <div class="item-after"><small><i class="ion ion-ios-cloud-upload iconblueright alnright" ></i><br><span id="policeDate">{{datefmt}}</span></small></div>
+					</div>
+				  </div>
+				</li>
+				</ul>
+		</div>
+		<p class="font12"><small>Upload your Police Clearance form in pdf.</small></p>
+		
+	  </div>
+	  <div class="card-footer"><a class=""><strong>Status:</strong> <span id="policeStatus" style="color:#000000">{{doc_stat}}</span></a>{{#js_if "this.doc_stat !== 'Accepted'"}}<a class="">|</a><a @click="getPhoto('Police','Yes')" class="link">Upload</a>{{/js_if}}</div>
+     </div>
+	{{/each}}
+	
+	{{#each getprvdCac}}
+	<div class="card card-outline">
+      <div class="card-content card-content-padding">
+		<div class="list">
+			  <ul>
+				<li>
+				  <div class="item-content">
+				  <div class="item-media itmsize"><img src="img/agreement.png" style="height:40px"></div>
+					<div class="item-inner">
+					  <div class="item-title font14">CAC Certificate 
+					  <div class="item-footer">Required</div>
+					  </div>
+					  
+					  <div class="item-after"><small><i class="ion ion-ios-cloud-upload iconblueright alnright" ></i><br><span id="cacDate">{{datefmt}}</span></small></div>
+					</div>
+				  </div>
+				</li>
+				</ul>
+		</div>
+		<p class="font12"><small>Upload Photo of CAC Certificate of Company/Business Name Registration</small></p>
+	  </div>
+	   <div class="card-footer"><a class=""><strong>Status:</strong> <span id="cacStatus" style="color:#000000">{{doc_stat}}</span></a>{{#js_if "this.doc_stat !== 'Accepted'"}}<a class="">|</a><a @click="getPhoto('CAC','Yes')" class="link">Upload</a>{{/js_if}}</div>
+     </div>
+	 {{/each}}
+	
+	{{#each getprvdCert}}
+	<div class="card card-outline">
+      <div class="card-content card-content-padding">
+		<div class="list">
+			  <ul>
+				<li>
+				  <div class="item-content">
+				  <div class="item-media itmsize"><img src="img/contract.png" style="height:40px"></div>
+					<div class="item-inner">
+					  <div class="item-title font14">Professional Competency 
+					  <div class="item-footer">Optional</div>
+					  </div>
+					  
+					  <div class="item-after"><small><i class="ion ion-ios-cloud-upload iconblueright alnright" ></i><br><span id="certDate">{{datefmt}}</small></div>
+					</div>
+				  </div>
+				</li>
+				</ul>
+		</div>
+		<p class="font12"><small>Upload Photo of Valid Professional Competency Certificate if any.</small></p>
+	  </div>
+	  <div class="card-footer"><a class=""><strong>Status:</strong> <span id="certStatus" style="color:#000000">{{doc_stat}}</span></a>{{#js_if "this.doc_stat !== 'Accepted'"}}<a class="">|</a><a @click="getPhoto('Certificate','No')" class="link">Upload</a>{{/js_if}}</div>
+     </div>
+	 {{/each}}
+	 
+  </div>
+ 
+ 
+
+</div>
+</template>
+<style>
+.alnright
+{float: right;}
+.itmsize
+{min-width:20px !important;}
+</style>
+<script>
+  return {
+    data: function () {
+      return {		
+		//read data from root object
+        getprvdDocs: this.$app.data.getprvdDocs,
+        getprvdId: this.$app.data.getprvdId,
+        getprvdAdd: this.$app.data.getprvdAdd,
+        getprvdPolice: this.$app.data.getprvdPolice,
+        getprvdCac: this.$app.data.getprvdCac,
+        getprvdCert: this.$app.data.getprvdCert,
+      };
+    },
+	methods:{
+		uploadPhoto: function (fileType, fileReq) {
+		
+		// App instance
+		var app = this.$app;
+		
+		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		
+		navigator.camera.getPicture(onSuccess, onFail, {  
+			 quality: 65,
+			destinationType: Camera.DestinationType.FILE_URI,
+			encodingType: Camera.EncodingType.JPEG,
+			correctOrientation: true,
+			targetWidth: 720,
+			targetHeight: 1280,
+			sourceType : Camera.PictureSourceType.CAMERA 
+		   });  
+		   
+		   function onSuccess(imageData) { 
+			  //var image = document.getElementById('myImage'); 
+			  //image.src = "data:image/jpeg;base64," + imageData; 
+			  //image.src = imageData; 
+			  //document.getElementById("imagesrc").innerHTML = image.src; 
+		    
+		   
+		    var options = new FileUploadOptions();
+			 options.fileKey = "file";
+			 options.fileName = imageData.substr(imageData.lastIndexOf('/') + 1);
+			 options.mimeType = "image/jpeg";
+			 console.log(options.fileName);
+			 var params = new Object();
+			 params.value1 = "test";
+			 params.value2 = "param";
+			 options.params = params;
+			 options.chunkedMode = false;
+			 
+			 // Show Preloader
+			app.dialog.progress();
+			 
+		    var ft = new FileTransfer();
+			//var uid=$$('#uid4').val();
+			//var frmcode=$$('#frmcode').val();	
+			var url = 'http://xperthands.ng/mapp/api/api?type=fileupload&fileType='+fileType+'&fileReq='+fileReq+'&userPhone='+userPhone;
+			 ft.upload(imageData, url, function(result){
+			 console.log(JSON.stringify(result));
+			 //myApp.alert(JSON.stringify(result));
+			 //app.dialog.alert('Success!');
+			//setTimeout(function () {app.dialog.close();}, 1000); //Close Dialog
+			
+			var d = new Date();
+			
+			//Use if to update the rest
+			if(fileType == "Photo")
+			{
+			document.getElementById("photoStatus").innerHTML = "Submitted"; 
+			document.getElementById("photoDate").innerHTML = "Now"; 
+			document.getElementById("photoDate2").innerHTML = d.toDateString(); 
+			
+			//app.dialog.alert('Success! Image Uploaded.');
+			//if (!app.toastBottom) {
+						  app.toastBottom =  app.toast.create({
+							text: 'Success! Image Uploaded.',
+							closeTimeout: 3000,
+						  });
+						//}
+						
+						
+						// Open it
+						app.toastBottom.open();
+			}
+			
+			//Ajax to check if Req Doc is complete and update App data - Later - can be called as a function in Root area also get & set new profile photo for photo upload
+			//Update Server Record ajax
+			//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		
+			app.request({
+				url: url+'type=getDocData',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				userPhone: userPhone,
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				 
+				  if (adata.message == "success") {
+						//app.router.navigate('/account/');
+					app.data.appdata.profile_img = adata.profile_img;
+					app.data.appdata.prvdReqDocs = adata.prvdReqDocs;
+						
+						
+					  }
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again!');
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.dialog.close();}, 1000);
+				}
+				}); 
+			
+			 }, function(error){
+			 console.log(JSON.stringify(error));
+			 setTimeout(function () {app.dialog.close();}, 1000); //Close Dialog
+			 app.dialog.alert('An Error Occurred. Take Another Photo!');
+			 }, options);
+ 
+			} 
+		   function onFail(message) {
+			  setTimeout(function () {app.dialog.close();}, 1000); //Close Dialog		   
+			  alert('Failed because: ' + message); 
+		   } 
+		
+		},	
+		getPhoto: function (fileType, fileReq) {
+		
+		// App instance
+		var app = this.$app;
+		
+		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		
+		navigator.camera.getPicture(onSuccess, onFail, {  
+			  quality: 65, 
+			  destinationType: Camera.DestinationType.FILE_URI,
+			  correctOrientation: true,
+			  targetWidth: 720,
+			  targetHeight: 1280,
+			  sourceType: Camera.PictureSourceType.PHOTOLIBRARY			  
+		   }); 
+		   
+		   function onSuccess(imageData) { 
+			  //var image = document.getElementById('myImage'); 
+			  //image.src = "data:image/jpeg;base64," + imageData; 
+			  //image.src = imageData; 
+			  //document.getElementById("imagesrc").innerHTML = image.src; 
+		    
+		   
+		    var options = new FileUploadOptions();
+			 options.fileKey = "file";
+			 options.fileName = imageData.substr(imageData.lastIndexOf('/') + 1);
+			 options.mimeType = "image/jpeg";
+			 console.log(options.fileName);
+			 var params = new Object();
+			 params.value1 = "test";
+			 params.value2 = "param";
+			 options.params = params;
+			 options.chunkedMode = false;
+			 
+			 // Show Preloader
+			app.dialog.progress();
+			 
+		    var ft = new FileTransfer();
+			//var uid=$$('#uid4').val();
+			//var frmcode=$$('#frmcode').val();	
+			var url = 'http://xperthands.ng/mapp/api/api?type=fileupload&fileType='+fileType+'&fileReq='+fileReq+'&userPhone='+userPhone;
+			 ft.upload(imageData, url, function(result){
+			 console.log(JSON.stringify(result));
+			 //myApp.alert(JSON.stringify(result));
+			 //app.dialog.alert('Success!');
+			//setTimeout(function () {app.dialog.close();}, 1000); //Close Dialog
+			
+			var d = new Date();
+			
+			//Use if to update the rest
+			if(fileType == "Id")
+			{
+			document.getElementById("idStatus").innerHTML = "Submitted"; 
+			document.getElementById("idDate").innerHTML = d.toDateString(); 
+			}
+			
+			if(fileType == "Address")
+			{
+			document.getElementById("addStatus").innerHTML = "Submitted"; 
+			document.getElementById("addDate").innerHTML = d.toDateString(); 
+			}
+			
+			if(fileType == "Police")
+			{
+			document.getElementById("policeStatus").innerHTML = "Submitted"; 
+			document.getElementById("policeDate").innerHTML = d.toDateString(); 
+			}
+			
+			if(fileType == "CAC")
+			{
+			document.getElementById("cacStatus").innerHTML = "Submitted"; 
+			document.getElementById("cacDate").innerHTML = d.toDateString(); 
+			}
+			
+			if(fileType == "Certificate")
+			{
+			document.getElementById("certStatus").innerHTML = "Submitted"; 
+			document.getElementById("certDate").innerHTML = d.toDateString(); 
+			}
+			
+			//app.dialog.alert('Success! Image Uploaded.');
+			//if (!app.toastBottom) {
+						  app.toastBottom =  app.toast.create({
+							text: 'Success! File Uploaded.',
+							closeTimeout: 3000,
+						  });
+						//}
+						
+						
+						// Open it
+						app.toastBottom.open();
+			
+			
+			//Ajax to check if Req Doc is complete and update App data - Later - can be called as a function in Root area also get & set new profile photo for photo upload
+			//Update Server Record ajax
+			//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		
+			app.request({
+				url: url+'type=getDocData',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				userPhone: userPhone,
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				 
+				  if (adata.message == "success") {
+						//app.router.navigate('/account/');
+					app.data.appdata.profile_img = adata.profile_img;
+					app.data.appdata.prvdReqDocs = adata.prvdReqDocs;
+						
+						
+					  }
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again!');
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.dialog.close();}, 1000);
+				}
+				}); 
+			
+			 }, function(error){
+			 console.log(JSON.stringify(error));
+			 setTimeout(function () {app.dialog.close();}, 1000); //Close Dialog
+			 app.dialog.alert('An Error Occurred. Take Another Photo!');
+			 }, options);
+ 
+			} 
+		   function onFail(message) {
+			  setTimeout(function () {app.dialog.close();}, 1000); //Close Dialog		   
+			  alert('Failed because: ' + message); 
+		   } 
+		
+		},	
+	}
+  };
+  
+  /*
+  Doc Stats - Pending, Submitted, Accepted/Rejected
+  Doc Type: Photo, ID, Address, Police, CAC, Certificate*(optional)
+  
+  */
+  /*
+  
+  SCRAP
+  
+   
+	<div class="card card-outline">
+      <div class="card-content card-content-padding">
+		<div class="list">
+			  <ul>
+				<li>
+				  <div class="item-content">
+				  <div class="item-media itmsize"><img src="img/addimage.png" style="height:40px"></div>
+					<div class="item-inner">
+					  <div class="item-title font14">Current Photo  
+					  <div class="item-footer">Required</div>
+					  </div>
+					  
+					  <div class="item-after"><small><i class="ion ion-ios-cloud-upload iconblueright alnright" ></i><br><span id="photoDate">Dec. 30, 2018</span></small></div>
+					</div>
+				  </div>
+				</li>
+				</ul>
+		</div>
+		<p class="font12"><small>Take a photo with your Phone Camera</small>
+		<div style="background-image:url(./img/sl2.jpg);height:200px;font-size:x-small" valign="bottom" class="card-header"><a href='/prvdashboard/'><button class="col button button-small button-fill color-blue" style="font-size:x-small">Delete</button></a></div>
+		</p>
+	  </div>
+	  <div class="card-footer"><a class=""><strong>Status:</strong> <span style="color:#000000">Accepted</span></a><a class="">|</a><a href="/scrap1/" class="link">Upload</a></div>
+     </div>
+	 
+	 */
+</script>

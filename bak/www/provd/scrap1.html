@@ -1,0 +1,423 @@
+<template>
+<div class="page" data-name="scrap1">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+        <a href="#" class="link back">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Scrap Page</div>
+    </div>
+  </div>
+  <div class="page-content">
+<div class="block"></div>
+<div class="block">
+   <button id="cameraTakePicture" >TAKE PICTURE</button>
+	 <img id="myImagex" style="max-width:100%"></img>
+	
+	 <a class="col button button-raised" id="cameraTakePicturex" @click="takePhoto">TAKE PICTURE</a>
+	 <br>
+	 <img id="myImage" style="max-width:100%"></img>
+	 <br>
+	 <span id="imagesrc"></span>
+	 <p></p>
+	 <a class="col button button-raised" id="cameraTakePicturex2" @click="getPhoto">GET PICTURE</a>
+	 <br>
+	 <img id="myImage2" style="max-width:100%">
+	 <br>
+	 <span id="imagesrc2"></span>
+	 <p></p>
+	 <a class="col button button-raised" id="cameraTakePicturex3" @click="takePhotoMedia">ADD MEDIA - PICTURE</a>
+	 <br>
+	 <img id="myImage3" style="max-width:100%">
+	 <br>
+	 <span id="imagesrc3"></span>
+	 <p></p>
+	 <a class="col button button-raised" id="cameraTakePicturex3" @click="takeAudioMedia">ADD MEDIA - AUDIO</a>
+	 <br>
+	 <span id="audioID"></span>
+	 <img id="myImageAudio" style="max-width:100%"></img>
+	 <br>
+	 <a class="external" id="filesrc">LISTEN TO AUDIO</a>
+	 <p></p>
+	 <a class="col button button-raised" id="cameraTakePicturex3" @click="takeVideoMedia">ADD MEDIA - VIDEO</a>
+	 <br>
+	 <span id="videoID"></span>
+	 <br>
+	 <a class="external" id="filesrc2">VIEW VIDEO</a>
+	 <p></p>
+	 
+</div>	
+	 
+</form>
+	
+	
+	
+	
+  </div>
+</div>
+</template>
+<script>
+
+  return {
+    
+	
+	methods: {
+      takePhoto: function() {
+			var app = this.$app; 
+		   navigator.camera.getPicture(onSuccess, onFail, {  
+			 quality: 98,
+			destinationType: Camera.DestinationType.FILE_URI,
+			encodingType: Camera.EncodingType.JPEG,
+			correctOrientation: true,
+			sourceType : Camera.PictureSourceType.CAMERA 
+		   });  
+		   
+		   function onSuccess(imageData) { 
+			  var image = document.getElementById('myImage'); 
+			  //image.src = "data:image/jpeg;base64," + imageData; 
+			  image.src = imageData; 
+			  document.getElementById("imagesrc").innerHTML = image.src; 
+		    
+		   
+		    var options = new FileUploadOptions();
+			 options.fileKey = "file";
+			 options.fileName = imageData.substr(imageData.lastIndexOf('/') + 1);
+			 options.mimeType = "image/jpeg";
+			 console.log(options.fileName);
+			 var params = new Object();
+			 params.value1 = "test";
+			 params.value2 = "param";
+			 options.params = params;
+			 options.chunkedMode = false;
+			 
+		    var ft = new FileTransfer();
+			//var uid=$$('#uid4').val();
+			//var frmcode=$$('#frmcode').val();	
+			var url = 'http://xperthands.ng/mapp/api/api?type=upload&rand=123456';
+			 ft.upload(imageData, url, function(result){
+			 console.log(JSON.stringify(result));
+			 //myApp.alert(JSON.stringify(result));
+			 app.dialog.alert('Success!');
+			 }, function(error){
+			 console.log(JSON.stringify(error));
+			 app.dialog.alert('An Error Occurred. Take Another Photo!');
+			 }, options);
+ 
+			} 
+		   function onFail(message) { 
+			  alert('Failed because: ' + message); 
+		   } 
+		
+		
+      },
+	  getPhoto: function() {
+        
+		   navigator.camera.getPicture(onSuccess, onFail, {  
+			  quality: 98, 
+			  destinationType: Camera.DestinationType.FILE_URI,
+			  correctOrientation: true,
+			  sourceType: Camera.PictureSourceType.PHOTOLIBRARY			  
+		   });  
+		   
+		   function onSuccess(imageURL) { 
+			  var image2 = document.getElementById('myImage2'); 
+			  image2.src = imageURL; 
+			  document.getElementById("imagesrc2").innerHTML = image2.src; 
+		   }  
+		   
+		   function onFail(message) { 
+			  alert('Failed because: ' + message); 
+		   } 
+		
+		
+      },
+	  takePhotoMedia: function() {
+        
+		    var options = {
+			  limit: 1,
+			  quality: 98,
+			correctOrientation: true
+		   };
+		   navigator.device.capture.captureImage(onSuccess, onError, options);
+
+		   function onSuccess(mediaFiles) {
+			  var i, path, len;
+			  for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+				 path = mediaFiles[i].fullPath;
+				 console.log(mediaFiles);
+			  }
+			  var image3 = document.getElementById('myImage3'); 
+			  image3.src = path; 
+			  document.getElementById("imagesrc3").innerHTML = image3.src; 
+		   }
+
+		   function onError(error) {
+			  navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+		   }
+		
+		
+      },
+	  takeAudioMedia: function() {
+        /*
+		    var options = {
+			  limit: 1,
+			  duration: 10
+		   };
+		   navigator.device.capture.captureAudio(onSuccess, onError, options);
+
+		   function onSuccess(mediaFilesAudio) {
+			  var i, path, len;
+			  for (i = 0, len = mediaFilesAudio.length; i < len; i += 1) {
+				 path = mediaFilesAudio[i].fullPath;
+				 console.log(mediaFilesAudio);
+			  }
+			  
+			  mediaFilesAudio.toString();
+			  app.dialog.alert(mediaFilesAudio);
+		   }
+		   
+		   var filesrc = document.getElementById('filesrc'); 
+			  filesrc.href = path; 
+			  document.getElementById("audioID").innerHTML = path;
+
+		   function onError(error) {
+			  navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+		   }
+		   
+		   
+		   
+		   cordova.plugins.backgroundvideo.start('myxvideo', 'back', true, null, null);
+		   app.dialog.alert("I ran here before;")
+		   setTimeout(function () {cordova.plugins.backgroundvideo.stop(successFn, errorFn);}, 10000);
+		   
+		   
+			
+			 function successFn(recAudio) {
+			 var filesrc = document.getElementById('filesrc'); 
+			  filesrc.href = recAudio; 
+			  document.getElementById("audioID").innerHTML = recAudio;
+			 app.dialog.alert(recAudio);
+			 
+			 }
+		*/
+		
+		//Select File
+		/*fileChooser.open(function(obj) {
+        obj = obj[0];
+         var imageData = obj.path;
+		 console.log(imageData);
+		});
+		*/
+		
+		/*fileChooser.open(function(file) {
+         app.dialog.alert("Name: " + file.name + " URI: " + file.uri + " Mime type: " + file.mime_type + " Extension: " + file.extension +" Path: " + file.path);
+		  var imageData = file.uri;
+		  console.log(imageData);
+		  console.log(file);
+		  console.log(JSON.stringify(file));
+        });
+		
+		*/
+		var successna = function(data) {
+		app.dialog.alert(data.url);
+        console.log(data.url);
+        // do something
+		};
+
+		var errorna = function(msg) {
+			console.log(msg);
+			app.dialog.alert("Error Occurred");
+			//do something
+		};
+
+    filechooser.open({"mime": "application/pdf"}, successna, errorna);
+	
+		/*
+		OurCodeWorld.Filebrowser.filePicker.single({
+			success: function(idata){
+				if(!idata.length){
+					app.dialog.alert('No File Selected!');
+					return;
+				}
+				
+				idata = idata[0];
+				var imageData = idata;
+
+				console.log(idata);
+				// Array with the file path
+				// ["file:///storage/emulated/0/360/security/file.txt"]
+			},
+			error: function(err){
+				console.log(err);
+			}
+		});
+		*/
+		
+/*	
+			var image = document.getElementById('myImageAudio'); 
+			  image.src = imageData; 
+			  document.getElementById("audioID").innerHTML = image.src; 
+		    
+		   
+		    var options = new FileUploadOptions();
+			 options.fileKey = "file";
+			 options.fileName = imageData.substr(imageData.lastIndexOf('/') + 1);
+			 options.mimeType = "image/jpeg";
+			 console.log(options.fileName);
+			 var params = new Object();
+			 params.value1 = "test";
+			 params.value2 = "param";
+			 options.params = params;
+			 options.chunkedMode = false;
+			 
+		    var ft = new FileTransfer();
+			//var uid=$$('#uid4').val();
+			//var frmcode=$$('#frmcode').val();	
+			var url = 'http://xperthands.ng/mapp/api/api?type=upload&rand=123456';
+			 ft.upload(imageData, url, function(result){
+			 console.log(JSON.stringify(result));
+			 //myApp.alert(JSON.stringify(result));
+			 app.dialog.alert('Success!');
+			 }, function(error){
+			 console.log(JSON.stringify(error));
+			 app.dialog.alert('An Error Occurred. Add Another File!');
+			 }, options);
+ */
+			
+      },
+	   takeVideoMedia: function() {
+        
+		    var options = {
+			  limit: 1,
+			  duration: 10
+		   };
+		   
+		   //navigator.device.capture.captureVideo(onSuccess, onError, options);
+		   navigator.device.capture.captureVideo(captureSuccess, captureError, {limit: 1});
+
+		   function captureError(e) {
+				console.log("capture error: "+JSON.stringify(e));
+			}
+
+			function captureSuccess(s) {
+				console.log("Success");
+				console.log(s);
+				console.dir(s[0]);
+				var v = "<video controls='controls'>";
+				v += "<source src='" + s[0].fullPath + "' type='video/mp4'>";
+				v += "</video>";
+				document.querySelector("#videoID").innerHTML = v;
+			}
+		   
+		   var filesrc2 = document.getElementById('filesrc2'); 
+			  filesrc2.href = s[0].fullPath; 
+			  
+		   app.dialog.alert(s[0].fullPath);
+		 /*  function onSuccess(mediaFilesVideo) {
+			  var i, path, len;
+			  for (i = 0, len = mediaFilesVideo.length; i < len; i += 1) {
+				 path = mediaFilesVideo[i].fullPath;
+				 console.log(mediaFilesVideo);
+			  }
+			  
+			  mediaFilesVideo.toString();
+			  app.dialog.alert(mediaFilesVideo);
+		   }
+		   
+		   var filesrc2 = document.getElementById('filesrc2'); 
+			  filesrc2.href = path; 
+			  document.getElementById("videoID").innerHTML = path;
+
+		   function onError(error) {
+			  navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+		   }
+		*/
+		
+      },
+	  },
+	
+	 on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+		//var app = this.$app;
+		//app.router.clearPreviousHistory();
+		
+		/*
+		var toggle = this.$app.toggle.create({
+			el: 'prvdtoggle1',
+			on: {
+			change: function () {
+			console.log('Toggle changed');
+			app.dialog.alert('Hooray');
+			}
+			}
+			})
+		
+		//document.getElementById("prvdtoggle").addEventListener ("click", chgOnlineStatus); 
+		
+		$$('#cameraTakePicture').on('click', function cameraTakePicture() { 
+		   navigator.camera.getPicture(onSuccess, onFail, {  
+			  quality: 100, 
+			  destinationType: Camera.DestinationType.DATA_URL 
+		   });  
+		   
+		   function onSuccess(imageData) { 
+			  var image = document.getElementById('myImage'); 
+			  image.src = "data:image/jpeg;base64," + imageData; 
+		   }  
+		   
+		   function onFail(message) { 
+			  alert('Failed because: ' + message); 
+		   } 
+		
+		
+		//app.dialog.alert('Ready to Take Picture');
+			
+			
+		});
+			
+		*/
+		
+		$$('#cameraTakePicture').on('click', function () {
+		app.dialog.alert('Ready to Take Picture');
+			});
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);
+		this.$app.methods.getPrvdAlerts();
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    }
+  };
+  
+    /*
+  Status:
+  Registered
+  Verified
+  Suspended
+  
+  Profile Complete - True/False
+  
+  
+  Welcome to Provider Dashboard (Coming from Registration - Notification to Complete Profile and Upload required Docs)
+  
+  
+  */
+</script>

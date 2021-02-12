@@ -1,0 +1,376 @@
+<template>
+<div class="page" data-name="srvinvoice">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+          <a href="/bkdetail1/" class="link">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Invoice</div>
+    </div>
+  </div>
+  <div class="page-content">
+	<div class="block">
+        <div class="list">
+			  <ul>
+				<li>
+				  <div class="item-content">
+					<div class="item-media"><i class="ion ion-ios-contact iconlargeorange" style="font-size: 60px" ></i></div>
+					<div class="item-inner">
+					  <div class="item-title font12">{{appdata.srv_serviceid}}
+					  <div class="item-footer">{{appdata.srv_catname}}</div>
+					  <div>{{#with appdata}}
+						{{#js_if "this.srv_invBal > 0"}}
+						<span class="badge color-red badgefont">UNPAID</span>
+						{{else}}
+						<span class="badge color-green badgefont">PAID</span>
+						{{/js_if}}
+						{{/with}}
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</li>
+				</ul>
+		</div>
+      </div>
+	 <div class="block list no-hairlines-md">
+              <ul>
+			  {{#each prvdSrvInvoice}}
+                <li class="customli2">
+                  <div class="item-content">
+					<div class="item-inner">
+                      <div class="item-title">{{srv_itmtype}}<br><small style="color:#034679">{{srv_itm}}</small></div>
+					  <div class="item-after">N{{srv_itmcost}}</div>
+                    </div>
+                  </div>
+                </li>
+			{{/each}}
+				<li class="customli2">
+                  <div class="item-content">
+                     <div class="item-media"><strong>Total</strong></div>
+					<div class="item-inner">
+                      <div class="item-title"></div>
+					  <div class="item-after"><strong>N{{appdata.srv_invTotal}}</strong></div>
+                    </div>
+                  </div>
+                </li>
+				<li class="customli2">
+                  <div class="item-content">
+                     <div class="item-media"><strong>Unpaid Balance</strong></div>
+                      <div class="item-title"></div>
+					<div class="item-inner">
+					  <div class="item-after"><strong>N{{appdata.srv_invBal}}
+					  </strong></div>
+                    </div>
+                  </div>
+                </li>
+			</ul>
+		</div>
+		
+		{{#with appdata}}
+		{{#js_if "this.srv_invBal > '0'"}} 
+		<p class="block row">
+          <a href="#" class="col button button-raised popup-open" data-popup=".paystack-popup"> Pay Balance </a>
+        </p>
+		{{/js_if}}
+		{{/with}}
+	
+  </div>
+ 
+  <!-- Card Payment Pop Start -->
+ 	<div class="popup cardpay-popup">
+      <div class="page">
+        <div class="navbar" style="background:#e3000f;">
+          <div class="navbar-inner">
+            <div class="title titlehd">Payment</div>
+            <div class="right titlehd"><a href="#" class="link popup-close">Close</a></div>
+          </div>
+        </div>
+        <div class="page-content">
+    <img src='./img/ccard2.png' style='display: block; margin: auto; width:50%;'>
+	 <div class="list no-hairlines-md" style="margin-top:0px">
+      <ul>
+	  <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-label frmtxt lblcolor">Card Number</div>
+            <div class="item-input-wrap">
+              <input type="number" class="frmtxt" id="cardNo" placeholder="1234 5678 9012 1254">
+              <span class="input-clear-button"></span>
+            </div>
+          </div>
+        </li>
+		<li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-label frmtxt lblcolor">Card Expiration Month</div>
+            <div class="item-input-wrap">
+              <input type="number" class="frmtxt" id="cardMonth" placeholder="03">
+              <span class="input-clear-button"></span>
+            </div>
+          </div>
+        </li>
+		<li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-label frmtxt lblcolor">Card Expiration Year</div>
+            <div class="item-input-wrap">
+              <input type="number" class="frmtxt" id="cardYear" placeholder="19">
+              <span class="input-clear-button"></span>
+            </div>
+          </div>
+        </li>
+		<li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-label frmtxt lblcolor">Card CVC Number</div>
+            <div class="item-input-wrap">
+              <input type="number" class="frmtxt" id="cardCVC" placeholder="033">
+              <span class="input-clear-button"></span>
+            </div>
+          </div>
+        </li>
+	</ul>
+	</div>
+	
+	
+	<div class="block">
+		<a @click="makePayment" class="button button-fill button-round button-big" style="background:#034679">Pay Balance</a>
+    </div>
+
+        </div>
+      </div>
+    </div> 
+<!-- Card Payment Pop Ends -->
+
+
+<!-- Paystack Card Payment Pop Start -->
+ 	<div class="popup paystack-popup">
+	 <div class="navbar" style="background:#e3000f;">
+          <div class="navbar-inner">
+            <div class="title titlehd">Payment</div>
+            <div class="right titlehd"><a href="#" class="link popup-close">Close</a></div>
+          </div>
+        </div>
+      <div class="page">
+        <div class="page-content" style="">
+		<div class="divspinner" id="paystackid" >
+		<iframe id='flink' width='100%' height='480px' src='./img/rateload.gif' frameborder='0' scrolling='yes' style='overflow:hidden;'></iframe>
+		</div>
+		<div class="block">
+		<a @click="confirmPayment" class="button button-fill button-round button-big" style="background:#034679">Finish Transaction</a>
+    </div>
+
+        </div>
+      </div>
+    </div> 
+<!-- Paystack Card Payment Pop Ends -->
+
+
+</div>
+</template>
+<style>
+.alnright
+{float: right;}
+.customli2
+{border-bottom: 1px solid #e0e0e0; font-size:16px !important;}
+.divspinner
+{background:transparent url('./img/imgspinner.gif') center no-repeat;}
+</style>
+<script>
+return {
+	methods: {
+      makePayment: function() {
+       // App instance
+		var app = this.$app;
+		
+		//Get and Check Form Values
+		var cardNo = $$('#cardNo').val();
+		var cardMonth = $$('#cardMonth').val();
+		var cardYear = $$('#cardYear').val();
+		var cardCVC = $$('#cardCVC').val();
+		
+		if (!cardNo || !cardMonth || !cardYear || !cardCVC){
+		  app.dialog.alert('Please fill in all fields');
+		  return;
+		 }
+		
+		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		var accessCode = app.data.appdata.accessCode;
+		
+		//Call Charge Plugin to Complete Transaction if Success
+		if (!accessCode){
+		  app.dialog.alert('No Access Code! Cannot Process Transaction.');
+		  return;
+		 }
+		 else
+		 {
+		 //app.dialog.alert('We are good to go!');
+		
+		var publicKey = "sk_live_7ac4d9a2eeac392b6327e6b8be52553300b46861";
+		//PaystackPlugin.setPaystackKey(publicKey);
+		 
+		 PaystackPlugin.chargeCardWithAccessCode(
+			  function(resp) {
+				// A valid one-timme-use token is obtained, do your thang!
+				
+				app.dialog.alert('Payment successful: ', resp);
+				//Go to Payment Success Page
+			  },
+			  function(resp) {
+				// Something went wrong, oops - perhaps an invalid card.
+				app.dialog.alert('Payment failed: ', resp);
+				console.log(resp);
+				//Go to Payment Failed Page
+			  },
+			  {
+				cardNumber: cardNo, 
+				expiryMonth: cardMonth, 
+				expiryYear: cardYear, 
+				cvc: cardCVC,
+				accessCode: accessCode
+		});
+		 
+		 }
+		
+      },
+	   confirmPayment: function() {
+       // App instance
+		var app = this.$app;
+		
+		
+		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		var accesscode = app.data.appdata.accesscode;
+		var payref = app.data.appdata.payref;
+		//var payref = "53hbo8yll3";
+		
+		// Show Preloader
+		app.preloader.show();
+		
+		//Confirm Payment from Paystack
+			app.request({
+				url: url+'type=confirmpayment',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				payref: payref,
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				  if (adata.message == "success")
+				  {
+				  app.toastBottom =  app.toast.create({
+					text: 'Success! Payment Received with Reference: ' + payref,
+					closeTimeout: 2000,
+				  })
+				// Open it
+				//app.toastBottom.open();
+				
+				//Close Popup
+				app.popup.close();
+				
+				app.router.navigate('/paymentsuccess/');
+				
+				}
+				else
+				{
+				app.dialog.alert('Incomplete Transaction. Please Try Again!');
+				
+				}
+				
+				
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again! '+error.response);
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.preloader.hide();}, 1000);
+				}
+			});
+		
+		
+      }
+	  },
+	data: function () {
+      return {		
+		//read data from root object
+        prvdSrvInvoice: this.$app.data.prvdSrvInvoice,
+		appdata: this.$app.data.appdata
+      };
+    },
+	on: {
+      pageInit: function (e, page) {
+		// App instance
+		var app = this.$app;
+		
+		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		
+		var payAmt = app.data.appdata.srv_invBal;
+		
+		
+		if (payAmt > 0)
+		{
+			//Get Access Code from Paystack
+			app.request({
+				url: url+'type=getaccesscode',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				payAmt: payAmt,
+				userPhone: userPhone,
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				  if (adata.message == "success")
+				  {
+				  app.toastBottom =  app.toast.create({
+					text: 'Success! Access Code Received - ' + adata.accesscode,
+					closeTimeout: 2000,
+				  })
+				// Open it
+				//app.toastBottom.open();
+				
+				//Set Access Code
+				app.data.appdata.accessCode = adata.accesscode;
+				app.data.appdata.payref = adata.payref;
+				var payUrl = "https://checkout.paystack.com/"+adata.accesscode+"/";
+				document.getElementById("flink").src = payUrl;
+				}
+				else
+				{
+				app.dialog.alert('Cannot Retrieve Access Code! - '+ adata.message);
+				
+				}
+				
+				
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again! '+error.response);
+				},
+				complete:function(){
+				//Close Dialog
+				//setTimeout(function () {app.preloader.hide();}, 1000);
+				}
+			});
+		
+		}
+		
+      },
+      pageBeforeRemove: function (e, page) {
+        if (this.demoGauge) this.demoGauge.destroy();
+      },
+    }
+}
+</script>

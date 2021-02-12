@@ -1,0 +1,535 @@
+<template>
+  <div class="page" data-name="chat">
+    <div class="navbar gradback navborder" >
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="ion ion-ios-arrow-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title sliding titlehd whitecolor">Chat</div>
+		<div class="right">
+          <a class="link icon-only">
+            <i class="icon material-icons md-only">notifications_none<span class="badge color-red">5</span></i>
+            <i class="icon f7-icons ios-only">bell<span class="badge color-red">5</span></i>
+          </a>
+        </div>
+      </div>
+    </div>
+	
+	
+	<div class="toolbar messagebar">
+      <div class="toolbar-inner">
+        <a class="link icon-only">
+          <i class="icon f7-icons ios-only">chat_fill</i>
+          <i class="icon material-icons md-only">chat_bubble</i>
+        </a>
+        <div class="messagebar-area">
+          <textarea class="resizable" placeholder="Message"></textarea>
+        </div>
+        <a class="link icon-only demo-send-message-link">
+          <i class="icon f7-icons ios-only">arrow_up_fill</i>
+          <i class="icon material-icons md-only">send</i>
+        </a>
+      </div>
+    </div>
+  
+  <div class="tabs">
+    <div id="tab-1" class="page-content tab tab-active  bodybg" style="margin-top:5%">
+    
+	
+        <div class="messages-content">
+      <div class="messages">
+        <div class="messages-title"><b>Sunday, Feb 9,</b> 12:58</div>
+        <div class="message message-sent">
+          <div class="message-content">
+            <div class="message-bubble">
+              <div class="message-text">Hi, Kate</div>
+            </div>
+          </div>
+        </div>
+        <div class="message message-sent">
+          <div class="message-content">
+            <div class="message-bubble">
+              <div class="message-text">How are you?</div>
+            </div>
+          </div>
+        </div>
+        <div class="message message-received">
+          <div class="message-content">
+            <div class="message-name">Kate</div>
+            <div class="message-bubble">
+              <div class="message-text">Hi, I am good!</div>
+            </div>
+          </div>
+        </div>
+        <div class="message message-received">
+          <div class="message-content">
+            <div class="message-name">Blue Ninja</div>
+            <div class="message-bubble">
+              <div class="message-text">Hi there, I am also fine, thanks! And how are you?</div>
+            </div>
+          </div>
+        </div>
+        <div class="message message-sent">
+          <div class="message-content">
+            <div class="message-bubble">
+              <div class="message-text">Hey, Blue Ninja! Glad to see you ;)</div>
+            </div>
+          </div>
+        </div>
+        <div class="message message-sent">
+          <div class="message-content">
+            <div class="message-bubble">
+              <div class="message-text">Hey, look, cutest kitten ever!</div>
+            </div>
+          </div>
+        </div>
+        <div class="message message-sent">
+          <div class="message-content">
+            <div class="message-bubble">
+              <div class="message-image">
+                <img src="http://lorempixel.com/200/260/cats/4/" style="width:200px; height: 260px">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="message message-received">
+          <div class="message-content">
+            <div class="message-name">Kate</div>
+            <div class="message-bubble">
+              <div class="message-text">Nice!</div>
+            </div>
+          </div>
+        </div>
+        <div class="message message-received">
+          <div class="message-content">
+            <div class="message-name">Kate</div>
+            <div class="message-bubble">
+              <div class="message-text">Like it very much!</div>
+            </div>
+          </div>
+        </div>
+        <div class="message message-received">
+          <div class="message-content">
+            <div class="message-name">Blue Ninja</div>
+            <div class="message-bubble">
+              <div class="message-text">Awesome!</div>
+            </div>
+          </div>
+        </div>
+		<br>
+	<br>
+      </div>
+    </div>
+	
+	
+          
+    </div>
+    <div id="tab-2" class="page-content tab">
+      <div class="block">
+        <p>Tab 2 content</p>
+        
+      </div>
+    </div>
+    <div id="tab-3" class="page-content tab">
+      <div class="block">
+        <p>Tab 3 content</p>
+        
+      </div>
+    </div>
+  </div>
+	
+		
+		
+  </div>
+</template>
+<style>
+.divspinner
+{background:transparent url('./img/imgspinner.gif') center no-repeat;}
+.md .navbar:after
+{height:0px;}
+.md .color-theme-red .toolbar:not(.messagebar), .md .color-theme-red.toolbar:not(.messagebar)
+{background: #ffffff;}
+.md .tabbar a.tab-link.active-state, .md .tabbar a.tab-link.tab-link-active, .md .tabbar-labels a.tab-link.active-state, .md .tabbar-labels a.tab-link.tab-link-active
+{color: #346d9a;}
+.md .item-input-wrap:after
+{background-color:#e3e1e1;}
+.md .toolbar a
+{color: #f44336;}
+.md .color-theme-red .input-after:after, .md .color-theme-red .item-input-focused .item-input-wrap:after
+{background: #e3e1e1;}
+.md .list
+{margin: 10px 0;}
+.iptborder
+{background:#e3e1e1;border-radius:10px;}
+.boxcol
+{border-radius: 10px;background: #ffffff none repeat scroll 0 0;box-shadow: 0 5px 20px 0 rgba(0,0,0,0.15);margin:15px 0;}
+.alnright
+{float: right;}
+</style>
+<script>
+return {
+	methods:{
+	iptSearch: function () {
+	
+	var fullName = $$('#fullName').val();
+	app.dialog.alert('Inputed '+ fullName);
+	
+	},
+	newUser: function () {
+	
+		// App instance
+		var app = this.$app;
+			
+		//get variables from login form
+		var fullName = $$('#fullName').val();
+		var userEmail = $$('#userEmail').val();
+		var userPhone = $$('#userPhone').val();
+		var inviteCode = $$('#inviteCode').val();
+		
+		if (!fullName || !userPhone){
+		  app.dialog.alert('Complete Required Fields');
+		  return;
+		 }
+		 
+		 if (document.getElementById("myCheck").checked != true){
+		  app.dialog.alert('Accept Terms & Condition');
+		  return;
+		 }
+		 
+		 if(userPhone.length != 11){
+		  app.dialog.alert('Enter a Valid Phone Number');
+		  return;
+		 }
+		 
+		var url = app.data.appconst.url;
+		
+		 //validate E-mail
+		 if((userEmail) && (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userEmail))))
+		 {
+			app.dialog.alert('Invalid Email Address');
+			return;
+		 }
+		 
+		  // Show Preloader
+			app.dialog.progress();
+			
+			app.request({
+				url: url+'type=reg',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				fullName:$$('#fullName').val(),
+				userEmail:$$('#userEmail').val(),
+				userPhone:$$('#userPhone').val(),
+				inviteCode:$$('#inviteCode').val()
+				},
+				crossDomain:true,
+				success:function(data){
+				 
+				 
+				  if (data.message == "success") {
+						app.data.appdata = {otpCode: data.otpcode, userPhone: userPhone, fullName: fullName};
+						app.router.navigate('/verify/');
+					  } else {
+					  app.dialog.alert(data.message);
+					  }
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+				  // Create toast
+					//if (!app.toastBottom) {
+					  app.toastBottom =  app.toast.create({
+						text: 'Connection Error!',
+						closeTimeout: 3000,
+					  });
+				//	}
+					
+					
+					// Open it
+					app.toastBottom.open();
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.dialog.close();}, 1000);
+				}
+				
+				}); 
+
+			//Close Dialog
+		//setTimeout(function () {app.dialog.close();}, 1000);
+	
+	
+	
+	
+	
+		},
+			},
+	on: {
+      pageInit: function (e, page) {
+        var self = this;
+        var today = new Date();
+        var app = self.$app;
+        // iOS Device picker
+		
+		var lclcityList = localStorage.getItem("lclcityList");
+		var lclserviceList = localStorage.getItem("lclserviceList");
+		
+        self.pickerDevice = app.picker.create({
+          inputEl: '#demo-picker-device',
+          cols: [
+            {
+              textAlign: 'center',
+              values: ['All City','Agboyi/Ketu','Agege','Ajah','Alimosho','Amuwo-Odofin','Apapa','Badagry','Egbe Idimu','Epe','Gbagada','Ibeju','Ifako-Ijaiye','Ikeja','Ikorodu','Ikotun/Igando','Ikoyi','Ilupeju','Ipaja','Isolo','Kosofe','Lagos Island','Lagos Mainland','Lekki Phase I','Lekki Phase II','Magodo','Maryland','Mushin','Ojo','Ojodu','Ojota','Orile','Oshodi-Isolo','Shomolu','Surulere','Victoria Island','Yaba']
+            }
+          ],
+		  on: {
+            closed: function(picker, value, displayValue) {
+             var iptCity = $$('#demo-picker-device').val();
+			 var iptService = $$('#demo-picker-device2').val();
+			 //app.dialog.alert('Selected City '+ iptCity);
+			
+			//check both city and service 
+			if (iptCity && iptService){
+			  //app.dialog.alert('Ready to call API');
+			  
+			  app.data.appdata.filtCity = iptCity;
+			  app.data.appdata.filtSrv = iptService;
+			  app.router.navigate('/filtresult/');
+			  
+			}
+			
+            },
+          }
+        });
+		
+		 self.pickerDevice = app.picker.create({
+          inputEl: '#demo-picker-device2',
+          cols: [
+            {
+              textAlign: 'center',
+              values: ['Ayurveda','Cardiology','Dental Care','Dermatology','Eye Care','Gastrology','Gynecology','Homeopathy','Neurology','Orthopedic','Pulmonology','Urology']
+            }
+          ],
+		  on: {
+            closed: function(picker, value, displayValue) {
+             var iptCity = $$('#demo-picker-device').val();
+			 var iptService = $$('#demo-picker-device2').val();
+			//app.dialog.alert('Selected Service '+ iptService);
+			
+			//check both city and service 
+			if (iptCity && iptService){
+			  //app.dialog.alert('Ready to call API');
+			  
+			  app.data.appdata.filtCity = iptCity;
+			  app.data.appdata.filtSrv = iptService;
+			  app.router.navigate('/filtresult/');
+			  
+			  
+			}
+			
+            },
+          }
+        });
+
+
+        // Describe yourself picker
+        self.pickerDescribe = app.picker.create({
+          inputEl: '#demo-picker-describe',
+          rotateEffect: true,
+          cols: [
+            {
+              textAlign: 'left',
+              values: ('Super Amazing Bat Iron Rocket Lex Beautiful Wonderful Raining Happy Funny Cool Hot').split(' ')
+            },
+            {
+              values: ('Man Luthor Woman Boy Girl Person Cutie Babe Raccoon').split(' ')
+            },
+          ]
+        });
+
+        // Dependent values
+        var carVendors = {
+          Japanese : ['Honda', 'Lexus', 'Mazda', 'Nissan', 'Toyota'],
+          German : ['Audi', 'BMW', 'Mercedes', 'Volkswagen', 'Volvo'],
+          American : ['Cadillac', 'Chrysler', 'Dodge', 'Ford']
+        };
+        self.pickerDependent = app.picker.create({
+          inputEl: '#demo-picker-dependent',
+          rotateEffect: true,
+          formatValue: function (values) {
+            return values[1];
+          },
+          cols: [
+            {
+              textAlign: 'left',
+              values: ['Japanese', 'German', 'American'],
+              onChange: function (picker, country) {
+                if(picker.cols[1].replaceValues){
+                  picker.cols[1].replaceValues(carVendors[country]);
+                }
+              }
+            },
+            {
+              values: carVendors.Japanese,
+              width: 160,
+            },
+          ]
+        });
+
+        // Custom Toolbar
+        self.pickerCustomToolbar = app.picker.create({
+          inputEl: '#demo-picker-custom-toolbar',
+          rotateEffect: true,
+          renderToolbar: function () {
+            return '<div class="toolbar">' +
+              '<div class="toolbar-inner">' +
+                '<div class="left">' +
+                  '<a href="#" class="link toolbar-randomize-link">Randomize</a>' +
+                '</div>' +
+                '<div class="right">' +
+                  '<a href="#" class="link sheet-close popover-close">That\'s me</a>' +
+                '</div>' +
+              '</div>' +
+            '</div>';
+          },
+          cols: [
+            {
+              values: ['Mr', 'Ms'],
+            },
+            {
+              textAlign: 'left',
+              values: ('Super Amazing Bat Iron Rocket Lex Beautiful Wonderful Raining Happy Funny Cool Hot').split(' ')
+            },
+            {
+              values: ('Man Luthor Woman Boy Girl Person Cutie Babe Raccoon').split(' ')
+            },
+          ],
+          on: {
+            open: function (picker) {
+              picker.$el.find('.toolbar-randomize-link').on('click', function () {
+                var col0Values = picker.cols[0].values;
+                var col0Random = col0Values[Math.floor(Math.random() * col0Values.length)];
+
+                var col1Values = picker.cols[1].values;
+                var col1Random = col1Values[Math.floor(Math.random() * col1Values.length)];
+
+                var col2Values = picker.cols[2].values;
+                var col2Random = col2Values[Math.floor(Math.random() * col2Values.length)];
+
+                picker.setValue([col0Random, col1Random, col2Random]);
+              });
+            },
+          }
+        });
+        // Inline date-time
+        self.pickerInline = app.picker.create({
+          containerEl: '#demo-picker-date-container',
+          inputEl: '#demo-picker-date',
+          toolbar: false,
+          rotateEffect: true,
+          value: [
+            today.getMonth(),
+            today.getDate(),
+            today.getFullYear(),
+            today.getHours(),
+            today.getMinutes() < 10 ? '0' + today.getMinutes() : today.getMinutes()
+          ],
+          formatValue: function (values, displayValues) {
+            return displayValues[0] + ' ' + values[1] + ', ' + values[2] + ' ' + values[3] + ':' + values[4];
+          },
+          cols: [
+            // Months
+            {
+              values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+              displayValues: ('January February March April May June July August September October November December').split(' '),
+              textAlign: 'left'
+            },
+            // Days
+            {
+              values: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            },
+            // Years
+            {
+              values: (function () {
+                var arr = [];
+                for (var i = 1950; i <= 2030; i++) { arr.push(i); }
+                  return arr;
+              })(),
+            },
+            // Space divider
+            {
+              divider: true,
+              content: '&nbsp;&nbsp;'
+            },
+            // Hours
+            {
+              values: (function () {
+                var arr = [];
+                for (var i = 0; i <= 23; i++) { arr.push(i); }
+                  return arr;
+              })(),
+            },
+            // Divider
+            {
+              divider: true,
+              content: ':'
+            },
+            // Minutes
+            {
+              values: (function () {
+                var arr = [];
+                for (var i = 0; i <= 59; i++) { arr.push(i < 10 ? '0' + i : i); }
+                  return arr;
+              })(),
+            }
+          ],
+          on: {
+            change: function (picker, values, displayValues) {
+              var daysInMonth = new Date(picker.value[2], picker.value[0]*1 + 1, 0).getDate();
+              if (values[1] > daysInMonth) {
+                picker.cols[1].setValue(daysInMonth);
+              }
+            },
+          }
+        });
+		
+		
+		
+		
+		/*
+		else
+		{
+			//get from api
+		}
+		
+		*/
+		
+		//on page after in - check for new lclallServices if new update localstorage
+      },
+	  pageAfterIn: function(e, page) {
+		
+		//get allservice data
+		var lclallServices = localStorage.getItem("lclallServices");
+		var lclallServicesData = localStorage.getItem("lclallServicesData");
+		
+		
+		if(lclallServices){setTimeout(function () {}, 2000);document.getElementById("lclallServicesData").innerHTML = lclallServicesData;}
+	  
+	  },
+      pageBeforeRemove() {
+        var self = this;
+        self.pickerDevice.destroy();
+        self.pickerDescribe.destroy();
+        self.pickerDependent.destroy();
+        self.pickerCustomToolbar.destroy();
+      },
+    }
+
+
+}
+
+</script>

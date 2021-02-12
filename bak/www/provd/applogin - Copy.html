@@ -1,0 +1,169 @@
+<template>
+  <div class="page" data-name="applogin">
+   <div class="page-content" style='background-image:url(img/back1.jpg);background-repeat:no-repeat; background-size:cover;'>
+          
+	<a @click="retryApplogin"><div class="block" id="retryID"></div></a>
+    </div>
+  </div>
+</template>
+<script>
+return {
+	methods:{
+	retryApplogin: function() {
+        var app = this.$app;
+		
+		//var userPhone = '08065672050';
+		//var fullName = 'John Doe';
+		
+		//get data from localstorage
+		var userPhone = localStorage.getItem("userPhone");
+		
+		//read data from root object
+		var url = app.data.appconst.url;
+		
+		app.request({
+				url: url+'type=applogin',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				userPhone: userPhone
+				},
+				success:function(adata){
+				 
+				 
+				  if (adata.message == "success") {
+						app.data.appdata = {userPhone: userPhone, fullName: adata.fullName, userCity: adata.userCity, userEmail: adata.userEmail, userAlert: adata.userAlert, userAlertID: adata.userAlertID, userSrvReqs: adata.userSrvReqs, userAddress: adata.userAdd, usrInvNum: adata.usrInvNum, userWalletBal: adata.userWalletBal};
+						app.data.appcity = adata.city;
+						app.data.userAlertMsg = adata.userAlertMsg;
+						app.data.srvCategory = adata.srvCategory;
+						app.data.srvCatOthers = adata.srvCatOthers;
+						app.data.userSrvReqList = adata.userSrvReqList;
+						app.dialog.alert('Welcome Back');
+						app.router.navigate('/dashboard/');
+					  }
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again!');
+					
+					
+					
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.dialog.close();}, 1000);
+				}
+				}); 
+	
+		
+      },
+	},
+	 data: function () {
+      return {		
+		//read data from root object
+        usrvImages: this.$app.data.usrvImages,
+      };
+    },
+	// Page Events
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+		
+		// Show Preloader
+		app.dialog.progress();
+		
+		
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);
+		
+		var app = this.$app;
+		var userPhone = localStorage.getItem("userPhone");
+		
+		/*
+		NativeStorage.getItem("appx19",
+			//success
+			function(obj){
+				userPhone = obj.userPhone;
+			   },
+			//error
+			function(error){
+					console.log(error.code);
+					if (error.exception !== "") console.log(error.exception);
+					alert('An error Occurred!');
+				}	
+			);
+		*/
+		//var userPhone = '08065672050';
+		//var fullName = 'John Doe';
+		
+		//if(userPhone == "")
+		//{userPhone = "58585858580";}
+		
+		//read data from root object
+		var url = app.data.appconst.url;
+		
+		
+			
+		
+		app.request({
+				url: url+'type=applogin',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				userPhone: userPhone
+				},
+				success:function(adata){
+				 
+				 
+				  if (adata.message == "success") {
+						app.data.appdata = {userPhone: userPhone, fullName: adata.fullName, userCity: adata.userCity, userEmail: adata.userEmail, userAlert: adata.userAlert, userAlertID: adata.userAlertID, userSrvReqs: adata.userSrvReqs, userAddress: adata.userAdd, usrInvNum: adata.usrInvNum, userWalletBal: adata.userWalletBal};
+						app.data.appcity = adata.city;
+						app.data.userAlertMsg = adata.userAlertMsg;
+						app.data.srvCategory = adata.srvCategory;
+						app.data.srvCatOthers = adata.srvCatOthers;
+						app.data.userSrvReqList = adata.userSrvReqList;
+						app.dialog.alert('Welcome Back');
+						app.router.navigate('/dashboard/');
+					  }
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again!');
+					
+					var retryVal = "<br><img src='img/xpertlogo.png' style='display: block; margin: auto; width:60%; margin-top:30%'><p class='block row'><a class='col button button-raised button-big button-outline external' style='color:#000;border-color:#034679' > <i class='ion ion-ios-construct' style='color:#000'></i> Refresh Connection!</a></p>";
+					
+					var retryVal2 = "<p class='block row'><a class='col button button-raised external' style=''> Slide Show!</a></p>";
+					
+					document.getElementById("retryID").innerHTML = retryVal;
+					//document.getElementById("retryID2").innerHTML = retryVal2;
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.dialog.close();}, 1000);
+				}
+				}); 
+	
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    }
+
+}
+
+</script>

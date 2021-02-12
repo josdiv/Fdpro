@@ -7,8 +7,6 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //http://localhost/xperthands/f7/core/api/api.php
 //http://localhost/xperthands/f7/core/api/api?type=test - test
 
-//another 1 for github
-
 //API Test
 if($_REQUEST['type'] == "test")
 {

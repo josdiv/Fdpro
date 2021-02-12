@@ -1,0 +1,101 @@
+<template>
+<div class="page" data-name="myreviewx">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+          <a href="/prvdashboard/" class="link">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">My Reviews</div>
+    </div>
+  </div>
+  <div class="page-content">
+	<div class="block">
+	
+	</div>
+	 {{#each srvPrvdRating}}
+	<div class="card card-outline">
+      <div class="card-content card-content-padding">
+		<div class="list">
+			  <ul>
+				<li>
+				  <div class="item-content">
+					<div class="item-media itmsize"><i class="ion ion-ios-ribbon iconlargeorange" ></i></div>
+					<div class="item-inner">
+					  <div class="item-title font12">{{user_fullname}}
+					  <div class="item-footer">{{datefmt}}<br>{{catname}}</div>
+					  </div>
+					  
+					  <div class="item-after"><small>{{review_star}}&nbsp;<i class="ion ion-ios-star iconblueright" ></i></small></div>
+					</div>
+				  </div>
+				</li>
+				</ul>
+		</div>
+		<p class="font12">{{user_review}}</p>
+	  </div>
+     </div>
+	 {{/each}}
+	
+	
+  </div>
+ 
+ 
+
+</div>
+</template>
+<style>
+.alnright
+{float: right;}
+.itmsize
+{min-width:20px !important;}
+</style>
+<script>
+
+return {
+	
+	 
+	// Page Events
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+		
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+		/*
+		app.data.appdata.puserImg = page.route.query.userImg;
+		app.data.appdata.pfullName = page.route.query.fullName;
+		app.data.appdata.prating = page.route.query.rating;
+		*/
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);	
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    },
+	data: function () {
+      return {
+        srvPrvdRating: this.$app.data.usrvPrvdRating
+      };
+    },
+	methods: {
+	
+	},
+
+}
+
+</script>

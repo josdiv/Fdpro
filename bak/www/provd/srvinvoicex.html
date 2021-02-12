@@ -1,0 +1,104 @@
+<template>
+<div class="page" data-name="srvinvoicex">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+          <a href="/bkdetailx1/" class="link">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Invoice</div>
+    </div>
+  </div>
+  <div class="page-content">
+	<div class="block">
+        <div class="list">
+			  <ul>
+				<li>
+				  <div class="item-content">
+					<div class="item-media"><i class="ion ion-ios-contact iconlargeorange" style="font-size: 60px" ></i></div>
+					<div class="item-inner">
+					  <div class="item-title font12">{{appdata.srv_serviceid}}
+					  <div class="item-footer">{{appdata.srv_catname}}</div>
+					  <div>{{#with appdata}}
+						{{#js_if "this.srv_invBal > 0"}}
+						<span class="badge color-red badgefont">UNPAID</span>
+						{{else}}
+						<span class="badge color-green badgefont">PAID</span>
+						{{/js_if}}
+						{{/with}}
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</li>
+				</ul>
+		</div>
+      </div>
+	 <div class="block list no-hairlines-md">
+              <ul>
+			  {{#each prvdSrvInvoice}}
+                <li class="customli2">
+                  <div class="item-content">
+					<div class="item-inner">
+                      <div class="item-title">{{srv_itmtype}}<br><small style="color:#034679">{{srv_itm}}</small></div>
+					  <div class="item-after">N{{srv_itmcost}}</div>
+                    </div>
+                  </div>
+                </li>
+			{{/each}}
+				<li class="customli2">
+                  <div class="item-content">
+                     <div class="item-media"><strong>Total</strong></div>
+					<div class="item-inner">
+                      <div class="item-title"></div>
+					  <div class="item-after"><strong>N{{appdata.srv_invTotal}}</strong></div>
+                    </div>
+                  </div>
+                </li>
+				<li class="customli2">
+                  <div class="item-content">
+                     <div class="item-media"><strong>Unpaid Balance</strong></div>
+                      <div class="item-title"></div>
+					<div class="item-inner">
+					  <div class="item-after"><strong>N{{appdata.srv_invBal}}</strong></div>
+                    </div>
+                  </div>
+                </li>
+			</ul>
+		</div>
+		
+		{{#with appdata}}
+		{{#js_if "this.srv_invBal > '0'"}} 
+		<!--
+		<p class="block row">
+          <a href="#" class="col button button-raised popup-open" data-popup=".addpay-popup"> Pay Balance > </a>
+        </p>
+		-->
+		{{/js_if}}
+		{{/with}}
+	
+  </div>
+ 
+ 
+
+</div>
+</template>
+<style>
+.alnright
+{float: right;}
+.customli2
+{border-bottom: 1px solid #e0e0e0; font-size:16px !important;}
+</style>
+<script>
+return {
+	data: function () {
+      return {		
+		//read data from root object
+        prvdSrvInvoice: this.$app.data.prvdSrvInvoice,
+		appdata: this.$app.data.appdata
+      };
+    },
+}
+</script>

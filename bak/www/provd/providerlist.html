@@ -1,0 +1,161 @@
+<template>
+<div class="page" data-name="providerlist">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+        <a href="/service/" class="link">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Provider List</div>
+	   <div class="subnavbar">
+        <div class="subnavbar-inner" style="background:#e3000f">
+          <div class="segmented segmented-raised">
+            <a @click="recomProvider" class="button">Use A Recommended Provider</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-content">
+ 	
+	
+	
+	{{#each srvPrvdList}}
+	<div class="card">
+      <div class="card-content card-content-padding">
+	  <div class="list">
+      <ul>
+        <li>
+          <a @click="provDetails('{{fullname}}','{{prvd_rating}}','{{profile_img}}','{{sno}}')" class="item-link item-content">
+            <div class="item-media"><img src="img/demo.png?tr=w-40,h-40" data-src="https://xperthands.ng/admin/{{profile_img}}" class="prvdimg lazy"></div>
+            <div class="item-inner">
+              <div class="item-title">
+                <div class="item-header">{{prvd_rating}} <i class="ion ion-ios-star iconbluesmall" ></i></div>
+               {{fullname}}
+                <div class="item-footer">{{cityname}}</div>
+              </div>
+              <div class="item-after">Details</div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+	  
+	  </div>
+    </div>
+	{{/each}}
+	
+	
+	
+	
+	
+    
+
+	
+	
+  </div>
+ 
+ 
+
+</div>
+</template>
+<style>
+.iconlarge-x
+{
+color: #e62b1e;
+font-size: large;
+}
+.textsmall
+{
+font-size:small;
+text-align: justify;
+}
+</style>
+<script>
+return {
+	
+	 data: function () {
+      return {		
+		//read data from root object
+        curappcity: app.data.appdata.userCity,
+        srvPrvdList: app.data.srvPrvdList,
+      };
+    },
+	methods: {
+	recomProvider: function () {
+		// App instance
+		var app = this.$app;
+		
+		app.dialog.alert('Our System will Recommended the best Provider as per your Service Request.');
+		app.data.appdata.recomprvd = "Yes";
+		app.data.appdata.prvdsno = "";
+		app.router.navigate('/schedule/');
+	},
+	provDetails: function (fullName, rating, userImg, prvdsno) {
+		// App instance
+		var app = this.$app;
+			
+		app.data.appdata.puserImg = userImg;
+		app.data.appdata.pfullName = fullName;
+		app.data.appdata.prating = rating;
+		app.data.appdata.prvdsno = prvdsno;
+		
+		var prvdsno = prvdsno;
+		
+		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		
+		//app.dialog.alert(prvdsno);
+		// Show Preloader
+		app.preloader.show();
+		//app.dialog.progress();
+		
+		//Update Server Record ajax
+		app.request({
+				url: url+'type=detailsprvd',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				prvdsno: prvdsno
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				 
+				  if (adata.message == "success") {
+					//if provider found
+					//app.dialog.alert(userCity+' '+userPhone+' '+catName+' '+catSno);
+					app.data.srvPrvdDetails = adata.srvPrvdDetails;
+					app.data.srvPrvdRating = adata.srvPrvdRating;
+					app.router.navigate('/pdetails/');
+					  }
+					
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again!');
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.preloader.hide();}, 1000);
+				}
+			}); 
+		//app.data.appdata.psrv_des = srv_des;
+		//app.data.appdata.psrv_type = srv_type;
+		//app.data.appdata.psrv_city = srv_city;
+		
+		//app.dialog.alert(userImg + ' - ' + fullName + ' - ' +  rating);
+		
+		
+	}
+	},
+	
+	
+
+}
+
+</script>

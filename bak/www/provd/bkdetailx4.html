@@ -1,0 +1,159 @@
+<template>
+<div class="page" data-name="bkdetail4">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+          <a href="/srvrequestx/" class="link">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Service Details</div>
+    </div>
+  </div>
+  <div class="page-content">
+	<div class="block text-align-center">
+        <div class="gauge demo-gauge"></div>
+      </div>
+	 <div class="list no-hairlines-md">
+              <ul>
+                <li class="customli2">
+                  <div class="item-content">
+                     <div class="item-media"><i class="ion ion-ios-construct iconlarge"></i></div>
+					<div class="item-inner">
+                      <div class="item-title"></div>
+					  <div class="item-after">ID04512Q</div>
+                    </div>
+                  </div>
+                </li>
+				<li class="customli2">
+                  <div class="item-content">
+                     <div class="item-media"><i class="ion ion-ios-list iconlarge"></i></div>
+					<div class="item-inner">
+                      <div class="item-title"></div>
+					  <div class="item-after">Laundry</div>
+                    </div>
+                  </div>
+                </li>
+				<li class="customli2">
+                  <div class="item-content">
+                     <div class="item-media"><i class="ion ion-ios-calendar iconlarge"></i></div>
+					<div class="item-inner">
+                      <div class="item-title"></div>
+					  <div class="item-after">December 5, 2018 | 12pm</div>
+                    </div>
+                  </div>
+                </li>
+				<li class="customli2">
+                  <div class="item-content">
+                     <div class="item-media"><i class="ion ion-ios-compass iconlarge"></i></div>
+					<div class="item-inner">
+                      <div class="item-title"></div>
+					  <div class="item-after">Ikoyi</div>
+                    </div>
+                  </div>
+                </li>
+				<li class="customli2">
+                  <div class="item-content">
+                     <div class="item-media"><i class="ion ion-ios-card iconlarge"></i></div>
+					<div class="item-inner">
+                      <div class="item-title"></div>
+					  <div class="item-after">Paid</div>
+                    </div>
+                  </div>
+                </li>
+			</ul>
+		</div>
+	<div class="card card-outline">
+      <div class="card-content card-content-padding">
+		<p class="font12"><strong>Description:</strong><br>I need laundry service for my travel clothes. Be professional and punctual.</p>
+	  </div>
+     </div>
+	 <div class="card card-outline">
+      <div class="card-content card-content-padding">
+		<p class="font12"><strong>Address:</strong><br>15, Thomas Jefferson Estate<br>Golden Gate Round about<br>Ikoyi</p>
+	  </div>
+     </div>
+	 
+	 <p class="block row">
+          <a href="/srvinvoicex/" class="col button button-raised"> View Invoice</a>
+        </p>
+		
+	 
+	
+	
+	<div class="card card-outline">
+      <div class="card-content card-content-padding">
+		<div class="list">
+			  <ul>
+				<li>
+				  <div class="item-content">
+					<div class="item-inner">
+					  <div class="item-title font14">
+					  <div class="item-footer">December 5, 2018 <br></div>
+					  </div>
+					  
+					  <div class="item-after"><small>4.0&nbsp;<i class="ion ion-ios-star iconbluesmall" ></i></small></div>
+					</div>
+				  </div>
+				</li>
+				</ul>
+		</div>
+		<p class="font12">Professional done. Highly Recommended</p>
+	  </div>
+     </div>
+	
+	
+  </div>
+ 
+ 
+
+</div>
+</template>
+<style>
+.alnright
+{float: right;}
+.customli2
+{border-bottom: 1px solid #e0e0e0; font-size:14px !important;}
+</style>
+<script>
+  return {
+    methods: {
+      setGaugeValue: function(value) {
+        var self = this;
+        self.demoGauge.update({
+          value: value / 100,
+          valueText: value + '%',
+        });
+      },
+    },
+    on: {
+      pageInit: function (e, page) {
+        var self = this;
+        var app = self.$app;
+        self.demoGauge = app.gauge.create({
+          el: '.demo-gauge',
+          type: 'circle',
+          value: 1,
+          size: 250,
+          borderColor: '#034679',
+          borderWidth: 10,
+          valueText: '100%',
+          valueFontSize: 41,
+          valueTextColor: '#034679',
+          labelText: 'Status: Completed',
+        });
+      },
+      pageBeforeRemove: function (e, page) {
+        if (this.demoGauge) this.demoGauge.destroy();
+      },
+    }
+  }
+  /*
+  Accepted		10%
+  Assigned		20%
+  In Progress	40%
+  Completed		100%
+  Cancelled		0%
+  */
+</script>

@@ -1,0 +1,146 @@
+<template>
+<div class="page" data-name="profilev">
+  <div class="navbar pgradback navborder" >
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="ion ion-ios-arrow-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+      <div class="title sliding titlehd">My Profile</div>
+    </div>
+  </div>
+  <div class="page-content" style="margin-top:10%">
+  
+  <span id="lclprofileData">
+  
+	<div style="height:150px !important"><center><p><img src="./img/imgspinner.gif" width="100px" height="100px"></p></center></div>
+  
+  </span>
+	
+
+	
+  </div>
+  
+</div>
+</template>
+<style>
+.txtjustify
+{
+text-align: justify;
+}
+.divspinner
+{background:transparent url('./img/imgspinner.gif') center no-repeat;}
+.md .navbar:after
+{height:0px;}
+.md .color-theme-red .toolbar:not(.messagebar), .md .color-theme-red.toolbar:not(.messagebar)
+{background: #ffffff;}
+.md .tabbar a.tab-link.active-state, .md .tabbar a.tab-link.tab-link-active, .md .tabbar-labels a.tab-link.active-state, .md .tabbar-labels a.tab-link.tab-link-active
+{color: #346d9a;}
+.md .item-input-wrap:after
+{background-color:#e3e1e1;}
+.md .toolbar a
+{color: #f44336;}
+.md .color-theme-red .input-after:after, .md .color-theme-red .item-input-focused .item-input-wrap:after
+{background: #e3e1e1;}
+.md .list
+{margin: 10px 0;}
+.iptborder
+{background:#e3e1e1;border-radius:10px;}
+.boxcol
+{border-radius: 10px;background: #ffffff none repeat scroll 0 0;box-shadow: 0 5px 20px 0 rgba(0,0,0,0.15);margin:15px 0;}
+.alnright
+{float: right;}
+</style>
+<script>
+  return {
+	on: {
+      pageInit: function (e, page) {
+		
+		//var appVer = app.data.appdata.appVer;
+		//document.getElementById("appVer").innerHTML = appVer;
+        },
+	  pageAfterIn: function(e, page) {
+		
+		//Get variables
+		var url = app.data.appconst.url;
+		var constr = app.data.appconst.constr;
+		var userPhone = localStorage.getItem("lcluserPhone");
+		var lclprofileData = localStorage.getItem("lclprofileData");
+		
+		if (lclprofileData)
+			{
+				setTimeout(function () {document.getElementById("lclprofileData").innerHTML = lclprofileData;}, 1000);
+			}
+		
+		/*
+		 //Call server and send code
+		app.request({
+				url: url+'About/',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				authid: constr,
+				userPhone:userPhone
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				 
+				 if(adata.status == "Success")
+					{
+					
+						if (adata.lclprofileDate != lclprofileDate)
+						{
+							localStorage.setItem("lclprofileDate", adata.lclprofileDate);
+							localStorage.setItem("lclprofileData", adata.lclprofileData);
+							
+							setTimeout(function () {document.getElementById("lclprofileData").innerHTML = adata.lclprofileData;}, 2000);
+						}
+						
+						
+						app.toastBottom =  app.toast.create({
+							text: adata.message,
+							closeTimeout: 3000,
+						  })
+						// Open it
+						//app.toastBottom.open();
+					
+					}
+					else
+					{
+						//app.dialog.alert(adata.message);
+						app.toastBottom =  app.toast.create({
+							text: adata.message,
+							closeTimeout: 3000,
+						  })
+						// Open it
+						//app.toastBottom.open();
+					}
+					  
+				},
+				error:function(error){
+				//console.log(error.code);
+				console.log(error);
+					//if(!navigator.onLine) { }
+						app.toastBottom =  app.toast.create({
+							text: 'An Error Occurred, Please check connection!',
+							closeTimeout: 3000,
+						  })
+						// Open it
+						app.toastBottom.open();
+						
+				
+				},
+				complete:function(){				
+				}
+			});
+			
+	  */
+	  },
+      pageBeforeRemove() {
+      },
+    }
+  };
+</script>

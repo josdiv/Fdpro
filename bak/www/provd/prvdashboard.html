@@ -1,0 +1,411 @@
+<template>
+<div class="page" data-name="prvdashboard">
+  <!-- Top Navbar -->
+	  <div class="navbar" style="background:#e3000f">
+	  <div class="navbar-inner sliding">
+		<div class="left">
+		  <div class="title sliding titlehd">Provider Area</div>
+		</div>
+		<div class="right">{{#with appdata}}
+	  <a href="/mymessagex/" class="link icon-only">
+		<i class="icon f7-icons ios-only">bell{{#js_if "this.prvdAlert > 0"}}<span class="badge custombadge">{{prvdAlert}} {{else}} {{/js_if}}</span></i>
+		<i class="icon material-icons md-only">notifications_none{{#js_if "this.prvdAlert > 0"}}<span class="badge custombadge">{{prvdAlert}} {{else}} {{/js_if}}</span></i>
+	  </a>
+	</div>{{/with}}
+	  </div>
+		
+	</div>
+  <!-- Top Navbar -->
+   <style>
+	
+	</style>
+  <div class="toolbar tabbar-labels toolbar-bottom-md customtoolbar">
+    <div class="toolbar-inner">
+      <a href="#tab-3" class="tab-link tab-link-active activeborder">
+			<i class="ion ion-ios-home" style="font-size:x-large;"></i>
+            <span class="tabbar-label badgefont">Dashboard</span>
+	  </a>
+      <a href="/srvrequestx/" class="tab-link">
+			<i class="ion ion-ios-list icontab" ></i>
+            <span class="tabbar-label badgefont">Services</span>
+	  </a>
+	  <a href="/walletprvd/" class="tab-link">
+			<i class="ion ion-ios-wallet icontab"></i>
+            <span class="tabbar-label badgefont">Wallet</span>
+	  </a>
+      <a href="/accountprvd/" class="tab-link">
+			<i class="ion ion-ios-settings icontab"></i>
+            <span class="tabbar-label badgefont">Account</span>
+	  </a>
+    </div>
+  </div>
+  <div class="tabs">
+    <div id="tab-1" class="page-content tab ">
+		<p>Tab 1 content</p>
+    </div>
+    <div id="tab-2" class="page-content tab ">
+      <div class="block">
+        <p>Tab 2 content</p>
+        
+      </div>
+    </div>
+    <div id="tab-3" class="page-content tab tab-active custombackground" style="">
+    <div class="elevation-demo elevation-4 elevation-pressed-12 elevation-transition" style="text-align:left;line-height:40px">
+	{{#with appdata}}
+	<div class="list no-hairlines-md">
+			  <ul>
+				<li>
+				  <div class="item-content">
+					<div class="item-media itmsize"><a href="/prvdetails2/"><img src="http://xperthands.ng/admin/{{profile_img}}" class="prvdimg"></a></div>
+					<div class="item-inner">
+					  <div class="item-title font12">{{fullName}}
+					  <div class="item-footer" style="font-size:14px">Availability<br><span id="prvdstat" style="font-size:14px">{{prvdOnlineStatus}}</span></div>
+					  </div>
+					  
+					  <div class="item-after" style="padding-top:25px">
+					  <a @click='chgOnlineStatus'><label class="toggle color-green toggle-init" id="prvdtoggle1">
+						<input id="prvdtoggle" @click="chgOnlineStatus"  type="checkbox" {{#js_if "this.prvdOnlineStatus === 'Online'"}} checked {{/js_if}}>
+						<span class="toggle-icon"></span>
+					  </label></a>
+					  </div>
+					</div>
+				  </div>
+				</li>
+				</ul>
+		</div>
+	 </div>
+		
+		
+			<div class="list no-hairlines-md">
+              <ul>
+			  <li class="customli item-content">
+                  
+                     <div class="item-media"><i class="ion ion-ios-flash iconlarge"></i></div>
+					<div class="item-inner">
+                      <div class="item-title">Status</div>
+					  <div class="item-after"><span class="badge color-green badgefont">{{prvdStatus}}</span></div>
+                    </div>
+                </li>
+                <li class="customlix">
+                  <a href="/srvrequestx/" class="item-content item-link">
+                     <div class="item-media"><i class="ion ion-ios-construct iconlarge"></i></div>
+					<div class="item-inner">
+                      <div class="item-title">Service Requests</div>
+					  <div class="item-after">{{#js_if "this.prvdSrvReqs > 0"}}<span class="badge color-blue badgefont">{{prvdSrvReqs}}</span>{{else}} {{/js_if}}</div>
+                    </div>
+                  </a>
+                </li>
+				<li class="customlix">
+                  <a href="/mymessagex/" class="item-content item-link">
+				  <div class="item-media"><i class="ion ion-ios-notifications-outline iconlarge"></i></div>
+                    <div class="item-inner">
+                      <div class="item-title">Messages</div>
+					  <div class="item-after">{{#js_if "this.prvdAlert > 0"}}<span class="badge badgefont">{{prvdAlert}}</span>{{else}} {{/js_if}}</div>
+                    </div>
+                  </a>
+                </li>
+				<li class="customlix">
+                  <a href="/profileprvd/" class="item-content item-link">
+				  <div class="item-media"><i class="ion ion-ios-briefcase iconlarge"></i></div>
+                    <div class="item-inner">
+                      <div class="item-title">Profile</div>
+					  <div class="item-after"> {{#js_if "this.prvdprofile === 'True'"}}<i class="ion ion-ios-checkmark-circle-outline" style="font-size:x-large;color:#4caf50"></i>{{else}}<i class="ion ion-ios-help-circle-outline" style="font-size:x-large;color:#e62b1e"></i>{{/js_if}}</div>
+                    </div>
+                  </a>
+                </li>
+				<li class="customlix">
+                  <a href="/myrating/" class="item-content item-link">
+				  <div class="item-media"><i class="ion ion-ios-contract iconlarge"></i></div>
+                    <div class="item-inner">
+                      <div class="item-title">My Rating</div>
+					  <div class="item-after">{{#js_if "this.prvdRating > 0"}}<span class="badge color-orange badgefont">{{prvdRating}}</span>{{else}} {{/js_if}}</div>
+                    </div>
+                  </a>
+                </li>
+				<li class="customlix">
+                  <a @click="getDocStats" class="item-content item-link">
+				  <div class="item-media"><i class="ion ion-ios-filing iconlarge"></i></div>
+                    <div class="item-inner">
+                      <div class="item-title">Documents</div>
+					  <div class="item-after">{{#js_if "this.prvdReqDocs === 'Complete'"}}<i class="ion ion-ios-checkmark-circle-outline" style="font-size:x-large;color:#4caf50"></i>{{else}}<i class="ion ion-ios-help-circle-outline" style="font-size:x-large;color:#e62b1e"></i>{{/js_if}}</div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+			{{/with}}
+    </div>
+  </div>
+
+<!-- Page Ends -->
+</div>
+</template>
+<style>
+.iconform
+{
+color: #e62b1e; !important
+font-size: large;
+}
+.frmtxt
+{font-size:small;}
+
+.itmsize
+{min-width:20px !important;}
+
+</style>
+<script>
+
+  return {
+    data: function () {
+      return {		
+		//read data from root object
+        appdata: this.$app.data.appdata,
+      };
+    },
+	methods: {
+	getDocStats: function() {
+        var app = this.$app;
+		
+		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		
+		// Show Preloader
+		app.preloader.show();
+		//app.dialog.progress();
+		
+		//Update Server Record ajax
+		app.request({
+				url: url+'type=getDocStat',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				userPhone: userPhone
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				 
+				  if (adata.message == "success") {
+				   
+				    app.data.getprvdDocs = adata.getprvdDocs;
+				    app.data.getprvdId = adata.getprvdId;
+				    app.data.getprvdAdd = adata.getprvdAdd;
+				    app.data.getprvdPolice = adata.getprvdPolice;
+				    app.data.getprvdCac = adata.getprvdCac;
+				    app.data.getprvdCert = adata.getprvdCert;
+					
+					app.router.navigate('/mydocs/');
+					  }
+					
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again!');
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.preloader.hide();}, 1000);
+				}
+			}); 
+		
+		
+		},
+		
+		
+		
+      chgOnlineStatus: function() {
+        var app = this.$app;
+		
+		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		var onStat = app.data.appdata.prvdOnlineStatus;
+		var newOnStat;
+		
+		if (onStat == "Online")
+		{
+		newOnStat = "Offline";
+		document.getElementById("prvdstat").innerHTML = "Offline"; 
+		//document.getElementById("prvdtoggle").removeAttribute("checked");
+		document.getElementById("prvdtoggle").checked = false;
+		}
+		else
+		{
+		newOnStat = "Online"; 
+		document.getElementById("prvdstat").innerHTML = "Online";
+		//document.getElementById("prvdtoggle").setAttribute("checked");
+		document.getElementById("prvdtoggle").checked = true;
+		}
+		
+		app.data.appdata.prvdOnlineStatus = newOnStat;
+		
+		// Show Preloader
+		app.preloader.show();
+		//app.dialog.progress();
+		
+		//Update Server Record ajax
+		app.request({
+				url: url+'type=chgOnlineStatus',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				onStatus: newOnStat,
+				userPhone: userPhone
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				 
+				  if (adata.message == "success") {
+					app.toastBottom =  app.toast.create({
+						text: 'Profile Status changed to '+newOnStat,
+						closeTimeout: 2000,
+					  });
+				//}
+					
+					
+					// Open it
+					app.toastBottom.open();
+					  }
+					
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again!');
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.preloader.hide();}, 1000);
+				}
+			}); 
+		
+      },
+	  },
+	 on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+		//var app = this.$app;
+		//app.router.clearPreviousHistory();
+		
+		/*
+		var toggle = this.$app.toggle.create({
+			el: 'prvdtoggle1',
+			on: {
+			change: function () {
+			console.log('Toggle changed');
+			app.dialog.alert('Hooray');
+			}
+			}
+			})
+		*/
+		
+		//Test Local Notification
+		var schedule_time = new Date();
+		var title = "Xpert Hands";
+		var message = "Access Granted to Provider Dashboard!";
+		var messageold = "Old - Access Granted to Provider Dashboard old!";
+		
+		cordova.plugins.notification.local.hasPermission(function(granted){
+			  if(granted == true)
+			  {
+			//	schedule(title, message, schedule_time);
+				//scheduleold(title, messageold, schedule_time);
+			  }
+			  else
+			  {
+				cordova.plugins.notification.local.registerPermission(function(granted) {
+					if(granted == true)
+					{
+				//	  schedule(title, message, schedule_time);
+					//  scheduleold(title, messageold, schedule_time);
+					}
+					else
+					{
+					//  navigator.notification.alert("Reminder cannot be added because app doesn't have permission");
+					}
+				});
+			  }
+		});
+		
+		function schedule(title, message, schedule_time)
+		{
+			
+			cordova.plugins.notification.local.schedule({
+			title: title,
+			text: message
+			});
+
+			//var array = [id, title, message, schedule_time];
+			//info.data[info.data.length] = array;
+			//localStorage.setItem("rp_data", JSON.stringify(info));
+
+			//navigator.notification.alert("Reminder added successfully")
+		}
+		
+		function scheduleold(id, title, messageold, schedule_time)
+		{
+			cordova.plugins.notification.local.schedule({
+				title: title,
+				message: message,
+				at: schedule_time
+			});
+
+			//var array = [id, title, message, schedule_time];
+			//info.data[info.data.length] = array;
+			//localStorage.setItem("rp_data", JSON.stringify(info));
+
+			//navigator.notification.alert("Reminder added successfully")
+		}
+		
+		
+		document.getElementById("prvdtoggle").addEventListener ("click", chgOnlineStatus); 
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);
+		this.$app.methods.getPrvdAlerts();
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    }
+	/*
+	on: {
+        pageInit: function () {
+         // do something on page init
+		 //var fullName = app.data.appdata.fullName;
+		 //var userPhone = app.data.appdata.userPhone;
+		 //document.getElementById("usrdet").innerHTML = fullName + ' <br><small>' + userPhone + '</small>'; 
+        },
+	},
+	*/
+  };
+  
+    /*
+  Status:
+  Registered
+  Verified
+  Suspended
+  
+  Profile Complete - True/False
+  
+  
+  Welcome to Provider Dashboard (Coming from Registration - Notification to Complete Profile and Upload required Docs)
+  
+  
+  */
+</script>

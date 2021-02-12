@@ -1,0 +1,383 @@
+<template>
+<div class="page" data-name="walletprvd">
+  <!-- Top Navbar -->
+	  <div class="navbar" style="background:#e3000f">
+	  <div class="navbar-inner sliding">
+		<div class="left">
+		  <div class="title sliding titlehd">Wallet</div>
+		</div>
+		<div class="right">{{#with appdata}}
+	  <a href="/mymessagex/" class="link icon-only">
+		<i class="icon f7-icons ios-only">bell{{#js_if "this.prvdAlert > 0"}}<span class="badge custombadge">{{prvdAlert}} {{else}} {{/js_if}}</span></i>
+		<i class="icon material-icons md-only">notifications_none{{#js_if "this.prvdAlert > 0"}}<span class="badge custombadge">{{prvdAlert}} {{else}} {{/js_if}}</span></i>
+	  </a>
+	</div>{{/with}}
+	  </div>
+	</div>
+  <!-- Top Navbar -->
+  <div class="toolbar tabbar-labels toolbar-bottom-md customtoolbar">
+    <div class="toolbar-inner">
+      <a href="/prvdashboard/" class="tab-link">
+			<i class="ion ion-ios-home icontab"></i>
+            <span class="tabbar-label badgefont">Dashboard</span>
+	  </a>
+      <a href="/srvrequestx/" class="tab-link">
+			<i class="ion ion-ios-list icontab"></i>
+            <span class="tabbar-label badgefont">Services</span>
+	  </a>
+	  <a href="#tab-1" class="tab-link tab-link-active activeborder">
+			<i class="ion ion-ios-wallet" style="font-size:x-large;"></i>
+            <span class="tabbar-label badgefont">Wallet</span>
+	  </a>
+      <a href="/accountprvd/" class="tab-link">
+			<i class="ion ion-ios-settings icontab"></i>
+            <span class="tabbar-label badgefont">Account</span>
+	  </a>
+    </div>
+  </div>
+  <div class="tabs">
+    <div id="tab-1" class="page-content tab tab-active custombackground">
+	<div class="block" style="height:1px"></div>
+    <div class="block">
+      <p><center style="font-size:xx-large">N <span id="walletval">{{appdata.prvdWalletBal}}</span></center></p>
+	   <p class="row">
+          <a href="#" class="col button button-raised popup-open" data-popup=".request-popup">Request Funds</a>
+        </p>
+    </div>
+	<div class="block" style="height:1px"></div>
+	<span id="translist">
+	<center><img src="./img/rateload.gif" width="150px" height="150px"></center>
+	
+	</span>
+	
+	
+
+           
+          
+    </div>
+    <div id="tab-2" class="page-content tab">
+      <div class="block">
+        <p>Tab 2 content</p>
+        
+      </div>
+    </div>
+    <div id="tab-3" class="page-content tab">
+      <div class="block">
+        <p>Tab 3 content</p>
+        
+      </div>
+    </div>
+  </div>
+  
+ <!-- Request Fund Pop Start -->
+ 	<div class="popup request-popup">
+      <div class="page">
+        <div class="navbar" style="background:#e3000f;">
+          <div class="navbar-inner">
+            <div class="title titlehd">Request Fund</div>
+            <div class="right titlehd"><a href="#" class="link popup-close">Close</a></div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="block-title">Complete Fields:</div>
+    <div class="list no-hairlines-md">
+      <ul>
+        <li class="item-content item-input">
+          <div class="item-media">
+            <i class="ion ion-ios-wallet iconform"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-title item-label">Amount:</div>
+            <div class="item-input-wrap">
+             <input type="number" class="frmtxt" required id="amt" placeholder="How much you want">
+				  <span class="input-clear-button"></span>
+            </div>
+          </div>
+        </li>
+		 <li class="item-content item-input">
+          <div class="item-media">
+            <i class="ion ion-ios-create iconform"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-title item-label">Account Number:</div>
+            <div class="item-input-wrap">
+             <input type="number" class="frmtxt" required id="actnum" placeholder="Your Bank Account Number">
+				  <span class="input-clear-button"></span>
+            </div>
+          </div>
+        </li>
+		<li class="item-content item-input">
+          <div class="item-media">
+            <i class="ion ion-ios-contact iconform"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-title item-label">Account Name:</div>
+            <div class="item-input-wrap">
+             <input type="text" class="frmtxt" required id="actname" placeholder="Your Bank Account Name">
+				  <span class="input-clear-button"></span>
+            </div>
+          </div>
+        </li>
+		
+        <li class="item-content item-input">
+          <div class="item-media">
+            <i class="ion ion-ios-business iconform"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-title item-label">Bank:</div>
+             <div class="item-input-wrap input-dropdown-wrap" id="bankfrm">
+              <select class="frmtxt" id="actbank" placeholder="Please choose...">
+                <option value="Access">Access Bank</option>
+                <option value="First Bank">First Bank</option>
+                <option value="Diamond Bank">Diamond Bank</option>
+                <option value="Keystone Bank">Keystone Bank</option>
+                <option value="Ecobank">Ecobank</option>
+              </select>
+            </div>
+          </div>
+        </li>
+		
+      </ul>
+    </div>
+	 <div class="block">
+			<a @click="requestMoney" class="button button-fill button-round button" style="background:#034679">Submit</a>
+	</div>
+        </div>
+      </div>
+    </div>
+
+<!-- Request Fund Pop Ends -->
+
+
+ <!-- Add Fund Pop Start -->
+ 	<div class="popup add-popup">
+      <div class="page">
+        <div class="navbar" style="background:#e3000f;">
+          <div class="navbar-inner">
+            <div class="title titlehd">Add Fund</div>
+            <div class="right titlehd"><a href="#" class="link popup-close">Close</a></div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="block-title">Complete Fields:</div>
+    <div class="list no-hairlines-md">
+      <ul>
+        <li class="item-content item-input">
+          <div class="item-media">
+            <i class="ion ion-ios-wallet iconform"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-title item-label">Amount:</div>
+            <div class="item-input-wrap">
+             <input type="number" class="frmtxt" required id="fullName" placeholder="Amount to Add">
+				  <span class="input-clear-button"></span>
+            </div>
+          </div>
+        </li>
+		 
+		
+        
+		
+      </ul>
+    </div>
+	 <div class="block">
+			<a class="button button-fill button-round button" style="background:#034679">Submit</a>
+	</div>
+        </div>
+      </div>
+    </div>
+
+<!-- Add Fund Pop Ends -->
+  
+  
+  
+</div>
+</template>
+<style>
+.listline
+{
+border-bottom: 1px solid #e5e5e5;
+color:#034679;
+}
+.textsmall
+{
+font-size:small;
+text-align: justify;
+}
+</style>
+<script>
+return {
+	// Page Events
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+		
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+		/*
+		app.data.appdata.puserImg = page.route.query.userImg;
+		app.data.appdata.pfullName = page.route.query.fullName;
+		app.data.appdata.prating = page.route.query.rating;
+		*/
+		
+		var app = this.$app;
+		  
+  		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		
+		//get rating values from database
+		app.request({
+				url: url+'type=getwalletprvd',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				userPhone: userPhone
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				document.getElementById("translist").innerHTML = adata.walletlist;
+				document.getElementById("walletval").innerHTML = adata.prvdWalletBal;
+				document.getElementById("bankfrm").innerHTML = adata.curBanks;
+				
+				//Collect the remain transaction more than 5 and show all
+				//app.data.usrvPrvdRating = adata.srvPrvdRating;
+					  
+				},
+				error:function(error){
+				//console.log(error.code);
+				console.log(error);
+				app.dialog.alert('An Error Occurred!'+error.response);
+				
+				},
+				complete:function(){
+				//Close Dialog
+				//setTimeout(function () {app.dialog.close();}, 1000);
+				}
+			}); 
+		
+		this.$app.methods.getUserAlerts();
+		
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);	
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    },
+	methods:{
+		callAccounts: function () {
+		//var fullName = app.data.appdata.fullName;
+		//var userPhone = app.data.appdata.userPhone;
+		
+		//app.router.navigate('/account/');
+		//document.getElementById("usrdet").innerHTML = fullName + ' <br> ' + userPhone; 
+
+
+		},
+		requestMoney: function () {
+		// App instance
+		var app = this.$app;
+		
+		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		
+		//get form values
+		var amt = $$('#amt').val();
+		var actname = $$('#actname').val();
+		var actnum = $$('#actnum').val();
+		var actbank = $$('#actbank').val();
+		
+		if (!amt || !actname|| !actnum || actbank == "default"){
+		  app.dialog.alert('Please fill in all fields');
+		  //app.dialog.alert(srvdate+' '+srvtime+' '+srvdetails+' '+srvadd+' '+srvdate2);
+		  return;
+		 }
+		 
+		 if (amt < 1000){
+		  app.dialog.alert('Minimum Payout Request is N1,000!');
+		  //app.dialog.alert(srvdate+' '+srvtime+' '+srvdetails+' '+srvadd+' '+srvdate2);
+		  return;
+		 }
+		 
+		 //app.dialog.alert('Form Ok - Read for Ajax Call');
+		 
+		 //close pop
+		app.popup.close();
+		 
+		  // Show Preloader
+		app.dialog.progress();
+		
+		//Update Server Record ajax
+		app.request({
+				url: url+'type=requestmoney',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				actname: actname,
+				userPhone: userPhone,
+				actbank: actbank,
+				amt: amt,
+				utype: 'Provider',
+				actnum: actnum
+				},
+				crossDomain:true,
+				success:function(adata){				
+					  
+				if(adata.message == "success")
+				{
+				//Add toast - Invoice Item Created
+				app.toastBottom =  app.toast.create({
+							text: 'Success! Request will be Processed Shortly.',
+							closeTimeout: 3000,
+						  })
+				// Open it
+				app.toastBottom.open();
+				
+				document.getElementById("walletval").innerHTML = adata.newWalletBal;
+				
+				}
+				else
+				{
+				app.dialog.alert(adata.message);
+				}
+								
+				
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again!');
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.dialog.close();}, 1000);
+				}
+			}); 
+
+
+		},
+
+	},
+	 data: function () {
+      return {		
+		//read data from root object
+        appdata: this.$app.data.appdata,
+      };
+    },
+
+}
+</script>

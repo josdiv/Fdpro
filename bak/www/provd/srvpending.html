@@ -1,0 +1,174 @@
+<template>
+<div class="page" data-name="srvpending">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+          <a href="/srvrequestx/" class="link">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Service Requests</div>
+	  <div class="subnavbar">
+        <div class="subnavbar-inner" style="background:#e3000f">
+          <div class="segmented segmented-raised">
+            <a href="#" class="button">Pending</a>
+            <a href="/srvcompleted/" class="button">Completed</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="page-content">
+	<div class="block">
+	
+	</div>
+	
+	{{#each prvdSrvReqList}}
+	{{#js_if "this.service_status === 'Pending' || this.service_status === 'Assigned' || this.service_status === 'In-Progress'"}} 
+	<a @click="getBkxDetail('{{sno}}','{{service_status}}')" style="color:#212121;">
+	<div class="card card-outline">
+      <div class="card-content card-content-padding">
+		<div class="list">
+			  <ul>
+				<li>
+				  <div class="item-content">
+					<div class="item-media itmsize"><i class="ion ion-ios-construct iconlargeorange" ></i></div>
+					<div class="item-inner">
+					  <div class="item-title font14">{{fullname}}
+					  <div class="item-footer">{{catname}}<br>{{datefmt}}</div>
+					  </div>
+					  
+					  <div class="item-after"><small><i class="ion ion-ios-timer iconblueright alnright" ></i><br>{{service_status}}</small></div>
+					</div>
+				  </div>
+				</li>
+				</ul>
+		</div>
+		<p class="font12">{{service_request}}</p>
+	  </div>
+     </div>
+	</a>
+	{{/js_if}}
+	
+	 {{else}}
+	 
+	 <div class="block">
+	<center><i class="ion ion-ios-construct iconlarge-xx"></i></center>
+	
+	</div>
+	<div class="block">
+	<p><strong><center>None Available at the Moment!</center></strong></p>
+	
+	</div>
+	
+{{/each}}
+	
+	
+	
+  </div>
+ 
+ 
+
+</div>
+</template>
+<style>
+.alnright
+{float: right;}
+.itmsize
+{min-width:20px !important;}
+</style>
+<script>
+return {
+	data: function () {
+      return {		
+		//read data from root object
+        //userAlertdate: this.$app.data.userAlertdate,
+        prvdSrvReqList: this.$app.data.prvdSrvReqList,
+      };
+    },
+	 methods: {
+      getBkxDetail: function(usrvsno, srvstatus) {
+        var app = this.$app;
+		
+		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		
+		var ajxlink;
+		
+		if (srvstatus == "Pending")
+		{ajxlink = "usrvdetails";}
+		else
+		{ajxlink = "uprvdetailsx";}
+		
+		// Show Preloader
+		app.preloader.show();
+		//app.dialog.progress();
+		
+		//Update Server Record ajax
+		app.request({
+				url: url+'type=uprvdetailsx',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				usrvsno: usrvsno
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				 
+				  if (adata.message == "success") {
+					//if provider found
+					//app.dialog.alert(userCity+' '+userPhone+' '+catName+' '+catSno);
+					app.data.appdata.psrvStats = adata.usrvStats;
+					app.data.psrvDets = adata.usrvDets;
+					app.router.navigate('/bkdetailx1/');
+					  }
+					
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again!');
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.preloader.hide();}, 1000);
+				}
+			}); 
+        
+      },
+    },
+	// Page Events
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+		this.$app.methods.getPrvdAlerts();
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);
+
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    }
+
+}
+
+</script>

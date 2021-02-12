@@ -1,0 +1,141 @@
+<template>
+<div class="page" data-name="service">
+  <!-- Top Navbar -->
+          <div class="navbar" style="background:#e3000f">
+		  <div class="navbar-inner sliding">
+			<div class="left">
+			  <div class="title titlehd">Book a Service</div>
+			</div>
+			<div class="right"> {{#with appdata}}
+	  <a href="/mymessage/" class="link icon-only">
+		<i class="icon f7-icons ios-only">bell{{#js_if "this.userAlert > 0"}}<span class="badge custombadge">{{userAlert}} {{else}} {{/js_if}}</span></i>
+		<i class="icon material-icons md-only">notifications_none{{#js_if "this.userAlert > 0"}}<span class="badge custombadge">{{userAlert}} {{else}} {{/js_if}}</span></i>
+	  </a>
+	</div>{{/with}}
+		<div class="subnavbar">
+        <form data-search-container=".search-list" data-search-in=".item-title" class="searchbar searchbar-init">
+          <div class="searchbar-inner">
+            <div class="searchbar-input-wrap">
+              <input type="search" placeholder="Search"/>
+              <i class="searchbar-icon"></i>
+              <span class="input-clear-button"></span>
+            </div>
+            <span class="searchbar-disable-button">Cancel</span>
+          </div>
+        </form>
+      </div>
+		  </div>
+		</div>
+  <!-- Top Navbar -->
+  <style>
+	.customli2
+	{border-bottom: 1px solid #e0e0e0;font-size:16px !important;}
+	</style>
+  <div class="toolbar tabbar-labels toolbar-bottom-md customtoolbar">
+    <div class="toolbar-inner">
+      <a href="/dashboard/" class="tab-link">
+			<i class="ion ion-ios-home icontab"></i>
+            <span class="tabbar-label badgefont">Dashboard</span>
+	  </a>
+      <a href="#tab-2" class="tab-link tab-link-active activeborder">
+			<i class="ion ion-ios-list" style="font-size:x-large;"></i>
+            <span class="tabbar-label badgefont">Services</span>
+	  </a>
+	  <a href="/wallet/" class="tab-link">
+			<i class="ion ion-ios-wallet icontab"></i>
+            <span class="tabbar-label badgefont">Wallet</span>
+	  </a>
+      <a href="/account/" class="tab-link">
+			<i class="ion ion-ios-settings icontab"></i>
+            <span class="tabbar-label badgefont">Account</span>
+	  </a>
+    </div>
+  </div>
+  <div class="tabs">
+    <div id="tab-1" class="page-content tab ">
+   
+          
+    </div>
+    <div id="tab-2" class="page-content tab tab-active">
+	
+        
+		  <div class="searchbar-backdrop"></div>
+		  <div class="list simple-list searchbar-not-found">
+		  <ul>
+			<li>Nothing found!</li>
+		  </ul>
+		</div>
+		<div class="list search-list searchbar-found">
+		
+		  <ul>
+		  {{#each srvCategory}}
+		  
+				<li class="customli2">
+                  <a href="/servicecity/?catSno={{sno}}&catName={{catname}}" class="item-content item-link">
+                     <div class="item-media"><img class="lazy" src="img/demo.png?tr=w-40,h-40" data-src="https://xperthands.ng/admin/{{app_img}}" width="30"></div>
+					<div class="item-inner">
+                      <div class="item-title">{{catname}}</div>
+					  <div class="item-after"></div>
+                    </div>
+                  </a>
+                </li>
+				
+		{{/each}}
+		
+			{{#each srvCatOthers}}
+		 <li class="customli2">
+                  <a href="/servicecity/?catsno={{sno}}&catName={{catname}}" class="item-content item-link">
+                     <div class="item-media"><img class="lazy" src="img/demo.png?tr=w-40,h-40" data-src='https://xperthands.ng/admin/{{app_img}}' width="30"></div>
+					<div class="item-inner">
+                      <div class="item-title">{{catname}}</div>
+					  <div class="item-after"></div>
+                    </div>
+                  </a>
+                </li>
+			
+		{{/each}}
+					
+ 
+		
+		</ul>
+    </div>
+     
+    </div>
+    <div id="tab-3" class="page-content tab">
+      <div class="block">
+        <p>Tab 3 content</p>
+       
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+<script>
+  return {
+    data: function () {
+      return {		
+		//read data from root object
+		appdata: this.$app.data.appdata,
+		appconst: this.$app.data.appconst,
+        srvCategory: this.$app.data.srvCategory,
+        srvCatOthers: this.$app.data.srvCatOthers,
+      };
+    },
+	on: {
+      pageInit: function (e, page) {
+        this.$app.methods.getUserAlerts();
+		
+		//Set Random Number and Picture Number
+		var app = this.$app;
+		var randNum = Math.floor(Math.random() * 9999999) + 111;
+		
+		
+		app.data.appdata.randNum = randNum;
+		app.data.appdata.srvImg = 0;
+		
+	
+		
+      }
+    },
+  };
+</script>

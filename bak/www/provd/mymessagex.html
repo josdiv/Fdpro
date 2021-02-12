@@ -1,0 +1,225 @@
+<template>
+<div class="page" data-name="mymessagex">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+          <a href="/prvdashboard/" class="link">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">My Messages</div>
+    </div>
+  </div>
+  <div class="page-content">
+	<div class="block">
+	
+	</div>
+	
+	{{#each prvdAlertMsg}}
+	<a @click="getMsgDetail('{{link}}','{{mdet}}')" style="color:#212121;">
+	<div class="card card-outline">
+      <div class="card-content card-content-padding">
+		<div class="list">
+			  <ul>
+				<li>
+				  <div class="item-content">
+					<div class="item-media"><i class="ion ion-ios-text iconlargeorange" ></i></div>
+					<div class="item-inner">
+					  <div class="item-title">
+					  <div class="item-footer">{{daddfmt}} | {{timefmt}}</div>
+					  </div>
+					  
+					  <div class="item-after">{{#js_if "this.status === 'Read'"}}<small><i class="ion ion-ios-mail-open iconblueright" ></i></small>{{else}}<small><i class="ion ion-ios-mail-unread iconblueright" ></i></small>{{/js_if}}</div>
+					</div>
+				  </div>
+				</li>
+				</ul>
+		</div>
+		<p class="font12">{{msg}}</p>
+	  </div>
+     </div>
+	 </a>
+	 {{else}}
+	 
+	 <div class="block">
+	<center><i class="ion ion-ios-construct iconlarge-xx"></i></center>
+	
+	</div>
+	<div class="block">
+	<p><strong><center>None Available at the Moment!</center></strong></p>
+	
+	</div>
+	
+{{/each}}
+	
+	
+  </div>
+ 
+ 
+
+</div>
+</template>
+<script>
+return {
+	data: function () {
+      return {		
+		//read data from root object
+        //userAlertdate: this.$app.data.userAlertdate,
+        prvdAlertMsg: this.$app.data.prvdAlertMsg,
+      };
+    },
+	methods: {
+	getMsgDetail: function (mtype, mlink) {
+		// App instance
+		var app = this.$app;
+		
+		//read data from root object
+		var url = app.data.appconst.url;
+		var userPhone = app.data.appdata.userPhone;
+		
+		//app.dialog.alert(mtype + ' ' + mlink);
+		
+		if((mtype == "Dashboard") || (mtype == "NULL") || (mtype == "") || (mtype == null))
+		{
+			app.router.navigate('/prvdashboard/');
+			return;
+		}
+		
+		if(mtype == "Wallet")  
+		{
+			app.router.navigate('/walletprvd/');
+			return;
+		}
+		
+		if(mtype == "Profile")  
+		{
+			app.router.navigate('/prvdetails2/');
+			return;
+		}
+		
+		if(mtype == "Service")  
+		{
+			//app.router.navigate('/wallet/');
+			 // Show Preloader
+		app.preloader.show();
+		//app.dialog.progress();
+		
+		//Update Server Record ajax
+		app.request({
+				url: url+'type=invdetailsx',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				userPhone: userPhone,
+				serviceid: mlink
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				 
+				  if (adata.message == "success") {
+					app.data.appdata.psrvStats = adata.usrvStats;
+					app.data.psrvDets = adata.usrvDets;
+					app.router.navigate('/bkdetailx1/');
+					  }
+					
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again!');
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.preloader.hide();}, 1000);
+				}
+			});
+			//return;
+		}
+		
+		
+		 // Show Preloader
+		//app.preloader.show();
+		//app.dialog.progress();
+	},
+	
+	},
+	// Page Events
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+		
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);
+
+		app.data.appdata.prvdAlert = 0;
+		
+		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var prvdAlertID = app.data.appdata.prvdAlertID;
+		var url = app.data.appconst.url;
+		
+		
+		//Update Server Record ajax
+		app.request({
+		url: url+'type=updateuseralertx',
+		dataType:'json',
+		method: 'GET',
+		data:{
+		userPhone: userPhone,
+		prvdAlertID: prvdAlertID
+		},
+		crossDomain:true,
+		success:function(adata){
+		 
+		 
+		  if (adata.message == "success") {
+			
+			app.data.appdata.prvdAlert = adata.prvdAlert;
+			app.data.appdata.prvdAlertID = adata.prvdAlertID;
+			app.data.prvdAlertMsg = adata.prvdAlertMsg;
+				
+			}
+		},
+		error:function(error){
+		console.log(error.code);
+		if (error.exception !== ""){console.log(error.exception);}
+			//app.dialog.alert('Connection Error, Try Again!');
+		},
+		complete:function(){
+		//Close Dialog
+		//setTimeout(function () {app.dialog.close();}, 1000);
+		}
+		});
+		
+	//Add toast - Invoice Item Created
+		app.toastBottom =  app.toast.create({
+					text: 'Hint: Tap Message to View Details.',
+					closeTimeout: 3000,
+				  })
+		// Open it
+		app.toastBottom.open();
+		
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    }
+
+}
+
+</script>

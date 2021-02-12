@@ -1,0 +1,104 @@
+<template>
+  <div class="page" data-name="providertype">
+    <div class="navbar" style="background:#ffffff;color:#000000">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="ion ion-ios-arrow-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title sliding titlehd">Sign Up</div>
+      </div>
+    </div>
+     <div class="page-content custombackground">
+	
+	<div class="block">
+	<div class="progressbar color-green" data-progress="55"><span style="transform: translate3d(-20%, 0px, 0px);"></span></div>
+	<br><span style="font-size:larger">Select a Provider Type:</span>
+	</div>
+	<div class="block" style="height:55%;overflow:scroll">
+	
+		<div class="list media-list">
+      <ul>
+	  {{#each provList}}
+        <li>
+          <label class="item-radio item-content">
+            <input type="radio" name="provider-type" value="{{this}}" />
+            <i class="icon icon-radio"></i>
+            <div class="item-inner">
+              <div class="item-title-row">
+                <div class="item-title">{{this}}</div>
+              </div>
+            </div>
+          </label>
+        </li>
+	{{/each}}
+		  </ul>
+		</div>
+			</div>
+		<div class="block">
+			<a class='button button-raised button-big button-outline buttonback' @click="newUser"><i class='ion ion-ios-pulse'></i> Proceed</a>
+			
+    </div>
+		</div>
+		
+		
+  </div>
+</template>
+<style>
+.divspinner
+{background:transparent url('./img/imgspinner.gif') center no-repeat;}
+.md .navbar:after
+{height:0px;}
+.md .color-theme-red .radio input[type=radio]:checked~.icon-radio, .md .color-theme-red label.item-radio input[type=radio]:checked~* .icon-radio, .md .color-theme-red label.item-radio input[type=radio]:checked~.icon-radio
+{border-color:#2196f3 !important;}
+.md .color-theme-red .radio input[type=radio]:checked~.icon-radio:after, .md .color-theme-red label.item-radio input[type=radio]:checked~* .icon-radio:after, .md .color-theme-red label.item-radio input[type=radio]:checked~.icon-radio:after
+{background:#2196f3 !important;}
+</style>
+<script>
+return {
+	methods:{
+	newUser: function () {
+	
+		// App instance
+		var app = this.$app;
+			
+		var providerType = document.querySelector('input[name="provider-type"]:checked').value;
+		
+		if(document.querySelector('input[name="provider-type"]:checked').value == "")
+		{
+		app.dialog.alert('Select your Provider Type!');
+		return;
+		}
+		if (providerType){
+		  //app.dialog.alert('Your Gender is ' + gender);
+		//  return;
+		
+		app.data.appdata.providerType = providerType;
+		app.router.navigate('/pregservice/');
+		 }
+	
+	
+	
+		},
+			},
+	data: function () {
+      return {		
+		//read data from root object
+        provList: this.$app.data.provList,
+      };
+    },
+	on: {
+      pageInit: function (e, page) {
+		// App instance
+		
+	 
+		
+      }
+    }
+
+
+}
+
+</script>

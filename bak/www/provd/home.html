@@ -1,0 +1,58 @@
+<template>
+  <div class="page" data-name="home">
+   <div class="page-content" style='background-image:url(img/back1.jpg);background-repeat:no-repeat; background-size:cover;'>
+          <div class="block">
+        <img src='img/placeholder.png' style='display: block; margin: auto; width:60%; margin-top:30%'>
+      </div>
+	  <div class="block" style='margin-top:40%'></div>
+	 <div id="lclinputHome">
+		<center><p><img src="./img/imgspinner.gif" width="100px" height="100px"></p></center>
+			
+		</div>
+		
+        </div>
+  </div>
+</template>
+
+<script>
+return {
+	methods:{
+	
+	
+	},
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+		
+		
+		
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);
+      },
+      pageAfterIn: function(e, page) {
+       
+	   var lclinputHome = "<div class='animated fadeIn'><div class='block'><a class='button button-raised button-big button-outline' style='border-color:#4caf50;color:#4caf50' href='/signup/'><i class='ion ion-ios-pulse'></i> Sign Up</a></div><div class='block'><a class='button button-raised button-big button-outline' style='border-color:#2196f3;color:#2196f3' href='/login/'><i class='ion ion-ios-lock'></i> Login</a></div></div>";
+	   
+	   //setTimeout(function () {document.getElementById("lclinputHome").innerHTML = lclinputHome;}, 1000);
+	   
+	   document.getElementById("lclinputHome").innerHTML = lclinputHome;
+	
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    }
+
+}
+
+</script>

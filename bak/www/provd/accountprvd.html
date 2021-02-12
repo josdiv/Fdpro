@@ -1,0 +1,199 @@
+<template>
+<div class="page" data-name="accountprvd">
+  <!-- Top Navbar -->
+	  <div class="navbar" style="background:#e3000f">
+	  <div class="navbar-inner sliding">
+		<div class="left">
+		  <div class="title sliding titlehd">My Account</div>
+		</div>
+		<div class="right">{{#with appdata}}
+	  <a href="/mymessagex/" class="link icon-only">
+		<i class="icon f7-icons ios-only">bell{{#js_if "this.prvdAlert > 0"}}<span class="badge custombadge">{{prvdAlert}} {{else}} {{/js_if}}</span></i>
+		<i class="icon material-icons md-only">notifications_none{{#js_if "this.prvdAlert > 0"}}<span class="badge custombadge">{{prvdAlert}} {{else}} {{/js_if}}</span></i>
+	  </a>
+	</div>{{/with}}
+	  </div>
+	  <div class="subnavbar" style="background:#e3000f;height:10em">
+		{{#with appdata}}
+		<div style="width:100%">
+		<img class="centerimgprvd prvdimg" src="http://xperthands.ng/admin/{{profile_img}}"/>
+		
+		<p class="texthd" id="usrdet"><span style="font-size:x-large">{{fullName}}</span>
+		<br>
+		<small>{{userPhone}}</small>
+		</p>
+		{{/with}}
+		</div>
+		</div>
+	</div>
+  <!-- Top Navbar -->
+   <style>
+	
+	</style>
+  <div class="toolbar tabbar-labels toolbar-bottom-md customtoolbar">
+    <div class="toolbar-inner">
+      <a href="/prvdashboard/" class="tab-link">
+			<i class="ion ion-ios-home icontab"></i>
+            <span class="tabbar-label badgefont">Dashboard</span>
+	  </a>
+      <a href="/srvrequestx/" class="tab-link">
+			<i class="ion ion-ios-list icontab" ></i>
+            <span class="tabbar-label badgefont">Services</span>
+	  </a>
+	  <a href="/walletprvd/" class="tab-link">
+			<i class="ion ion-ios-wallet icontab"></i>
+            <span class="tabbar-label badgefont">Wallet</span>
+	  </a>
+      <a href="#tab-3" class="tab-link tab-link-active activeborder">
+			<i class="ion ion-ios-settings" style="font-size:x-large;"></i>
+            <span class="tabbar-label badgefont">Account</span>
+	  </a>
+    </div>
+  </div>
+  <div class="tabs">
+    <div id="tab-1" class="page-content tab ">
+		<p>Tab 1 content</p>
+    </div>
+    <div id="tab-2" class="page-content tab ">
+      <div class="block">
+        <p>Tab 2 content</p>
+        
+      </div>
+    </div>
+    <div id="tab-3" class="page-content tab tab-active" style="margin-top:11em !important;height:30em">
+     
+			
+			<div class="card">
+			  <div class="card-content">
+				<div class="list links-list no-ios-edges">
+				<ul>
+					  <a href="/prvdetails2/">
+					  <li class="customli3"><i class="ion ion-ios-contact iconlargeblue padding-right"></i>View Profile</li>
+					  </a>
+				  </ul>
+				</div>
+			  </div>
+			</div>
+			<div class="card">
+			  <div class="card-content">
+				<div class="list links-list no-ios-edges">
+				  <ul>
+					<a href="/password/">
+					<li class="customli3"><i class="ion ion-ios-key iconlargeblue padding-right"></i>Change Password</li>
+					</a>
+				  </ul>
+				</div>
+			  </div>
+			</div>
+			<div class="card">
+			  <div class="card-content">
+				<div class="list links-list no-ios-edges">
+				  <ul>
+					<a href="/prvdsupport/">
+					<li class="customli3"><i class="ion ion-ios-call iconlargeblue padding-right"></i>Get Support</li>
+					</a>
+				  </ul>
+				</div>
+			  </div>
+			</div>
+			<div class="card">
+			  <div class="card-content">
+				<div class="list links-list no-ios-edges">
+				  <ul>
+					<a href="/faq/">
+					<li class="customli3"><i class="ion ion-ios-help-circle-outline iconlargeblue padding-right"></i>FAQs</li>
+					</a>
+				  </ul>
+				</div>
+			  </div>
+			</div>
+			<div class="card">
+			  <div class="card-content">
+				<div class="list links-list no-ios-edges">
+				  <ul>
+					<a href="/aboutus/">
+					<li class="customli3"><i class="ion ion-ios-bulb iconlargeblue padding-right"></i>About</li>
+					</a>
+				  </ul>
+				</div>
+			  </div>
+			</div>
+	   
+			<div class="card">
+			  <div class="card-content">
+				<div class="list links-list no-ios-edges">
+				  <ul>
+					<a href="/dashboard/">
+					<li class="customli3"><i class="ion ion-ios-cog iconlargeblue padding-right"></i>User Dashboard</li>
+					</a>
+				  </ul>
+				</div>
+			  </div>
+			</div>
+       <div class="block"></div>
+	   <div class="card">
+			  <div class="card-content">
+				<div class="list links-list no-ios-edges">
+				  <ul>
+					<a @click="signOut">
+					<li class="customli3"><i class="ion ion-ios-log-out iconlarge padding-right"></i>Sign Out</li>
+					</a>
+				  </ul>
+				</div>
+			  </div>
+			</div>
+    </div>
+  </div>
+
+
+
+<!-- Page Ends -->
+</div>
+</template>
+<style>
+.iconform
+{
+color: #e62b1e; !important
+font-size: large;
+}
+.frmtxt
+{font-size:small;}
+</style>
+<script>
+  return {
+  methods:{
+  signOut: function ()
+		{
+		var app = this.$app;
+		
+		//set Native Storage
+		
+		localStorage.removeItem("userPhone");
+		app.router.navigate('/home/');
+						
+		},
+  
+  },
+    data: function () {
+      return {		
+		//read data from root object
+        appdata: this.$app.data.appdata,
+      };
+    },
+	on: {
+      pageInit: function (e, page) {
+        this.$app.methods.getPrvdAlerts();
+      }
+    },
+	/*
+	on: {
+        pageInit: function () {
+         // do something on page init
+		 //var fullName = app.data.appdata.fullName;
+		 //var userPhone = app.data.appdata.userPhone;
+		 //document.getElementById("usrdet").innerHTML = fullName + ' <br><small>' + userPhone + '</small>'; 
+        },
+	},
+	*/
+  };
+</script>

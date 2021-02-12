@@ -1,0 +1,158 @@
+<template>
+<div class="page" data-name="prvdcity">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+        <a href="#" class="link back">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Work Cities</div>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="block-title">Select Cities you can Work in</div>
+<div class="list">
+      <ul>
+	  {{#each prvdcitylist}}
+        <li>
+          <label class="item-checkbox item-content">
+            <input type="checkbox" {{hasPrvd}} name="pcity" id="pcity" value="{{citysno}}" />
+            <i class="icon icon-checkbox"></i>
+            <div class="item-inner">
+              <div class="item-title font14">{{cityname}}</div>
+            </div>
+          </label>
+        </li>
+		{{/each}}
+      </ul>
+    </div>
+	<div class="block">
+			<a class="button button-raised button-big button-fill button-round" @click="setCityPrvd"  style="background:#034679">Submit</a>
+		</div>
+  </div>
+</div>
+</template>
+
+<script>
+return {
+	methods:{
+		setCityPrvd: function () {
+		
+		// App instance
+		var app = this.$app;
+		
+		//Get selected City
+		var citylist = [];
+		var citystr = "0,";
+		var checkboxes = document.querySelectorAll('input[id=pcity]:checked');
+
+		for (var i = 0; i < checkboxes.length; i++) {
+		  citylist.push(checkboxes[i].value);
+		  citystr += checkboxes[i].value+',';
+		}
+		
+		
+		
+		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		
+		
+		
+		// Show Preloader
+		app.dialog.progress();
+		
+		//Update Server Record ajax
+		app.request({
+		url: url+'type=updatecityprvd',
+		dataType:'json',
+		method: 'GET',
+		data:{
+		userPhone: userPhone,
+		citylist: citylist,
+		citystr: citystr
+		},
+		crossDomain:true,
+		success:function(adata){
+		 
+		 
+		  if (adata.message == "success") {
+				app.router.navigate('/prvdservice/');
+				app.data.prvdsrvlist = adata.prvdsrvlist;
+				app.data.prvdcitylist = adata.prvdcitylist;
+				app.toastBottom =  app.toast.create({
+						text: 'Service City Updated Successfully!',
+						closeTimeout: 3000,
+					  });
+				//}
+					
+					
+					// Open it
+				//	app.toastBottom.open();
+			  }
+		},
+		error:function(error){
+		console.log(error.code);
+		if (error.exception !== ""){console.log(error.exception);}
+			app.dialog.alert('Connection Error, Try Again!');
+		},
+		complete:function(){
+		//Close Dialog
+		setTimeout(function () {app.dialog.close();}, 1000);
+		}
+		}); 
+
+		//app.dialog.alert(citylist);
+		//app.dialog.alert(citystr);
+	
+		}
+
+	},
+	 data: function () {
+      return {		
+		//read data from root object
+        prvdcitylist: this.$app.data.prvdcitylist,
+      };
+    },
+	// Page Events
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+		
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);
+	/*
+	// User ID from request
+      var catName = routeTo.params.catname;
+		
+		//Set Global object Service Type
+		app.data.appdata.catName = catName;
+		//Set Global object Service Type
+		*/
+		app.data.appdata.catName = page.route.query.cat;
+		
+		//this.$app.dialog.alert(page.route.query.cat);
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    }
+
+}
+
+</script>

@@ -1,0 +1,270 @@
+<template>
+  <div class="page" data-name="srvreview">
+   <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+          <a href="/bkdetail1/" class="link">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Service Review</div>
+    </div>
+  </div>
+   <div class="page-content" style=''>
+    <div class="block">
+	<center>
+		<a @click="srvRate(1)"><i class="ion ion-ios-star-outline rateStar" id="rate1"></i></a>
+		<a @click="srvRate(2)"><i class="ion ion-ios-star-outline rateStar" id="rate2"></i></a>
+		<a @click="srvRate(3)"><i class="ion ion-ios-star-outline rateStar" id="rate3"></i></a>
+		<a @click="srvRate(4)"><i class="ion ion-ios-star-outline rateStar" id="rate4"></i></a>
+		<a @click="srvRate(5)"><i class="ion ion-ios-star-outline rateStar" id="rate5"></i></a>
+	</center>
+	<p></p>
+    </div>
+	<div class="list no-hairlines-md">
+      <ul>
+	   <li class="item-content item-input item-input-with-info">
+          <div class="item-inner">
+            <div class="item-input-wrap">
+             <textarea id="srvreview" style="height:200px" placeholder=" Add a Review..."></textarea>
+              <div class="item-input-info lblcolor"></div>
+            </div>
+          </div>
+        </li>
+		
+	
+       
+	</ul>
+	</div>
+	<div class="block">
+		<a @click="srvReview" class="button button-fill button-big" style="background:#034679">Submit</a>
+    </div>
+	
+	
+	
+	
+    </div>
+  </div>
+</template>
+<style>
+.rateStar
+{font-size:60px;color:#e3000f;}
+</style>
+<script>
+return {
+	methods:{
+	srvRate: function(rateVal) {
+	var app = this.$app;
+	//var rate = "rate"+rateVal;
+	var rate,i;
+	var rateid = 0;
+	
+	app.data.appdata.srv_amtPaid = rateVal;
+	/*
+	if(rateVal == 1)
+	{
+	rate = "rate"+rateVal;
+	document.getElementById(rate).setAttribute("class", "ion ion-ios-star rateStar");
+	return;
+	}
+	
+	if(rateVal == 5)
+	{
+	for (i = 0; i < rateVal; i++) { 
+	  rateid++;
+	  rate = "rate"+rateid;
+	  app.dialog.alert(rate);
+	  //document.getElementById(rate).setAttribute("class", "ion ion-ios-star rateStar");
+	}
+	//document.getElementById(rate).setAttribute("class", "ion ion-ios-star rateStar");
+	return;
+	}
+	
+	*/
+	
+	
+	
+	for (i = 0; i < rateVal; i++) { 
+	  rateid++;
+	  rate = "rate"+rateid;
+	  //app.dialog.alert(rate+"- ON");
+	  document.getElementById(rate).setAttribute("class", "ion ion-ios-star rateStar");
+	}
+	
+	rateid = rateVal++;
+	
+	for (i = rateVal; i < 6; i++) { 
+	  rateid++;
+	  rate = "rate"+rateid;
+	  //app.dialog.alert(rate+"- OFF");
+	  document.getElementById(rate).setAttribute("class", "ion ion-ios-star-outline rateStar");
+	}
+	
+	//Send Rate Vale to Database
+	
+	//document.getElementById(rate).setAttribute("class", "ion ion-ios-star rateStar");
+	//document.getElementById(rate).setAttribute("class", "ion ion-ios-star-outline rateStar");
+	
+	},
+	srvReview: function() {
+        var app = this.$app;
+		
+		var srvreview = $$('#srvreview').val();
+		var rateVal = app.data.appdata.srv_amtPaid;
+		
+		if (!srvreview || !rateVal){
+		  app.dialog.alert('Select rating and provide a review.');
+		  //app.dialog.alert(srvdate+' '+srvtime+' '+srvdetails+' '+srvadd+' '+srvdate2);
+		  return;
+		 }
+		 
+		//read data from root object
+		var url = app.data.appconst.url;
+		var service_id = app.data.appdata.srv_serviceid;
+		var userPhone = app.data.appdata.userPhone;
+		 
+		// Show Preloader
+		app.dialog.progress();
+		
+		app.request({
+				url: url+'type=servicereview',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				service_id: service_id,
+				rateVal: rateVal,
+				userPhone: userPhone,
+				srvRating: srvreview
+				},
+				success:function(adata){
+				 
+				 
+				  if (adata.message == "success") {
+						 app.notificationFull = app.notification.create({
+								icon: '<i class="ion ion-ios-construct" style="color:#e62b1e;"></i>',
+								title: 'XpertHands',
+								titleRightText: 'now',
+								subtitle: 'Service Completed',
+								text: 'Thanks for your service patronage.!',
+								closeTimeout: 10000,
+							  });
+						   // }
+							// Open it
+							app.notificationFull.open();
+							app.data.userSrvReqList = adata.userSrvReqList;
+							
+							//Go to Dashboard
+							app.router.navigate('/dashboard/');
+					  }
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again!');
+					
+					
+					
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.dialog.close();}, 2000);
+				}
+				}); 
+	
+		
+	},	
+	retryApplogin: function() {
+        var app = this.$app;
+		
+		var userPhone = '08065672050';
+		//var fullName = 'John Doe';
+		
+		//get data from localstorage
+		//var userPhone = localStorage.getItem("userPhone");
+		
+		//read data from root object
+		var url = app.data.appconst.url;
+		
+		// Show Preloader
+		app.dialog.progress();
+		
+		app.request({
+				url: url+'type=applogin',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				userPhone: userPhone
+				},
+				success:function(adata){
+				 
+				 
+				  if (adata.message == "success") {
+						app.data.appdata = {userPhone: userPhone, fullName: adata.fullName, userCity: adata.userCity, userEmail: adata.userEmail, userAlert: adata.userAlert, userAlertID: adata.userAlertID, userSrvReqs: adata.userSrvReqs};
+						app.data.appcity = adata.city;
+						app.data.userAlertMsg = adata.userAlertMsg;
+						app.data.srvCategory = adata.srvCategory;
+						app.data.srvCatOthers = adata.srvCatOthers;
+						app.data.userSrvReqList = adata.userSrvReqList;
+						app.dialog.alert('Welcome Back');
+						app.router.navigate('/dashboard/');
+					  }
+				},
+				error:function(error){
+				console.log(error.code);
+				if (error.exception !== ""){console.log(error.exception);}
+					app.dialog.alert('Connection Error, Try Again!');
+					
+					
+					
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.dialog.close();}, 2000);
+				}
+				}); 
+	
+		
+      },
+	},
+	 data: function () {
+      return {		
+		//read data from root object
+        //usrvImages: this.$app.data.usrvImages,
+      };
+    },
+	// Page Events
+    on: {
+      pageMounted: function(e, page) {
+        console.log('pageMounted', page);
+      },
+      pageInit: function(e, page) {
+        console.log('pageInit', page);
+		
+		// Show Preloader
+		//app.dialog.progress();
+		
+		
+      },
+      pageBeforeIn: function(e, page) {
+        console.log('pageBeforeIn', page);
+      },
+      pageAfterIn: function(e, page) {
+        console.log('pageAfterIn', page);
+		
+	
+      },
+      pageBeforeOut: function(e, page) {
+        console.log('pageBeforeOut', page);
+      },
+      pageAfterOut: function(e, page) {
+        console.log('pageAfterOut', page);
+      },
+      pageBeforeRemove: function(e, page) {
+        console.log('pageBeforeRemove', page);
+      },
+    }
+
+}
+
+</script>

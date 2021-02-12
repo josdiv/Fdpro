@@ -1,0 +1,81 @@
+<template>
+<div class="page" data-name="rateservice">
+  <div class="navbar" style="background:#e3000f">
+    <div class="navbar-inner sliding">
+      <div class="left">
+          <a href="/srvrequest/" class="link">
+          <i class="ion ion-ios-arrow-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title sliding titlehd">Rating</div>
+    </div>
+  </div>
+  <div class="page-content">
+	<div class="block">
+    Rate Service:   
+	   <hr class="hrline">
+	   <p class="text-align-center">
+	   <i class="ion ion-ios-star iconlargeorange" style="font-size: 60px;" ></i>
+	   <i class="ion ion-ios-star iconlargeorange" style="font-size: 60px" ></i>
+	   <i class="ion ion-ios-star iconlargeorange" style="font-size: 60px" ></i>
+	   <i class="ion ion-ios-star-outline iconlargeorange" style="font-size: 60px" ></i>
+	   <i class="ion ion-ios-star-outline iconlargeorange" style="font-size: 60px" ></i>
+	   </p>
+	   <hr class="hrline">
+      </div>
+	  <div class="block">
+	  
+	  </div>
+	 <div class="list no-hairlines-md">
+      <ul>
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-label">Comment</div>
+            <div class="item-input-wrap">
+              <textarea class="frmtxt" placeholder="Enter your feedback about the Service"></textarea>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+	<div class="block">
+			<a @click="serviceFinish" class="button button-fill button-round button" style="background:#034679">Submit</a>
+	</div>
+	
+  </div>
+ 
+ 
+
+</div>
+</template>
+<style>
+.customli2
+{border-bottom: 1px solid #e0e0e0; font-size:14px !important;}
+.hrline
+{border:0px; height:1px; background-color: #e0e0e0;}
+</style>
+<script>
+return {
+	methods:{
+	serviceFinish: function () {
+	
+	//if (!app.toastBottom) {
+		  app.toastBottom =  app.toast.create({
+			text: 'Thanks, Service Completed!',
+			closeTimeout: 3000,
+		  });
+		//}
+		
+		
+		// Open it
+		app.toastBottom.open();
+		
+		app.router.navigate('/dashboard/');
+	
+	},
+
+	}
+}
+
+</script>

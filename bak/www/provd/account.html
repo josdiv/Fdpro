@@ -1,0 +1,583 @@
+<template>
+<div class="page" data-name="account">
+  <!-- Top Navbar -->
+	  <div class="navbar pgradback navborder" >
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="ion ion-ios-settings whitecolor"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title sliding titlehd whitecolor">Account</div>
+		<div class="right">
+          <a href="/pnotice/" class="link icon-only">
+            <i class="icon material-icons md-only">notifications_none<span class="badge color-red" id="lclalertNumact">0</span></i>
+            <i class="icon f7-icons ios-only">bell<span class="badge color-red" id="lclalertNumact">0</span></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  <!-- Top Navbar -->
+   <style>
+	
+	</style>
+  <div class="toolbar tabbar-labels toolbar-bottom-md customtoolbar">
+    <div class="toolbar-inner">
+      <a href="/pmainhome/" class="tab-link">
+			<i class="ion ion-ios-pulse icontab"></i>
+            <span class="tabbar-label badgefont">Explore</span>
+	  </a>
+      <a href="/pservice/" class="tab-link">
+			<i class="ion ion-ios-medkit icontab" ></i>
+            <span class="tabbar-label badgefont">Booking</span>
+	  </a>
+	  <a href="/pupayment/" class="tab-link">
+			<i class="ion ion-ios-card icontab"></i>
+            <span class="tabbar-label badgefont">Wallet</span>
+	  </a>
+      <a href="#tab-3" class="tab-link tab-link-active activeborder">
+			<i class="ion ion-ios-switch" style="font-size:x-large;"></i>
+            <span class="tabbar-label badgefont">Account</span>
+	  </a>
+    </div>
+  </div>
+  <div class="tabs">
+    <div id="tab-1" class="page-content tab ">
+		<p>Tab 1 content</p>
+    </div>
+    <div id="tab-2" class="page-content tab ">
+      <div class="block">
+        <p>Tab 2 content</p>
+        
+      </div>
+    </div>
+    <div id="tab-3" class="page-content tab tab-active" style="margin-top:8%">
+     
+			
+			<div class="card">
+			  <div class="card-content">
+				<div class="list links-list no-ios-edges">
+				<ul>
+					  <a href="/pdprofilev/">
+					  <li class="customli3"><i class="ion ion-ios-contact iconlargeblue padding-right"></i>Manage Profile</li>
+					  </a>
+				  </ul>
+				</div>
+			  </div>
+			</div>
+			
+			<!--
+			<div class="card">
+			  <div class="card-content">
+				<div class="list links-list no-ios-edges">
+				<ul>
+					  <a href="/profile/">
+					  <li class="customli3"><i class="ion ion-ios-contact iconlargeblue padding-right"></i>Manage Health Data</li>
+					  </a>
+				  </ul>
+				</div>
+			  </div>
+			</div>
+			
+			-->
+			<div class="card">
+			  <div class="card-content">
+				<div class="list links-list no-ios-edges">
+				  <ul>
+					<a href="/pdpassword/">
+					<li class="customli3"><i class="ion ion-ios-key iconlargeblue padding-right"></i>Change Password</li>
+					</a>
+				  </ul>
+				</div>
+			  </div>
+			</div>
+			<div class="card">
+			  <div class="card-content">
+				<div class="list links-list no-ios-edges">
+				  <ul>
+					<a href="/pdsupport/">
+					<li class="customli3"><i class="ion ion-ios-call iconlargeblue padding-right"></i>Get Support</li>
+					</a>
+				  </ul>
+				</div>
+			  </div>
+			</div>
+			<div class="card">
+			  <div class="card-content">
+				<div class="list links-list no-ios-edges">
+				  <ul>
+					<a href="/pdfaq/">
+					<li class="customli3"><i class="ion ion-ios-help-circle-outline iconlargeblue padding-right"></i>FAQs</li>
+					</a>
+				  </ul>
+				</div>
+			  </div>
+			</div>
+			<div class="card">
+			  <div class="card-content">
+				<div class="list links-list no-ios-edges">
+				  <ul>
+					<a href="/pdaboutus/">
+					<li class="customli3"><i class="ion ion-ios-bulb iconlargeblue padding-right"></i>About</li>
+					</a>
+				  </ul>
+				</div>
+			  </div>
+			</div>
+	   
+       <div class="block"></div>
+	   <div class="card">
+			  <div class="card-content">
+				<div class="list links-list no-ios-edges">
+				  <ul>
+					<a href="/provider/">
+					<li class="customli3"><i class="ion ion-ios-log-out iconlarge padding-right"></i>Sign Out</li>
+					</a>
+				  </ul>
+				</div>
+			  </div>
+			</div>
+    </div>
+  </div>
+
+
+<!-- Material Registration Pop Start -->
+ 	<div class="popup material-popup">
+      <div class="page">
+        <div class="navbar" style="background:#e3000f;">
+          <div class="navbar-inner">
+            <div class="title titlehd">Material Registration</div>
+            <div class="right titlehd"><a href="#" class="link popup-close">Close</a></div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="block-title font12">Complete Fields:</div>
+    <div class="list no-hairlines-md">
+      <ul>
+        <li class="item-content item-input">
+          <div class="item-media">
+            <i class="ion ion-ios-business iconform"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-input-wrap">
+             <input type="text" class="frmtxt" id="biz_name" placeholder="Enter Business Name">
+				  <span class="input-clear-button"></span>
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input">
+          <div class="item-media">
+            <i class="ion ion-ios-navigate iconform"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <textarea class="frmtxt" id="biz_add" placeholder="Your Detailed Business Location"></textarea>
+            </div>
+          </div>
+        </li>
+		<li class="item-content item-input">
+          <div class="item-media">
+            <i class="ion ion-ios-attach iconform"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <textarea class="frmtxt" id="biz_des" placeholder="Enter the Home Maintenance Materials you sell."></textarea>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+	 <div class="block">
+			<a class="button button-fill button-round button" @click="newMatvendor" style="background:#034679">Submit</a>
+	</div>
+        </div>
+      </div>
+    </div>
+
+<!-- Material Registration Pop Ends -->
+
+<!-- Provider Registration Pop Start -->
+<div class="popup provider-popup">
+      <div class="page">
+        <div class="navbar" style="background:#e3000f;">
+          <div class="navbar-inner">
+            <div class="title titlehd">Provider Registration</div>
+            <div class="right titlehd"><a href="#" class="link popup-close">Close</a></div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="block-title font12">Complete Fields:</div>
+    <div class="list no-hairlines-md">
+      <ul>
+        <li class="item-content item-input">
+          <div class="item-media">
+            <i class="ion ion-ios-navigate iconform"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <textarea class="frmtxt" id="srv_add" placeholder="Provide your Business Address"></textarea>
+            </div>
+          </div>
+        </li>
+		<li class="item-content item-input">
+          <div class="item-media">
+            <i class="ion ion-ios-create iconform"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <textarea class="frmtxt" id="srv_des" placeholder="Describe your services"></textarea>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+	 <div class="block">
+			<a class="button button-fill button-round button" @click="openDboard" style="background:#034679">Submit</a>
+	</div>
+        </div>
+      </div>
+    </div>
+
+<!-- Provider Registration Pop Ends -->
+
+
+<!-- Page Ends -->
+</div>
+</template>
+<style>
+.iconform
+{
+color: #e62b1e; !important
+font-size: x-large;
+}
+.frmtxt
+{font-size:16px;}
+.divspinner
+{background:transparent url('./img/imgspinner.gif') center no-repeat;}
+.md .navbar:after
+{height:0px;}
+.md .color-theme-red .toolbar:not(.messagebar), .md .color-theme-red.toolbar:not(.messagebar)
+{background: #ffffff;}
+.md .tabbar a.tab-link.active-state, .md .tabbar a.tab-link.tab-link-active, .md .tabbar-labels a.tab-link.active-state, .md .tabbar-labels a.tab-link.tab-link-active
+{color: #346d9a;}
+.md .item-input-wrap:after
+{background-color:#e3e1e1;}
+.md .toolbar a
+{color: #f44336;}
+.md .color-theme-red .input-after:after, .md .color-theme-red .item-input-focused .item-input-wrap:after
+{background: #e3e1e1;}
+.md .list
+{margin: 10px 0;}
+.iptborder
+{background:#e3e1e1;border-radius:10px;}
+.boxcol
+{border-radius: 10px;background: #ffffff none repeat scroll 0 0;box-shadow: 0 5px 20px 0 rgba(0,0,0,0.15);margin:15px 0;}
+.alnright
+{float: right;}
+.customli2
+{border-bottom: 1px solid #e0e0e0;font-size:16px !important;}
+
+</style>
+<script>
+  return {
+  methods:{
+		signOut: function ()
+		{
+		var app = this.$app;
+		
+		//set Native Storage
+		
+		localStorage.removeItem("userPhone");
+		app.router.navigate('/home/');
+		},
+		openDboard: function () {
+		
+		var app = this.$app;
+		
+		
+		//get variables from form
+		var srv_des = $$('#srv_des').val();
+		var srv_add = $$('#srv_add').val();
+	
+		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		
+		if (!srv_des || !srv_add){
+		  app.dialog.alert('Please fill in all fields');
+		  return;
+		 }
+		 
+		 app.popup.close();
+		 
+		 // Show Preloader
+			app.dialog.progress();
+			
+			app.request({
+				url: url+'type=prvdreg',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				srv_des:srv_des,
+				srv_add:srv_add,
+				userPhone: userPhone
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				 
+				  if (adata.message == "success") {
+						app.data.appdata.prvdadd = srv_add;
+						app.data.appdata.prvdabout = srv_des;
+						app.router.navigate('/prvdashboard/');
+						app.dialog.alert('Welcome to Provider Dashboard. Complete your Profile and Upload documents for Verification');
+					  } 
+				
+				if (adata.message == "registered") {
+						/*
+						app.data.appdata.prvdadd = adata.prvdadd;
+						app.data.appdata.prvdabout = adata.prvdabout;
+						app.data.appdata.prvdprofile = adata.prvdprofile;
+						app.data.appdata.prvdprofcitylist = adata.prvdprofcitylist;
+						app.data.appdata.prvdprofsrvlist = adata.prvdprofsrvlist;
+						app.router.navigate('/prvdashboard/');
+						*/
+						app.dialog.alert('You are already Registered, Go to Provider Dashboard.');
+					  }
+				
+				app.data.prvdcitylist = adata.prvdcitylist;
+				},
+				error:function(xhr,status){
+				//console.log(error.code);
+				//console.log(error.exception);
+				//console.log(error);
+				console.log(status);
+				console.log(xhr);
+				//if (error.exception !== ""){console.log(error.exception);}
+				  // Create toast
+					//if (!app.toastBottom) {
+					  app.toastBottom =  app.toast.create({
+						text: 'Connection Error!',
+						closeTimeout: 3000,
+					  });
+				//}
+					
+					
+					// Open it
+					app.toastBottom.open();
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.dialog.close();}, 1000);
+				}
+				}); 
+			 
+		//this.$app.methods.getUserAlerts();
+
+	
+		},
+		chkProvider: function () {
+
+		var app = this.$app;
+		  
+  		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		  
+		 // Show Preloader
+			app.dialog.progress();
+			
+			app.request({
+				url: url+'type=prvdcheck',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				userPhone: userPhone
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				 
+				  if (adata.message == "true") {
+					app.data.appdata.prvdadd = adata.prvdadd;
+					app.data.appdata.prvdabout = adata.prvdabout;
+					app.data.appdata.prvdprofile = adata.prvdprofile;
+					app.data.appdata.prvdAlert = adata.prvdAlert;
+					app.data.appdata.prvdStatus = adata.prvdStatus;
+					app.data.appdata.prvdSrvReqs = adata.prvdSrvReqs;
+					app.data.appdata.prvdWalletBal = adata.prvdWalletBal;
+					app.data.appdata.prvdRating = adata.prvdRating;
+					app.data.appdata.prvdRatingNo = adata.prvdRatingNo;
+					app.data.appdata.prvdAlertID = adata.prvdAlertID;
+					app.data.appdata.profile_img = adata.profile_img;
+					app.data.appdata.prvdaltmsg = adata.prvdaltmsg;
+					app.data.appdata.prvdReqDocs = adata.prvdReqDocs;
+					app.data.appdata.prvdOnlineStatus = adata.prvdOnlineStatus;
+					app.data.appdata.prvdprofcitylist = adata.prvdprofcitylist;
+					app.data.appdata.prvdprofsrvlist = adata.prvdprofsrvlist;
+					app.data.prvdcitylist = adata.prvdcitylist;
+					app.data.prvdAlertMsg = adata.prvdAlertMsg;
+					app.data.prvdSrvReqList = adata.prvdSrvReqList;
+						app.router.navigate('/prvdashboard/');
+						//app.dialog.alert('Welcome to Provider Dashboard');
+						//app.dialog.alert(adata.prvdprofile);
+						
+						//var self = this;
+						
+						app.toastLargeMessage = app.toast.create({
+						text: app.data.appdata.prvdaltmsg,
+						 closeButton: true,
+					  });
+					  
+					  app.toastLargeMessage.open();
+					  
+						
+					  } 
+				
+				if (adata.message == "false") {
+						app.dialog.alert('Please Register First. Select Become a Provider Menu to Begin.');
+						//app.popup.open(provider-popup);
+					  }
+					  
+				},
+				error:function(xhr,status){
+				//console.log(error.code);
+				//console.log(error.exception);
+				//console.log(error);
+				console.log(status);
+				console.log(xhr);
+				//if (error.exception !== ""){console.log(error.exception);}
+				  // Create toast
+					//if (!app.toastBottom) {
+					  app.toastBottom =  app.toast.create({
+						text: 'Connection Error!',
+						closeTimeout: 3000,
+					  });
+				//}
+					
+					
+					// Open it
+					app.toastBottom.open();
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.dialog.close();}, 1000);
+				}
+				}); 
+		//this.$app.methods.getUserAlerts();
+		},
+		newMatvendor: function () {
+		
+		var app = this.$app;
+		
+		
+		//get variables from form
+		var biz_name = $$('#biz_name').val();
+		var biz_add = $$('#biz_add').val();
+		var biz_des = $$('#biz_des').val();
+	
+		//Retrieve Global Object userPhone
+		var userPhone = app.data.appdata.userPhone;
+		var url = app.data.appconst.url;
+		
+		if (!biz_name || !biz_add || !biz_des){
+		  app.dialog.alert('Please fill in all fields');
+		  return;
+		 }
+		 
+		 app.popup.close();
+		 
+		 // Show Preloader
+			app.dialog.progress();
+			
+			app.request({
+				url: url+'type=vendoreg',
+				dataType:'json',
+				method: 'GET',
+				data:{
+				biz_name:biz_name,
+				biz_add:biz_add,
+				biz_des:biz_des,
+				userPhone: userPhone
+				},
+				crossDomain:true,
+				success:function(adata){
+				 
+				 
+				  if (adata.message == "success") {
+						app.dialog.alert('Success! You will be contacted.');
+					  } 
+				
+				if (adata.message == "registered") {
+						app.dialog.alert('Sorry! You are already registered.');
+					  }
+					  
+				},
+				error:function(xhr,status){
+				//console.log(error.code);
+				//console.log(error.exception);
+				//console.log(error);
+				console.log(status);
+				console.log(xhr);
+				//if (error.exception !== ""){console.log(error.exception);}
+				  // Create toast
+					//if (!app.toastBottom) {
+					  app.toastBottom =  app.toast.create({
+						text: 'Connection Error!',
+						closeTimeout: 3000,
+					  });
+				//}
+					
+					
+					// Open it
+					app.toastBottom.open();
+				},
+				complete:function(){
+				//Close Dialog
+				setTimeout(function () {app.dialog.close();}, 1000);
+				}
+				}); 
+			 
+		//this.$app.methods.getUserAlerts();
+
+	
+		}
+
+	},
+    data: function () {
+      return {		
+		//read data from root object
+        appdata: this.$app.data.appdata,
+        appconst: this.$app.data.appconst,
+      };
+    },
+	
+	on: {
+      pageInit: function (e, page) {
+        //this.$app.methods.getUserAlerts();
+		var lclalertNum = localStorage.getItem("lclalertNum");
+		document.getElementById("lclalertNumact").innerHTML = lclalertNum;
+      },
+	  pageAfterIn: function(e, page) {
+	  
+		//document.getElementById("lclalertNum").innerHTML = lclalertNum;
+	  }
+    },
+	  mounted: function () {
+    // attach event listener
+    //this.$app.methods.helloWorld();
+  },
+
+	/*
+	on: {
+        pageInit: function () {
+         // do something on page init
+		 //var fullName = app.data.appdata.fullName;
+		 //var userPhone = app.data.appdata.userPhone;
+		 //document.getElementById("usrdet").innerHTML = fullName + ' <br><small>' + userPhone + '</small>'; 
+        },
+	},
+	*/
+  };
+</script>

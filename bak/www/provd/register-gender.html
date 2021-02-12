@@ -1,0 +1,114 @@
+<template>
+  <div class="page" data-name="gender">
+    <div class="navbar" style="background:#ffffff;color:#000000">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="ion ion-ios-arrow-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title sliding titlehd">Sign Up</div>
+      </div>
+    </div>
+     <div class="page-content custombackground">
+  
+	<div class="block" style="height:70%">
+	<div class="progressbar color-green" data-progress="25"><span style="transform: translate3d(-20%, 0px, 0px);"></span></div>
+	<br><span style="font-size:larger">Whats your Gender?</span>
+	<br>
+		<div class="list media-list">
+      <ul>
+        <li>
+          <label class="item-radio item-content">
+            <input type="radio" name="gender" value="Male" />
+            <i class="icon icon-radio"></i>
+            <div class="item-inner">
+              <div class="item-title-row">
+                <div class="item-title">Male</div>
+                <div class="item-after"><i class="ion ion-ios-man iconlarge" ></i></div>
+              </div>
+            </div>
+          </label>
+        </li>
+		<li>
+          <label class="item-radio item-content">
+            <input type="radio" name="gender"  value="Female" />
+            <i class="icon icon-radio"></i>
+            <div class="item-inner">
+              <div class="item-title-row">
+                <div class="item-title">Female</div>
+                <div class="item-after"><i class="ion ion-ios-woman iconlarge" ></i></div>
+              </div>
+            </div>
+          </label>
+        </li>
+			
+		  </ul>
+		</div>
+			</div>
+		<div class="block">
+			<a class='button button-raised button-big button-outline buttonback' @click="newUser"><i class='ion ion-ios-pulse'></i> Proceed</a>
+			
+    </div>
+		</div>
+		
+		
+  </div>
+</template>
+<style>
+.divspinner
+{background:transparent url('./img/imgspinner.gif') center no-repeat;}
+.md .navbar:after
+{height:0px;}
+.md .color-theme-red .radio input[type=radio]:checked~.icon-radio, .md .color-theme-red label.item-radio input[type=radio]:checked~* .icon-radio, .md .color-theme-red label.item-radio input[type=radio]:checked~.icon-radio
+{border-color:#2196f3 !important;}
+.md .color-theme-red .radio input[type=radio]:checked~.icon-radio:after, .md .color-theme-red label.item-radio input[type=radio]:checked~* .icon-radio:after, .md .color-theme-red label.item-radio input[type=radio]:checked~.icon-radio:after
+{background:#2196f3 !important;}
+</style>
+<script>
+return {
+	methods:{
+	newUser: function () {
+	
+		// App instance
+		var app = this.$app;
+			
+		//get variables from login form
+		//var gender = $$('#select-gender').val();
+		//var gender = document.querySelector('input[name="gender"]').value;
+		var gender = document.querySelector('input[name="gender"]:checked').value;
+		
+		if (!gender){
+		  app.dialog.alert('Select Gender');
+		  return;
+		 }
+		 
+		 
+		 
+		 if (gender){
+		  //app.dialog.alert('Your Gender is ' + gender);
+		//  return;
+		
+		app.data.appdata.uGender = gender;
+		app.router.navigate('/page/');
+		 }
+	
+	
+	
+	
+	
+		},
+			},
+	on: {
+      pageInit: function (e, page) {
+		// App instance
+			
+		
+      }
+    }
+
+
+}
+
+</script>
